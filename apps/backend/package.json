@@ -9,7 +9,8 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",
     "@cloudflare/workers-types": "^4.20240529.0",
-    "wrangler": "^3.57.2",
-    "biome-config": "workspace:*"
+    "biome-config": "workspace:*",
+    "typescript": "^5.4.5",
+    "wrangler": "^3.57.2"
   }
 }

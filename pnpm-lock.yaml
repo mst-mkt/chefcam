@@ -30,6 +30,9 @@ importers:
       biome-config:
         specifier: workspace:*
         version: link:../../packages/biome-config
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
       wrangler:
         specifier: ^3.57.2
         version: 3.60.2(@cloudflare/workers-types@4.20240605.0)
