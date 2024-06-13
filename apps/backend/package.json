@@ -1,7 +1,11 @@
 {
+  "name": "backend",
   "scripts": {
     "dev": "wrangler dev src/index.ts",
-    "deploy": "wrangler deploy --minify src/index.ts"
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "check": "biome check ./src/",
+    "fix": "biome check --write ./src/",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "hono": "^4.4.5"

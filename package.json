@@ -3,7 +3,14 @@
   "version": "0.0.1",
   "description": "geek-camp monthly hackathon vol.7",
   "author": "mst-mkt, imoken777, rarandeyo, sorainiad",
-  "scripts": {},
+  "scripts": {
+    "dev": "pnpm run dev:frontend & pnpm run dev:backend",
+    "dev:frontend": "pnpm -F frontend run dev",
+    "dev:backend": "pnpm -F backend run dev",
+    "check": "pnpm -F . run check && pnpm -F backend run check",
+    "fix": "pnpm -F frontend run fix && pnpm -F backend run fix",
+    "typecheck": "pnpm -F frontend run typecheck && pnpm -F backend run typecheck"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",
     "biome-config": "workspace:*"
