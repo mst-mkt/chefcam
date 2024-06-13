@@ -13,6 +13,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",
-    "biome-config": "workspace:*"
+    "biome-config": "workspace:*",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7"
   }
 }
