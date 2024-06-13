@@ -9,12 +9,18 @@
     "dev:backend": "pnpm -F backend run dev",
     "check": "pnpm -F . run check && pnpm -F backend run check",
     "fix": "pnpm -F frontend run fix && pnpm -F backend run fix",
-    "typecheck": "pnpm -F frontend run typecheck && pnpm -F backend run typecheck"
+    "typecheck": "pnpm -F frontend run typecheck && pnpm -F backend run typecheck",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",
     "biome-config": "workspace:*",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,css}": [
+      "biome check --write"
+    ]
   }
 }
