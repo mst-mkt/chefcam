@@ -3,5 +3,9 @@
   "version": "0.0.1",
   "description": "geek-camp monthly hackathon vol.7",
   "author": "mst-mkt, imoken777, rarandeyo, sorainiad",
-  "scripts": {}
+  "scripts": {},
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.1",
+    "biome-config": "workspace:*"
+  }
 }
