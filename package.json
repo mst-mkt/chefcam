@@ -22,5 +22,8 @@
     "*.{js,ts,jsx,tsx,css}": [
       "biome check --write"
     ]
+  },
+  "volta": {
+    "node": "20.14.0"
   }
 }
