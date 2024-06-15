@@ -1,16 +1,23 @@
 import { zValidator } from '@hono/zod-validator'
 import { Hono } from 'hono'
+import { env } from 'hono/adapter'
 import { cors } from 'hono/cors'
 import { z } from 'zod'
 
 const app = new Hono()
 
-app.use(
-  '/*',
-  cors({
-    origin: 'http://localhost:5173', // frontendのURL
-  }),
-)
+app.use('/*', (c, next) => {
+  // biome-ignore lint/style/useNamingConvention: <explanation>
+  const { FRONTEND_BASE_URL } = env<{ FRONTEND_BASE_URL: string | undefined }>(c)
+  if (!FRONTEND_BASE_URL) {
+    throw new Error('FRONTEND_BASE_URL is not defined')
+  }
+  const arrowUrl = new URL(FRONTEND_BASE_URL).origin.toString()
+
+  return cors({
+    origin: arrowUrl,
+  })(c, next)
+})
 
 const allowedImageTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/heic', 'image/heif']
 
