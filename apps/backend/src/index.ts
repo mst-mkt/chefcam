@@ -7,7 +7,7 @@ import { z } from 'zod'
 const app = new Hono()
 
 app.use('/*', (c, next) => {
-  // biome-ignore lint/style/useNamingConvention: <explanation>
+  // biome-ignore lint/style/useNamingConvention: The property name is in uppercase to match the naming convention for environment variables.
   const { FRONTEND_BASE_URL } = env<{ FRONTEND_BASE_URL: string | undefined }>(c)
   if (!FRONTEND_BASE_URL) {
     throw new Error('FRONTEND_BASE_URL is not defined')
