@@ -7,7 +7,13 @@ export const Route = createLazyFileRoute('/')({
   component: () => <Home />,
 })
 
-const uploadClient = hc<ImageUploadRouteType>('http://localhost:8787') // backendのURL
+const BACKEND_BASE_URL: string | undefined = import.meta.env.VITE_BACKEND_BASE_URL
+if (!BACKEND_BASE_URL) {
+  throw new Error('BACKEND_BASE_URL is not defined')
+}
+const requestUrl = new URL(BACKEND_BASE_URL).origin.toString()
+
+const uploadClient = hc<ImageUploadRouteType>(requestUrl)
 const $imagePost = uploadClient.upload.image.$post
 
 const Home = () => {

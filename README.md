@@ -8,6 +8,13 @@
 pnpm i
 ```
 
+### create environment files
+
+```bash
+cp apps/frontend/.env.local.example apps/frontend/.env.local
+cp apps/backend/.dev.vars.example apps/backend/.dev.vars
+```
+
 ### run dev server
 
 ```bash
