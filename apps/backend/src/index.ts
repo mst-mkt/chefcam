@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { recipesRouter } from './routers/recipes'
 import { uploadRouter } from './routers/upload'
 
 type Bindings = {
@@ -24,5 +25,6 @@ app.use(
 )
 
 app.route('/upload', uploadRouter)
+app.route('/recipes', recipesRouter)
 
 export default app
