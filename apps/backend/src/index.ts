@@ -3,11 +3,13 @@ import { cors } from 'hono/cors'
 import { recipesRouter } from './routers/recipes'
 import { uploadRouter } from './routers/upload'
 
-type Bindings = {
+export type AppBindings = {
   FRONTEND_BASE_URL: string | undefined
+  OPENAI_API_KEY: string | undefined
+  OPENAI_BASE_URL: string | undefined
 }
 
-const app = new Hono<{ Bindings: Bindings }>()
+const app = new Hono<{ Bindings: AppBindings }>()
 
 app.use(
   '*',

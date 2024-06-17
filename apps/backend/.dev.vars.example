@@ -1,1 +1,3 @@
 FRONTEND_BASE_URL = http://localhost:5173
+OPENAI_API_KEY =
+OPENAI_BASE_URL =
