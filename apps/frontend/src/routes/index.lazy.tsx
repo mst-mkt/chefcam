@@ -1,4 +1,4 @@
-import type { ImageUploadRouteType } from '@backend-types/index'
+import type { HonoRoutes } from '@backend-types/index'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { hc } from 'hono/client'
 import { type ChangeEvent, useState } from 'react'
@@ -13,12 +13,14 @@ if (!BACKEND_BASE_URL) {
 }
 const requestUrl = new URL(BACKEND_BASE_URL).origin.toString()
 
-const uploadClient = hc<ImageUploadRouteType>(requestUrl)
-const $imagePost = uploadClient.upload.image.$post
+const honoRoutes = hc<HonoRoutes>(requestUrl)
+const $imagePost = honoRoutes.upload.$post
+const $recipesGet = honoRoutes.recipes.$get
 
 const Home = () => {
   const [message, setMessage] = useState<string>('')
   const [file, setFile] = useState<File | null>(null)
+  const [foods, setFoods] = useState<string[]>([])
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -29,17 +31,17 @@ const Home = () => {
 
   const uploadFile = async () => {
     if (!file) return
-    try {
-      const res = await $imagePost({
-        form: { file },
-      })
-      const data = await res.text()
-      setMessage(data)
-    } catch (e) {
-      console.error(e)
+    const res = await $imagePost({
+      form: { file },
+    })
+    if (res.ok) {
+      const data = await res.json()
+      setFoods(data.foods)
+    } else {
+      const data = await res.json()
+      console.error(data.error)
     }
   }
-
   return (
     <div>
       <h1>Home</h1>
@@ -48,6 +50,11 @@ const Home = () => {
         Upload image
       </button>
       <p>{message}</p>
+      <ul>
+        {foods.map((food) => (
+          <li key={food}>{food}</li>
+        ))}
+      </ul>
     </div>
   )
 }
