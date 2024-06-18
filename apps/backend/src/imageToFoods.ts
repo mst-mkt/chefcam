@@ -1,10 +1,10 @@
 import { HumanMessage } from '@langchain/core/messages'
 import { ChatOpenAI } from '@langchain/openai'
 import { z } from 'zod'
-import type { AppBindings } from '.'
+import type { BindingsType } from './factory'
 import { fileToBase64 } from './utils/fileToBase64'
 
-export const imageToFoods = async (file: File, envs: AppBindings) => {
+export const imageToFoods = async (file: File, envs: BindingsType) => {
   const { OPENAI_API_KEY, OPENAI_BASE_URL } = envs
   if (!OPENAI_API_KEY) {
     throw new Error('OPENAI_API_KEY is not defined')
