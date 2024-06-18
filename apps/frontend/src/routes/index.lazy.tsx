@@ -15,10 +15,8 @@ const requestUrl = new URL(BACKEND_BASE_URL).origin.toString()
 
 const honoRoutes = hc<HonoRoutes>(requestUrl)
 const $imagePost = honoRoutes.upload.$post
-const $recipesGet = honoRoutes.recipes.$get
 
 const Home = () => {
-  const [message, setMessage] = useState<string>('')
   const [file, setFile] = useState<File | null>(null)
   const [foods, setFoods] = useState<string[]>([])
 
@@ -49,7 +47,6 @@ const Home = () => {
       <button type="button" onClick={uploadFile}>
         Upload image
       </button>
-      <p>{message}</p>
       <ul>
         {foods.map((food) => (
           <li key={food}>{food}</li>
