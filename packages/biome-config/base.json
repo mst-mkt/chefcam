@@ -43,7 +43,6 @@
         },
         "useForOf": "error",
         "useFragmentSyntax": "error",
-        "useNamingConvention": "error",
         "useNodeAssertStrict": "error",
         "useShorthandAssign": "error",
         "useSingleCaseStatement": "error",

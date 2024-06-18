@@ -1,53 +1,10 @@
-import { zValidator } from '@hono/zod-validator'
-import { Hono } from 'hono'
-import { env } from 'hono/adapter'
-import { cors } from 'hono/cors'
-import { z } from 'zod'
+import { honoFactory } from './factory'
+import { recipesRouter } from './routers/recipes'
+import { uploadRouter } from './routers/upload'
 
-const app = new Hono()
+const app = honoFactory.createApp()
 
-app.use('/*', (c, next) => {
-  // biome-ignore lint/style/useNamingConvention: The property name is in uppercase to match the naming convention for environment variables.
-  const { FRONTEND_BASE_URL } = env<{ FRONTEND_BASE_URL: string | undefined }>(c)
-  if (!FRONTEND_BASE_URL) {
-    throw new Error('FRONTEND_BASE_URL is not defined')
-  }
-  const arrowUrl = new URL(FRONTEND_BASE_URL).origin.toString()
+const routes = app.route('/upload', uploadRouter).route('/recipes', recipesRouter)
 
-  return cors({
-    origin: arrowUrl,
-  })(c, next)
-})
-
-const allowedImageTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/heic', 'image/heif']
-
-const imageSchema = z
-  .object({
-    file: z.instanceof(File).refine(
-      (f) => {
-        return allowedImageTypes.includes(f.type)
-      },
-      {
-        message: 'Invalid file type',
-      },
-    ),
-  })
-  .strict()
-
-const imageUploadRoute = app.post('/upload/image', zValidator('form', imageSchema), async (c) => {
-  try {
-    const { file } = c.req.valid('form')
-    if (!file) {
-      return c.json('No file found', 400)
-    }
-    // ここで画像に対する処理を書く？
-    return c.json('File uploaded', 200)
-  } catch (e) {
-    if (e instanceof Error) {
-      return c.json(e.message, 500)
-    }
-  }
-})
-
-export type ImageUploadRouteType = typeof imageUploadRoute
+export type HonoRoutes = typeof routes
 export default app
