@@ -1,43 +1,43 @@
 {
-	"editor.formatOnSave": true,
-	"editor.defaultFormatter": "biomejs.biome",
-	"editor.tabSize": 2,
-	"editor.codeActionsOnSave": {
-		"quickfix.biome": "explicit",
-		"source.fixAll.eslint": "never"
-	},
-	"editor.quickSuggestions": {
-		"strings": "on"
-	},
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.fixAll.eslint": "never"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
 
-	"files.insertFinalNewline": true,
-	"files.trimTrailingWhitespace": true,
-	"files.trimFinalNewlines": true,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
 
-	"[css]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
 
-	"[javascript]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
 
-	"[typescript]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
 
-	"[javascriptreact]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
 
-	"[typescriptreact]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
 
-	"javascript.suggest.autoImports": true,
-	"javascript.updateImportsOnFileMove.enabled": "always",
-	"typescript.suggest.autoImports": true,
-	"typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.suggest.autoImports": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
 
-	"cSpell.ignoreWords": [ "hono", "tanstack", "biomejs", "tabler", "typecheck" ]
+  "cSpell.ignoreWords": ["hono", "tanstack", "biomejs", "tabler", "typecheck"]
 }
