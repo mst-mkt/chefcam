@@ -1,5 +1,5 @@
-import type { HonoRoutes } from '@backend-types/index'
 import { createLazyFileRoute } from '@tanstack/react-router'
+import type { HonoRoutes } from 'backend/src/index'
 import { hc } from 'hono/client'
 import { type ChangeEvent, useState } from 'react'
 
