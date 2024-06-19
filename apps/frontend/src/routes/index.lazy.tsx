@@ -1,20 +1,12 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { HonoRoutes } from 'backend/src/index'
-import { hc } from 'hono/client'
 import { type ChangeEvent, useState } from 'react'
+import { apiClient } from '../lib/apiClient'
 
 export const Route = createLazyFileRoute('/')({
   component: () => <Home />,
 })
 
-const BACKEND_BASE_URL: string | undefined = import.meta.env.VITE_BACKEND_BASE_URL
-if (!BACKEND_BASE_URL) {
-  throw new Error('BACKEND_BASE_URL is not defined')
-}
-const requestUrl = new URL(BACKEND_BASE_URL).origin.toString()
-
-const honoRoutes = hc<HonoRoutes>(requestUrl)
-const $imagePost = honoRoutes.upload.$post
+const $imagePost = apiClient.upload.$post
 
 const Home = () => {
   const [file, setFile] = useState<File | null>(null)
