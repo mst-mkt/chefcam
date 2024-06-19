@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AppImport } from './routes/_app'
 import { Route as AppUploadImport } from './routes/_app/upload'
 
 // Create Virtual Routes
@@ -21,6 +22,11 @@ const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
+const AppRoute = AppImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
@@ -28,7 +34,7 @@ const IndexLazyRoute = IndexLazyImport.update({
 
 const AppUploadRoute = AppUploadImport.update({
   path: '/upload',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -42,12 +48,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppImport
+      parentRoute: typeof rootRoute
+    }
     '/_app/upload': {
       id: '/_app/upload'
       path: '/upload'
       fullPath: '/upload'
       preLoaderRoute: typeof AppUploadImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AppImport
     }
   }
 }
@@ -56,7 +69,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  AppUploadRoute,
+  AppRoute: AppRoute.addChildren({ AppUploadRoute }),
 })
 
 /* prettier-ignore-end */
@@ -68,14 +81,21 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_app/upload"
+        "/_app"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
+    "/_app": {
+      "filePath": "_app.tsx",
+      "children": [
+        "/_app/upload"
+      ]
+    },
     "/_app/upload": {
-      "filePath": "_app/upload.tsx"
+      "filePath": "_app/upload.tsx",
+      "parent": "/_app"
     }
   }
 }
