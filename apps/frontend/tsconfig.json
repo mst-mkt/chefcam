@@ -6,10 +6,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    "paths": {
-      "@backend-types/*": ["../backend/src/*"]
-    },
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
