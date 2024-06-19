@@ -37,5 +37,7 @@
 	"javascript.suggest.autoImports": true,
 	"javascript.updateImportsOnFileMove.enabled": "always",
 	"typescript.suggest.autoImports": true,
-	"typescript.updateImportsOnFileMove.enabled": "always"
+	"typescript.updateImportsOnFileMove.enabled": "always",
+
+	"cSpell.ignoreWords": [ "hono", "tanstack", "biomejs", "tabler", "typecheck" ]
 }
