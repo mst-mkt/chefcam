@@ -22,8 +22,9 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
+    "backend": "workspace:*",
+    "biome-config": "workspace:*",
     "typescript": "^5.4.5",
-    "vite": "^5.2.12",
-    "biome-config": "workspace:*"
+    "vite": "^5.2.12"
   }
 }
