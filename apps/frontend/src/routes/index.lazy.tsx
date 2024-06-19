@@ -2,6 +2,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { HonoRoutes } from 'backend/src/index'
 import { hc } from 'hono/client'
 import { type ChangeEvent, useState } from 'react'
+import './index.css'
 
 export const Route = createLazyFileRoute('/')({
   component: () => <Home />,
