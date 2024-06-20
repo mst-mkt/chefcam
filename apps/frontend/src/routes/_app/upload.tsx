@@ -3,34 +3,33 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Button } from '../../components/common/Button'
 import { FileInput } from '../../components/common/FileInput'
-import { apiClient } from '../../lib/apiClient'
-import { dropDuplicates } from '../../utils/dropDuplicates'
+import type { FoodImage } from '../../types/FoodTypes'
 
 export const Route = createFileRoute('/_app/upload')({
   component: () => <Upload />,
 })
 
 const Upload = () => {
-  const [files, setFiles] = useState<File[]>([])
+  const [files, setFiles] = useState<FoodImage[]>([])
   const [foods, setFoods] = useState<string[]>([])
   const [selectedFoods, setSelectedFoods] = useState<string[]>([])
 
-  const uploadFile = async () => {
-    const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
-    const responses = await Promise.all(files.map(postImage))
+  // const uploadFile = async () => {
+  //   const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
+  //   const responses = await Promise.all(files.map(postImage))
 
-    for (const res of responses) {
-      if (!res.ok) {
-        const data = await res.json()
-        console.error(data.error)
-        return
-      }
-      const data = await res.json()
-      const newFoods = data.foods.filter((food) => !foods.includes(food))
-      setFoods((prev) => dropDuplicates([...prev, ...data.foods]))
-      setSelectedFoods((prev) => dropDuplicates([...prev, ...newFoods]))
-    }
-  }
+  //   for (const res of responses) {
+  //     if (!res.ok) {
+  //       const data = await res.json()
+  //       console.error(data.error)
+  //       return
+  //     }
+  //     const data = await res.json()
+  //     const newFoods = data.foods.filter((food) => !foods.includes(food))
+  //     setFoods((prev) => dropDuplicates([...prev, ...data.foods]))
+  //     setSelectedFoods((prev) => dropDuplicates([...prev, ...newFoods]))
+  //   }
+  // }
 
   const toggleFoodSelect = (food: string) => {
     setSelectedFoods((prev) => {
