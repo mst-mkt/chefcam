@@ -3,32 +3,34 @@ import { useState } from 'react'
 import { Button } from '../../components/common/Button'
 import { FileInput } from '../../components/common/FileInput'
 import { apiClient } from '../../lib/apiClient'
+import { dropDuplicates } from '../../utils/dropDuplicates'
 
 export const Route = createFileRoute('/_app/upload')({
   component: () => <Upload />,
 })
 
 const Upload = () => {
-  const [file, setFile] = useState<File | null>(null)
+  const [files, setFiles] = useState<File[]>([])
   const [foods, setFoods] = useState<string[]>([])
 
   const uploadFile = async () => {
-    if (file === null) return
-    const res = await apiClient.upload.$post({ form: { file } })
+    const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
+    const responses = await Promise.all(files.map(postImage))
 
-    if (res.ok) {
-      const dropDuplicates = (arr: string[]) => [...new Set(arr)]
+    for (const res of responses) {
+      if (!res.ok) {
+        const data = await res.json()
+        console.error(data.error)
+        return
+      }
       const data = await res.json()
-      setFoods(dropDuplicates(data.foods))
-    } else {
-      const data = await res.json()
-      console.error(data.error)
+      setFoods((prev) => dropDuplicates([...prev, ...data.foods]))
     }
   }
 
   return (
     <>
-      <FileInput onChange={setFile} file={file} />
+      <FileInput setFiles={setFiles} files={files} />
       <Button onClick={uploadFile}>Upload</Button>
       <ul>
         {foods.map((food) => (

@@ -1,36 +1,23 @@
 import { IconPhotoPlus, IconX } from '@tabler/icons-react'
-import { type ChangeEvent, type FC, useMemo } from 'react'
+import { type ChangeEvent, type Dispatch, type FC, type SetStateAction, useMemo } from 'react'
 
 type FileInputProps = {
-  file: File | null
-  onChange: (files: File | null) => void
+  files: File[]
+  setFiles: Dispatch<SetStateAction<File[]>>
   allowedTypes?: string[]
 }
 
-export const FileInput: FC<FileInputProps> = ({ file, onChange, allowedTypes }) => {
-  const fileUrl = useMemo(() => (file ? URL.createObjectURL(file) : null), [file])
+export const FileInput: FC<FileInputProps> = ({ files, setFiles, allowedTypes }) => {
+  const fileUrls = useMemo(() => files.map((file) => URL.createObjectURL(file)), [files])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files === null) {
-      return
-    }
-
-    const selectedFile = event.target.files[0]
-
-    if (allowedTypes && !allowedTypes.includes(selectedFile.type)) {
-      alert('許可されていないファイル形式です')
-      return
-    }
-
-    onChange(selectedFile)
+    const selectedFile = [...(event.target.files ?? [])]
+    const validFiles = selectedFile.filter((file) => allowedTypes?.includes(file.type) ?? true)
+    setFiles((prev) => [...prev, ...validFiles])
   }
 
-  const handleRemove = () => {
-    if (file === null || fileUrl === null) {
-      return
-    }
-
-    onChange(null)
+  const handleRemove = (index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index))
   }
 
   return (
@@ -42,18 +29,23 @@ export const FileInput: FC<FileInputProps> = ({ file, onChange, allowedTypes }) 
           ファイルをドロップするか、<span className="font-bold text-[#486]">ここをクリック</span>
         </p>
       </label>
-      {fileUrl !== null && (
-        <div className="group relative aspect-square w-20 overflow-hidden rounded-md bg-green-50 shadow">
-          <img src={fileUrl} alt="preview" className="block h-full w-full object-cover" />
-          <button
-            type="button"
-            className="absolute top-0 right-0 cursor-pointer rounded-bl-md bg-[#f00] p-1 text-white opacity-0 transition-opacity hover:bg-[#d00] group-hover:opacity-100"
-            onClick={handleRemove}
+      <div className="flex gap-x-2 overflow-x-scroll rounded-md">
+        {fileUrls.map((url, i) => (
+          <div
+            className="group relative aspect-square w-20 shrink-0 overflow-hidden rounded-md bg-green-50 shadow"
+            key={files[i].name}
           >
-            <IconX size={16} color="#fff" />
-          </button>
-        </div>
-      )}
+            <img src={url} alt="preview" className="block h-full w-full object-cover" />
+            <button
+              type="button"
+              className="absolute top-0 right-0 cursor-pointer rounded-bl-md bg-[#f00] p-1 text-white opacity-0 transition-opacity hover:bg-[#d00] group-hover:opacity-100"
+              onClick={() => handleRemove(i)}
+            >
+              <IconX size={16} color="#fff" />
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
