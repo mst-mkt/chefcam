@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AppImport } from './routes/_app'
+import { Route as AppRecipeImport } from './routes/_app/recipe'
 import { Route as AppUploadImport } from './routes/_app/upload'
 
 // Create Virtual Routes
@@ -37,6 +38,11 @@ const AppUploadRoute = AppUploadImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
+const AppRecipeRoute = AppRecipeImport.update({
+  path: '/recipe',
+  getParentRoute: () => AppRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -55,6 +61,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
     }
+    '/_app/recipe': {
+      id: '/_app/recipe'
+      path: '/recipe'
+      fullPath: '/recipe'
+      preLoaderRoute: typeof AppRecipeImport
+      parentRoute: typeof AppImport
+    }
     '/_app/upload': {
       id: '/_app/upload'
       path: '/upload'
@@ -69,7 +82,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  AppRoute: AppRoute.addChildren({ AppUploadRoute }),
+  AppRoute: AppRoute.addChildren({ AppRecipeRoute, AppUploadRoute }),
 })
 
 /* prettier-ignore-end */
@@ -90,8 +103,13 @@ export const routeTree = rootRoute.addChildren({
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
+        "/_app/recipe",
         "/_app/upload"
       ]
+    },
+    "/_app/recipe": {
+      "filePath": "_app/recipe.tsx",
+      "parent": "/_app"
     },
     "/_app/upload": {
       "filePath": "_app/upload.tsx",
