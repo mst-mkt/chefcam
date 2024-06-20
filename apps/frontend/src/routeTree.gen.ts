@@ -15,7 +15,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as AppImport } from './routes/_app'
 import { Route as AppUploadImport } from './routes/_app/upload'
-import { Route as AppSelectImport } from './routes/_app/select'
 
 // Create Virtual Routes
 
@@ -38,11 +37,6 @@ const AppUploadRoute = AppUploadImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppSelectRoute = AppSelectImport.update({
-  path: '/select',
-  getParentRoute: () => AppRoute,
-} as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -61,13 +55,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
     }
-    '/_app/select': {
-      id: '/_app/select'
-      path: '/select'
-      fullPath: '/select'
-      preLoaderRoute: typeof AppSelectImport
-      parentRoute: typeof AppImport
-    }
     '/_app/upload': {
       id: '/_app/upload'
       path: '/upload'
@@ -82,7 +69,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  AppRoute: AppRoute.addChildren({ AppSelectRoute, AppUploadRoute }),
+  AppRoute: AppRoute.addChildren({ AppUploadRoute }),
 })
 
 /* prettier-ignore-end */
@@ -103,13 +90,8 @@ export const routeTree = rootRoute.addChildren({
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
-        "/_app/select",
         "/_app/upload"
       ]
-    },
-    "/_app/select": {
-      "filePath": "_app/select.tsx",
-      "parent": "/_app"
     },
     "/_app/upload": {
       "filePath": "_app/upload.tsx",

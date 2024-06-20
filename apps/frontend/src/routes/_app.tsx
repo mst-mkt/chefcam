@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_app')({
 const AppLayout = () => (
   <div className="flex min-h-svh flex-col gap-y-12">
     <Header />
-    <main className="mx-auto flex w-full max-w-[600px] grow flex-col gap-y-4">
+    <main className="mx-auto flex w-full max-w-[600px] grow flex-col gap-y-8">
       <Outlet />
     </main>
     <Footer />

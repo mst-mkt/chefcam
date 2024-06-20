@@ -1,24 +1,18 @@
 import { IconPhotoPlus, IconX } from '@tabler/icons-react'
-import { type ChangeEvent, type Dispatch, type FC, type SetStateAction, useMemo } from 'react'
+import { type ChangeEvent, type FC, useMemo } from 'react'
+import type { FoodImage } from '../../types/FoodTypes'
 
 type FileInputProps = {
-  files: File[]
-  setFiles: Dispatch<SetStateAction<File[]>>
-  allowedTypes?: string[]
+  foodImages: FoodImage[]
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleRemove: (index: number) => void
 }
 
-export const FileInput: FC<FileInputProps> = ({ files, setFiles, allowedTypes }) => {
-  const fileUrls = useMemo(() => files.map((file) => URL.createObjectURL(file)), [files])
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = [...(event.target.files ?? [])]
-    const validFiles = selectedFile.filter((file) => allowedTypes?.includes(file.type) ?? true)
-    setFiles((prev) => [...prev, ...validFiles])
-  }
-
-  const handleRemove = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index))
-  }
+export const FileInput: FC<FileInputProps> = ({ foodImages, handleChange, handleRemove }) => {
+  const fileUrls = useMemo(
+    () => foodImages.map((image) => URL.createObjectURL(image.file)),
+    [foodImages],
+  )
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -39,7 +33,7 @@ export const FileInput: FC<FileInputProps> = ({ files, setFiles, allowedTypes })
         {fileUrls.map((url, i) => (
           <div
             className="group relative aspect-square w-20 shrink-0 overflow-hidden rounded-md bg-green-50 shadow"
-            key={files[i].name}
+            key={foodImages[i].file.name}
           >
             <img src={url} alt="preview" className="block h-full w-full object-cover" />
             <button

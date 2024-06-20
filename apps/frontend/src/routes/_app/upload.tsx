@@ -1,35 +1,45 @@
 import { IconCircleCheck, IconCircleX, IconPlus } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { type ChangeEvent, useMemo, useState } from 'react'
 import { Button } from '../../components/common/Button'
 import { FileInput } from '../../components/common/FileInput'
+import { apiClient } from '../../lib/apiClient'
 import type { FoodImage } from '../../types/FoodTypes'
+import { dropDuplicates } from '../../utils/dropDuplicates'
 
 export const Route = createFileRoute('/_app/upload')({
   component: () => <Upload />,
 })
 
 const Upload = () => {
-  const [files, setFiles] = useState<FoodImage[]>([])
-  const [foods, setFoods] = useState<string[]>([])
+  const [foodImages, setFoodImages] = useState<FoodImage[]>([])
   const [selectedFoods, setSelectedFoods] = useState<string[]>([])
 
-  // const uploadFile = async () => {
-  //   const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
-  //   const responses = await Promise.all(files.map(postImage))
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
 
-  //   for (const res of responses) {
-  //     if (!res.ok) {
-  //       const data = await res.json()
-  //       console.error(data.error)
-  //       return
-  //     }
-  //     const data = await res.json()
-  //     const newFoods = data.foods.filter((food) => !foods.includes(food))
-  //     setFoods((prev) => dropDuplicates([...prev, ...data.foods]))
-  //     setSelectedFoods((prev) => dropDuplicates([...prev, ...newFoods]))
-  //   }
-  // }
+    const files = [...(e.target.files ?? [])]
+    const currentFiles = foodImages.map((image) => image.file)
+    const newFiles = files.filter((file) => !currentFiles.includes(file))
+
+    const responses = await Promise.all(newFiles.map(postImage))
+    const foodData = await Promise.all(responses.map((res) => res.json()))
+
+    const newFoodImages = foodData.map((data, i) => ({
+      file: newFiles[i],
+      foods: 'foods' in data ? data.foods : [],
+    }))
+    setFoodImages((prev) => [...prev, ...newFoodImages])
+
+    const newFood = dropDuplicates(
+      newFoodImages.flatMap((image) => image.foods).filter((food) => !selectedFoods.includes(food)),
+    )
+    setSelectedFoods((prev) => [...prev, ...newFood])
+  }
+
+  const handleFileRemove = (index: number) => {
+    setFoodImages((prev) => prev.filter((_, i) => i !== index))
+  }
 
   const toggleFoodSelect = (food: string) => {
     setSelectedFoods((prev) => {
@@ -40,12 +50,18 @@ const Upload = () => {
     })
   }
 
+  const foods = useMemo(
+    () => dropDuplicates(foodImages.flatMap((image) => image.foods)),
+    [foodImages],
+  )
+
   return (
     <>
-      <FileInput setFiles={setFiles} files={files} />
-      <Button onClick={uploadFile} disabled={files.length === 0}>
-        材料を検出
-      </Button>
+      <FileInput
+        handleChange={handleFileChange}
+        handleRemove={handleFileRemove}
+        foodImages={foodImages}
+      />
       <div className="flex flex-wrap gap-x-1 gap-y-2">
         {foods.map((food) => (
           <div
@@ -75,7 +91,7 @@ const Upload = () => {
           </button>
         )}
       </div>
-      <Button onClick={() => console.log(selectedFoods)}>レシピ検索</Button>
+      {foods.length !== 0 && <Button onClick={() => console.log(selectedFoods)}>レシピ検索</Button>}
     </>
   )
 }
