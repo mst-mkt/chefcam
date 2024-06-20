@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { type ChangeEvent, useState } from 'react'
+import { useState } from 'react'
+import { Button } from '../../components/common/Button'
+import { FileInput } from '../../components/common/FileInput'
 import { apiClient } from '../../lib/apiClient'
 
 export const Route = createFileRoute('/_app/upload')({
@@ -9,13 +11,6 @@ export const Route = createFileRoute('/_app/upload')({
 const Upload = () => {
   const [file, setFile] = useState<File | null>(null)
   const [foods, setFoods] = useState<string[]>([])
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file !== undefined) {
-      setFile(file)
-    }
-  }
 
   const uploadFile = async () => {
     if (file === null) return
@@ -31,17 +26,14 @@ const Upload = () => {
   }
 
   return (
-    <div>
-      <h1>Home</h1>
-      <input type="file" onChange={handleFileChange} />
-      <button type="button" onClick={uploadFile}>
-        Upload image
-      </button>
+    <>
+      <FileInput onChange={setFile} file={file} />
+      <Button onClick={uploadFile}>Upload</Button>
       <ul>
         {foods.map((food, i) => (
           <li key={[food, i].join('-')}>{food}</li>
         ))}
       </ul>
-    </div>
+    </>
   )
 }
