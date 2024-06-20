@@ -1,8 +1,8 @@
 import { IconCircleCheck, IconCircleX, IconPlus } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { type ChangeEvent, useMemo, useState } from 'react'
-import { FileInput } from '../../components/common/FileInput'
 import { LinkButton } from '../../components/common/LinkButton'
+import { ImagePicker } from '../../components/upload/ImagePicker'
 import { apiClient } from '../../lib/apiClient'
 import type { FoodImage } from '../../types/FoodTypes'
 import { dropDuplicates } from '../../utils/dropDuplicates'
@@ -57,7 +57,7 @@ const Upload = () => {
 
   return (
     <>
-      <FileInput
+      <ImagePicker
         handleChange={handleFileChange}
         handleRemove={handleFileRemove}
         foodImages={foodImages}

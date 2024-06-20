@@ -2,13 +2,13 @@ import { IconPhotoPlus, IconX } from '@tabler/icons-react'
 import { type ChangeEvent, type FC, useMemo } from 'react'
 import type { FoodImage } from '../../types/FoodTypes'
 
-type FileInputProps = {
+type ImagePickerProps = {
   foodImages: FoodImage[]
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleRemove: (index: number) => void
 }
 
-export const FileInput: FC<FileInputProps> = ({ foodImages, handleChange, handleRemove }) => {
+export const ImagePicker: FC<ImagePickerProps> = ({ foodImages, handleChange, handleRemove }) => {
   const fileUrls = useMemo(
     () => foodImages.map((image) => URL.createObjectURL(image.file)),
     [foodImages],
