@@ -1,8 +1,8 @@
 import { IconCircleCheck, IconCircleX, IconPlus } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { type ChangeEvent, useMemo, useState } from 'react'
-import { Button } from '../../components/common/Button'
 import { FileInput } from '../../components/common/FileInput'
+import { LinkButton } from '../../components/common/LinkButton'
 import { apiClient } from '../../lib/apiClient'
 import type { FoodImage } from '../../types/FoodTypes'
 import { dropDuplicates } from '../../utils/dropDuplicates'
@@ -91,7 +91,11 @@ const Upload = () => {
           </button>
         )}
       </div>
-      {foods.length !== 0 && <Button onClick={() => console.log(selectedFoods)}>レシピ検索</Button>}
+      {foods.length !== 0 && (
+        <LinkButton to="/recipe" search={{ foods }}>
+          レシピを検索
+        </LinkButton>
+      )}
     </>
   )
 }
