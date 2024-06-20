@@ -24,7 +24,13 @@ export const FileInput: FC<FileInputProps> = ({ files, setFiles, allowedTypes })
     <div className="flex flex-col gap-y-4">
       <label className="flex w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-2xl border-4 border-[#6c8] border-dotted p-16 transition-colors focus-within:bg-[#6c82] hover:bg-[#6c82]">
         <IconPhotoPlus size={64} color="#486" />
-        <input type="file" className="h-0 border-0 opacity-0" onChange={handleChange} />
+        <input
+          type="file"
+          className="h-0 border-0 opacity-0"
+          onChange={handleChange}
+          accept="image/*"
+          multiple
+        />
         <p>
           ファイルをドロップするか、<span className="font-bold text-[#486]">ここをクリック</span>
         </p>
