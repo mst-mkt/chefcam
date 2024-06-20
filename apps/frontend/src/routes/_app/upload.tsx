@@ -31,7 +31,9 @@ const Upload = () => {
   return (
     <>
       <FileInput setFiles={setFiles} files={files} />
-      <Button onClick={uploadFile}>Upload</Button>
+      <Button onClick={uploadFile} disabled={files.length === 0}>
+        Upload
+      </Button>
       <ul>
         {foods.map((food) => (
           <li key={food}>{food}</li>
