@@ -17,8 +17,9 @@ const Upload = () => {
     const res = await apiClient.upload.$post({ form: { file } })
 
     if (res.ok) {
+      const dropDuplicates = (arr: string[]) => [...new Set(arr)]
       const data = await res.json()
-      setFoods(data.foods)
+      setFoods(dropDuplicates(data.foods))
     } else {
       const data = await res.json()
       console.error(data.error)
@@ -30,8 +31,8 @@ const Upload = () => {
       <FileInput onChange={setFile} file={file} />
       <Button onClick={uploadFile}>Upload</Button>
       <ul>
-        {foods.map((food, i) => (
-          <li key={[food, i].join('-')}>{food}</li>
+        {foods.map((food) => (
+          <li key={food}>{food}</li>
         ))}
       </ul>
     </>
