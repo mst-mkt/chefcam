@@ -55,7 +55,11 @@
         "noEmptyBlockStatements": "error"
       },
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "error",
+          "options": {}
+        }
       }
     }
   },
