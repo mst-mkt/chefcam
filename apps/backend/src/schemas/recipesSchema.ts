@@ -9,4 +9,4 @@ const recipesSchema = z.array(recipeSchema)
 
 type Recipes = z.infer<typeof recipesSchema>
 
-export { recipesSchema, type Recipes }
+export { recipeSchema, recipesSchema, type Recipes }

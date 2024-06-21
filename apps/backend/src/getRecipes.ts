@@ -1,6 +1,6 @@
 import { load } from 'cheerio'
 import type { ingredients } from './schemas/ingredientsSchema'
-import { type Recipes, recipesSchema } from './schemas/recipesSchema'
+import { type Recipes, recipeSchema } from './schemas/recipesSchema'
 import { createSearchRecipesUrl } from './utils/createSearchUrl'
 
 const fetchRecipes = async (url: string): Promise<Recipes> => {
@@ -25,7 +25,7 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
           const newRecipe = { recipeImage, recipeTitle, ingredients }
 
           // 配列挿入前にバリデーション
-          const validatedRecipe = recipesSchema.parse([newRecipe])[0]
+          const validatedRecipe = recipeSchema.parse(newRecipe)
           return validatedRecipe
         } catch (parseError) {
           console.error(`Error parsing recipe at index ${index}:`, parseError)
