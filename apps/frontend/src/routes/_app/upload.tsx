@@ -92,7 +92,7 @@ const Upload = () => {
         )}
       </div>
       {foods.length !== 0 && (
-        <LinkButton to="/recipe" search={{ foods }}>
+        <LinkButton to="/recipe" search={{ foods: selectedFoods }}>
           レシピを検索
         </LinkButton>
       )}
