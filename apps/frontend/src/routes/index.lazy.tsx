@@ -18,7 +18,7 @@ const $imagePost = honoRoutes.upload.$post
 
 const Home = () => {
   const [file, setFile] = useState<File | null>(null)
-  const [foods, setFoods] = useState<string[]>([])
+  const [ingredients, setingredients] = useState<string[]>([])
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -34,7 +34,7 @@ const Home = () => {
     })
     if (res.ok) {
       const data = await res.json()
-      setFoods(data.foods)
+      setingredients(data.foods)
     } else {
       const data = await res.json()
       console.error(data.error)
@@ -48,7 +48,7 @@ const Home = () => {
         Upload image
       </button>
       <ul>
-        {foods.map((food) => (
+        {ingredients.map((food) => (
           <li key={food}>{food}</li>
         ))}
       </ul>

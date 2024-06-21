@@ -1,6 +1,6 @@
 import axios from 'axios'
 import cheerio from 'cheerio'
-import type { FoodList } from './schemas/foodListSchema'
+import type { ingredients } from './schemas/ingredientsSchema'
 import { type Recipes, recipesSchema } from './schemas/recipesSchema'
 import { createSearchRecipesUrl } from './utils/createSearchUrl'
 
@@ -11,6 +11,7 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
     const recipes: Recipes = []
     $('.recipe-list .recipe-preview').each((index, element) => {
       try {
+        //要素を指定して抽出
         const recipeImage = $(element).find('.recipe-image img').attr('src') || ''
         const recipeTitle = $(element).find('.recipe-title').text().trim()
         const ingredients = $(element)
@@ -22,7 +23,7 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
           .filter((ingredient) => !ingredient.includes('\n...'))
         const newRecipe = { recipeImage, recipeTitle, ingredients }
 
-        // バリデーション
+        // 配列挿入前にバリデーション
         const validatedRecipe = recipesSchema.parse([newRecipe])[0]
         recipes.push(validatedRecipe)
       } catch (parseError) {
@@ -36,9 +37,7 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
   }
 }
 
-export { fetchRecipes }
-
-const getRecipesByIngredients = async (ingredients: FoodList): Promise<Recipes> => {
+const getRecipesByIngredients = async (ingredients: ingredients): Promise<Recipes> => {
   const searchUrl = createSearchRecipesUrl(ingredients)
   return await fetchRecipes(searchUrl)
 }

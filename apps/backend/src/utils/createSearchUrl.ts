@@ -1,8 +1,10 @@
-import type { FoodList } from '../schemas/foodListSchema'
+import type { ingredients } from '../schemas/ingredientsSchema'
 
-const createSearchRecipesUrl = (foodList: FoodList): string => {
+const createSearchRecipesUrl = (ingredients: ingredients): string => {
   const baseSearchUrl = 'https://cookpad.com/search/'
-  const searchParams = foodList.ingredients.map((food) => encodeURIComponent(food)).join('%20')
+  const searchParams = ingredients.ingredients
+    .map((ingredients) => encodeURIComponent(ingredients))
+    .join('%20')
   return `${baseSearchUrl}${searchParams}`
 }
 

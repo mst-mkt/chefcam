@@ -1,9 +1,10 @@
 import { zValidator } from '@hono/zod-validator'
 import { honoFactory } from '../factory'
-import { foodListSchema } from '../schemas/foodListSchema'
+import { ingredientsSchema } from '../schemas/ingredientsSchema'
+
 const recipesRouter = honoFactory
   .createApp()
-  .get('/', zValidator('query', foodListSchema), async (c) => {
+  .get('/', zValidator('query', ingredientsSchema), async (c) => {
     console.log(c)
     /*
     try {

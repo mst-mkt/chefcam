@@ -1,7 +1,7 @@
 import { HumanMessage } from '@langchain/core/messages'
 import { ChatOpenAI } from '@langchain/openai'
 import type { BindingsType } from './factory'
-import { foodListSchema } from './schemas/foodListSchema'
+import { ingredientsSchema } from './schemas/ingredientsSchema'
 import { fileToBase64 } from './utils/fileToBase64'
 
 export const imageToFoods = async (file: File, envs: BindingsType) => {
@@ -24,7 +24,9 @@ export const imageToFoods = async (file: File, envs: BindingsType) => {
 
   const imageUrl = await fileToBase64(file)
 
-  const structuredLlm = model.withStructuredOutput(foodListSchema, { name: 'food_detection' })
+  const structuredLlm = model.withStructuredOutput(ingredientsSchema, {
+    name: 'food_detection',
+  })
 
   const message = new HumanMessage({
     content: [
@@ -40,7 +42,7 @@ export const imageToFoods = async (file: File, envs: BindingsType) => {
   })
 
   const res = await structuredLlm.invoke([message])
-  const foodListData = res.ingredients
+  const foodsData = res.ingredients
 
-  return foodListData
+  return foodsData
 }

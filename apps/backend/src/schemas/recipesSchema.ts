@@ -1,11 +1,12 @@
 import { z } from 'zod'
-import { foodListSchema } from './foodListSchema'
+import { ingredientsSchema } from './ingredientsSchema'
 
-const recipeSchema = foodListSchema.extend({
+const recipeSchema = ingredientsSchema.extend({
   recipeImage: z.string().url().describe('レシピの画像のURL'),
   recipeTitle: z.string().describe('レシピのタイトル'),
 })
 const recipesSchema = z.array(recipeSchema)
+
 type Recipes = z.infer<typeof recipesSchema>
 
 export { recipesSchema, type Recipes }
