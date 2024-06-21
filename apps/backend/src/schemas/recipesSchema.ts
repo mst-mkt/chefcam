@@ -2,8 +2,8 @@ import { z } from 'zod'
 import { ingredientsSchema } from './ingredientsSchema'
 
 const recipeSchema = ingredientsSchema.extend({
-  recipeImage: z.string().url().describe('レシピの画像のURL'),
-  recipeTitle: z.string().describe('レシピのタイトル'),
+  image: z.string().url().describe('レシピの画像のURL'),
+  title: z.string().describe('レシピのタイトル'),
 })
 const recipesSchema = z.array(recipeSchema)
 

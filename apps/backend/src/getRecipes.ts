@@ -11,8 +11,8 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
   const $ = load(data)
   const recipes = $('.recipe-list .recipe-preview')
     .map((index, element) => {
-      const recipeImage = $(element).find('.recipe-image img').attr('src')
-      const recipeTitle = $(element).find('.recipe-title').text().trim()
+      const image = $(element).find('.recipe-image img').attr('src')
+      const title = $(element).find('.recipe-title').text().trim()
       const ingredients = $(element)
         .find('.ingredients')
         .text()
@@ -20,7 +20,7 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
         .split('、')
         .map((ingredient) => ingredient.trim())
         .filter((ingredient) => !ingredient.includes('\n...'))
-      const newRecipe = { recipeImage, recipeTitle, ingredients }
+      const newRecipe = { image, title, ingredients }
 
       const validatedRecipe = recipeSchema.safeParse(newRecipe)
       if (!validatedRecipe.success) {
