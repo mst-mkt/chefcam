@@ -1,5 +1,12 @@
-import { IconPhotoPlus, IconX } from '@tabler/icons-react'
-import { type ChangeEvent, type Dispatch, type FC, type SetStateAction, useMemo } from 'react'
+import { IconLoader2, IconPhotoPlus, IconX } from '@tabler/icons-react'
+import {
+  type ChangeEvent,
+  type Dispatch,
+  type FC,
+  type SetStateAction,
+  useMemo,
+  useState,
+} from 'react'
 import { apiClient } from '../../lib/apiClient'
 import type { FoodImage } from '../../types/FoodTypes'
 
@@ -14,12 +21,14 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   setFoodImages,
   setSelectedFoods,
 }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const fileUrls = useMemo(
     () => foodImages.map((image) => URL.createObjectURL(image.file)),
     [foodImages],
   )
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    setIsLoading(true)
     const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
 
     const files = [...(e.target.files ?? [])]
@@ -38,6 +47,8 @@ export const ImagePicker: FC<ImagePickerProps> = ({
       ...prev,
       ...newFoodImages.flatMap((image) => image.foods).filter((food) => !prev.includes(food)),
     ])
+
+    setIsLoading(false)
   }
 
   const handleFileRemove = (index: number) => {
@@ -46,18 +57,25 @@ export const ImagePicker: FC<ImagePickerProps> = ({
 
   return (
     <div className="flex flex-col gap-y-4">
-      <label className="flex w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-2xl border-4 border-[#6c8] border-dotted p-16 transition-colors focus-within:bg-[#6c82] hover:bg-[#6c82]">
-        <IconPhotoPlus size={64} color="#486" />
-        <input
-          type="file"
-          className="h-0 border-0 opacity-0"
-          onChange={handleFileChange}
-          accept="image/*"
-          multiple
-        />
-        <p>
-          ファイルをドロップするか、<span className="font-bold text-[#486]">ここをクリック</span>
-        </p>
+      <label className="flex aspect-[2] w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-2xl border-4 border-[#6c8] border-dotted p-16 transition-colors focus-within:bg-[#6c82] hover:bg-[#6c82]">
+        {isLoading ? (
+          <IconLoader2 size={64} color="#486" className="animate-spin" />
+        ) : (
+          <>
+            <IconPhotoPlus size={64} color="#486" />
+            <input
+              type="file"
+              className="h-0 border-0 opacity-0"
+              onChange={handleFileChange}
+              accept="image/*"
+              multiple
+            />
+            <p>
+              ファイルをドロップするか、
+              <span className="font-bold text-[#486]">ここをクリック</span>
+            </p>
+          </>
+        )}
       </label>
       {foodImages.length !== 0 && (
         <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-transparent flex gap-x-2 overflow-x-scroll rounded-md">
