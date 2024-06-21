@@ -1,12 +1,19 @@
 import { zValidator } from '@hono/zod-validator'
 import { honoFactory } from '../factory'
-import { recipeSchema } from '../schemas/recipesSchema'
+import { foodListSchema } from '../schemas/foodListSchema'
 const recipesRouter = honoFactory
   .createApp()
-  .get('/', zValidator('query', recipeSchema), async (c) => {
-    const { ingredients } = c.req.valid('query')
-
-    return c.json({ message: `hello ${ingredients.join(', ')}` })
+  .get('/', zValidator('query', foodListSchema), async (c) => {
+    console.log(c)
+    /*
+    try {
+      const { ingredients } = c.req.valid('query')
+      const recipes = await getRecipesByIngredients({ ingredients })
+      return c.json(recipes)
+    } catch (error) {
+      console.error('Error in recipesRouter:', error)
+      return c.json({ error: 'An unexpected error occurred while fetching recipes' }, 500)
+    } */
   })
 
 export { recipesRouter }
