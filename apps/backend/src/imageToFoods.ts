@@ -1,7 +1,7 @@
 import { HumanMessage } from '@langchain/core/messages'
 import { ChatOpenAI } from '@langchain/openai'
-import { z } from 'zod'
 import type { BindingsType } from './factory'
+import { ingredientsSchema } from './schemas/ingredientsSchema'
 import { fileToBase64 } from './utils/fileToBase64'
 
 export const imageToFoods = async (file: File, envs: BindingsType) => {
@@ -24,11 +24,9 @@ export const imageToFoods = async (file: File, envs: BindingsType) => {
 
   const imageUrl = await fileToBase64(file)
 
-  const foodSchema = z.object({
-    ingredients: z.array(z.string()).describe('画像に含まれている食材のリスト'),
+  const structuredLlm = model.withStructuredOutput(ingredientsSchema, {
+    name: 'food_detection',
   })
-
-  const structuredLlm = model.withStructuredOutput(foodSchema, { name: 'food_detection' })
 
   const message = new HumanMessage({
     content: [
@@ -44,7 +42,7 @@ export const imageToFoods = async (file: File, envs: BindingsType) => {
   })
 
   const res = await structuredLlm.invoke([message])
-  const foodListData = res.ingredients
+  const foodsData = res.ingredients
 
-  return foodListData
+  return foodsData
 }

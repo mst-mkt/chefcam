@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 5173",
     "build": "tsc && vite build",
     "check": "biome check ./src/",
     "fix": "biome check --write ./src/",
