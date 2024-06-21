@@ -1,4 +1,4 @@
-import { IconCircleCheck, IconCircleX, IconPlus } from '@tabler/icons-react'
+import { IconCircleCheck, IconCircleX } from '@tabler/icons-react'
 import { type Dispatch, type FC, type SetStateAction, useMemo } from 'react'
 
 type FoodSelectProps = {
@@ -52,14 +52,14 @@ export const FoodSelect: FC<FoodSelectProps> = ({ foods, selectedFoods, setSelec
           onClick={() => toggleFoodSelect(food)}
         />
       ))}
-      {foods.length !== 0 && (
+      {/* {foods.length !== 0 && (
         <button
           className="box-content flex h-[1lh] w-[1lh] items-center justify-center rounded-full border border-[#6c8] bg-[#6c8] px-1 py-1"
           type="button"
         >
           <IconPlus size={20} color="#fff" className="aspect-square" />
         </button>
-      )}
+      )} */}
     </div>
   )
 }
