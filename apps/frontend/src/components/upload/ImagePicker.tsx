@@ -1,18 +1,48 @@
 import { IconPhotoPlus, IconX } from '@tabler/icons-react'
-import { type ChangeEvent, type FC, useMemo } from 'react'
+import { type ChangeEvent, type Dispatch, type FC, type SetStateAction, useMemo } from 'react'
+import { apiClient } from '../../lib/apiClient'
 import type { FoodImage } from '../../types/FoodTypes'
 
 type ImagePickerProps = {
   foodImages: FoodImage[]
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void
-  handleRemove: (index: number) => void
+  setFoodImages: Dispatch<SetStateAction<FoodImage[]>>
+  setSelectedFoods: Dispatch<SetStateAction<string[]>>
 }
 
-export const ImagePicker: FC<ImagePickerProps> = ({ foodImages, handleChange, handleRemove }) => {
+export const ImagePicker: FC<ImagePickerProps> = ({
+  foodImages,
+  setFoodImages,
+  setSelectedFoods,
+}) => {
   const fileUrls = useMemo(
     () => foodImages.map((image) => URL.createObjectURL(image.file)),
     [foodImages],
   )
+
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
+
+    const files = [...(e.target.files ?? [])]
+    const currentFiles = foodImages.map((image) => image.file)
+    const newFiles = files.filter((file) => !currentFiles.includes(file))
+
+    const responses = await Promise.all(newFiles.map(postImage))
+    const foodData = await Promise.all(responses.map((res) => res.json()))
+
+    const newFoodImages = foodData.map((data, i) => ({
+      file: newFiles[i],
+      foods: 'foods' in data ? data.foods : [],
+    }))
+    setFoodImages((prev) => [...prev, ...newFoodImages])
+    setSelectedFoods((prev) => [
+      ...prev,
+      ...newFoodImages.flatMap((image) => image.foods).filter((food) => !prev.includes(food)),
+    ])
+  }
+
+  const handleFileRemove = (index: number) => {
+    setFoodImages((prev) => prev.filter((_, i) => i !== index))
+  }
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -21,7 +51,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({ foodImages, handleChange, ha
         <input
           type="file"
           className="h-0 border-0 opacity-0"
-          onChange={handleChange}
+          onChange={handleFileChange}
           accept="image/*"
           multiple
         />
@@ -39,7 +69,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({ foodImages, handleChange, ha
             <button
               type="button"
               className="absolute top-0 right-0 cursor-pointer rounded-bl-md bg-[#f00] p-1 text-white opacity-0 transition-opacity hover:bg-[#d00] group-hover:opacity-100"
-              onClick={() => handleRemove(i)}
+              onClick={() => handleFileRemove(i)}
             >
               <IconX size={16} color="#fff" />
             </button>
