@@ -1,4 +1,5 @@
 import { load } from 'cheerio'
+import { COOKPAD_BASE_URL } from './constants/cookpad'
 import type { ingredients } from './schemas/ingredientsSchema'
 import { type Recipes, recipeSchema } from './schemas/recipesSchema'
 import { createSearchRecipesUrl } from './utils/createSearchUrl'
@@ -13,6 +14,8 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
     .map((index, element) => {
       const image = $(element).find('.recipe-image img').attr('src')
       const title = $(element).find('.recipe-title').text().trim()
+      const url = $(element).find('.recipe-title').attr('href')
+      const fullUrl = url !== undefined ? new URL(url, COOKPAD_BASE_URL).href : undefined
       const ingredients = $(element)
         .find('.ingredients')
         .text()
@@ -20,7 +23,7 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
         .split('、')
         .map((ingredient) => ingredient.trim())
         .filter((ingredient) => !ingredient.includes('\n...'))
-      const newRecipe = { image, title, ingredients }
+      const newRecipe = { url, image, title, ingredients }
 
       const validatedRecipe = recipeSchema.safeParse(newRecipe)
       if (!validatedRecipe.success) {
