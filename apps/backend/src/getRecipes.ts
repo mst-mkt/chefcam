@@ -6,6 +6,7 @@ import { createSearchRecipesUrl } from './utils/createSearchUrl'
 const fetchRecipes = async (url: string): Promise<Recipes> => {
   try {
     const res = await fetch(url)
+    if (!res.ok) throw new Error(`Failed to fetch the recipes: ${res.statusText}`)
     const data = await res.text()
     const $ = cheerio.load(data)
     const recipes: Recipes = []
