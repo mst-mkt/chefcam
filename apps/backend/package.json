@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "scripts": {
-    "dev": "wrangler dev src/index.ts",
+    "dev": "wrangler dev src/index.ts --port 8787",
     "deploy": "wrangler deploy --minify src/index.ts",
     "check": "biome check ./src/",
     "fix": "biome check --write ./src/",
