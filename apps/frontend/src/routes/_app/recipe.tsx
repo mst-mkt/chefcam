@@ -31,13 +31,31 @@ const Recipe = () => {
 
   return (
     <>
-      <h2>レシピ一覧</h2>
-      <div>
+      <hgroup>
+        <h2 className="font-bold text-3xl">レシピ一覧</h2>
+        <p className="font-bold text-[#4c6] text-lg">Recipe</p>
+      </hgroup>
+      <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
-          <div key={recipe.recipeTitle}>
-            <h3>{recipe.recipeTitle}</h3>
-            <p>{recipe.ingredients.join('、')}</p>
-          </div>
+          <a
+            href={recipe.url}
+            key={recipe.url}
+            className="group block rounded-md transition-colors hover:bg-[#ddd1]"
+          >
+            <div className="flex gap-x-4">
+              <img
+                src={recipe.image}
+                alt={recipe.title}
+                className="block aspect-square h-[8rem] rounded-md object-cover shadow-md"
+              />
+              <div className="flex shrink grow flex-col gap-y-2 overflow-hidden p-4">
+                <h3 className="truncate font-bold text-lg transition-colors group-hover:text-[#0a2]">
+                  {recipe.title}
+                </h3>
+                <p className="line-clamp-2 transition-colors">{recipe.ingredients.join(', ')}</p>
+              </div>
+            </div>
+          </a>
         ))}
       </div>
     </>
