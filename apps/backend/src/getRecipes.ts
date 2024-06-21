@@ -1,4 +1,3 @@
-import axios from 'axios'
 import cheerio from 'cheerio'
 import type { ingredients } from './schemas/ingredientsSchema'
 import { type Recipes, recipesSchema } from './schemas/recipesSchema'
@@ -6,7 +5,8 @@ import { createSearchRecipesUrl } from './utils/createSearchUrl'
 
 const fetchRecipes = async (url: string): Promise<Recipes> => {
   try {
-    const { data } = await axios.get(url)
+    const res = await fetch(url)
+    const data = await res.text()
     const $ = cheerio.load(data)
     const recipes: Recipes = []
     $('.recipe-list .recipe-preview').each((index, element) => {
