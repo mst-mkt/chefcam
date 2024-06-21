@@ -27,6 +27,7 @@
     "backend": "workspace:*",
     "biome-config": "workspace:*",
     "postcss": "^8.4.38",
+    "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
     "vite": "^5.2.12"
