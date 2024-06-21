@@ -20,9 +20,7 @@
     "turbo": "^2.0.4"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,css}": [
-      "biome check --write"
-    ]
+    "*.{js,ts,jsx,tsx,css}": ["biome check --write"]
   },
   "volta": {
     "node": "20.14.0"

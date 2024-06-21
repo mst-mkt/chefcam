@@ -15,15 +15,36 @@ const requestUrl = new URL(BACKEND_BASE_URL).origin.toString()
 
 const honoRoutes = hc<HonoRoutes>(requestUrl)
 const $imagePost = honoRoutes.upload.$post
+const $getRecipes = honoRoutes.recipes.$get
 
 const Home = () => {
   const [file, setFile] = useState<File | null>(null)
-  const [foods, setFoods] = useState<string[]>([])
+  const [ingredients, setingredients] = useState<string[]>([])
+  const [recipes, setRecipes] = useState<
+    {
+      ingredients: string[]
+      recipeImage: string
+      recipeTitle: string
+    }[]
+  >([])
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setFile(file)
+    }
+  }
+
+  const getRecipes = async () => {
+    const res = await $getRecipes({
+      query: { ingredients },
+    })
+    if (res.ok) {
+      const data = await res.json()
+      setRecipes(data)
+    } else {
+      const data = await res.json()
+      console.error(data)
     }
   }
 
@@ -34,7 +55,7 @@ const Home = () => {
     })
     if (res.ok) {
       const data = await res.json()
-      setFoods(data.foods)
+      setingredients(data.foods)
     } else {
       const data = await res.json()
       console.error(data.error)
@@ -48,8 +69,25 @@ const Home = () => {
         Upload image
       </button>
       <ul>
-        {foods.map((food) => (
+        {ingredients.map((food) => (
           <li key={food}>{food}</li>
+        ))}
+      </ul>
+
+      <button type="button" onClick={getRecipes}>
+        Get recipes
+      </button>
+      <ul>
+        {recipes.map((recipe) => (
+          <li key={recipe.recipeTitle}>
+            <img src={recipe.recipeImage} alt={recipe.recipeTitle} />
+            <h2>{recipe.recipeTitle}</h2>
+            <ul>
+              {recipe.ingredients.map((ingredient) => (
+                <li key={ingredient}>{ingredient}</li>
+              ))}
+            </ul>
+          </li>
         ))}
       </ul>
     </div>
