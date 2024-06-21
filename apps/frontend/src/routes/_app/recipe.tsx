@@ -1,6 +1,7 @@
 import { IconLoader2 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
+import { RecipeCard } from '../../components/recipe/RecipeCard'
 import { apiClient } from '../../lib/apiClient'
 
 const recipeSearchSchema = z.object({
@@ -37,25 +38,7 @@ const Recipe = () => {
       </hgroup>
       <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
-          <a
-            href={recipe.url}
-            key={recipe.url}
-            className="group block rounded-md transition-colors hover:bg-[#ddd1]"
-          >
-            <div className="flex gap-x-4">
-              <img
-                src={recipe.image}
-                alt={recipe.title}
-                className="block aspect-square h-[8rem] rounded-md object-cover shadow-md"
-              />
-              <div className="flex shrink grow flex-col gap-y-2 overflow-hidden p-4">
-                <h3 className="truncate font-bold text-lg transition-colors group-hover:text-[#0a2]">
-                  {recipe.title}
-                </h3>
-                <p className="line-clamp-2 transition-colors">{recipe.ingredients.join(', ')}</p>
-              </div>
-            </div>
-          </a>
+          <RecipeCard {...recipe} key={recipe.url} />
         ))}
       </div>
     </>
