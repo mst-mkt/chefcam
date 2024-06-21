@@ -6,13 +6,12 @@ import { ingredientsSchema } from '../schemas/ingredientsSchema'
 const recipesRouter = honoFactory
   .createApp()
   .get('/', zValidator('query', ingredientsSchema), async (c) => {
+    const { ingredients } = c.req.valid('query')
     try {
-      const { ingredients } = c.req.valid('query')
       const recipes = await getRecipesByIngredients({ ingredients })
       return c.json(recipes)
     } catch (error) {
-      console.error('Error in recipesRouter:', error)
-      return c.json({ error: 'An unexpected error occurred while fetching recipes' }, 500)
+      return c.json({ error }, 500)
     }
   })
 
