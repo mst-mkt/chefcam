@@ -1,7 +1,7 @@
 {
-  "name": "monthly-vol7",
+  "name": "chefcam.",
   "version": "0.0.1",
-  "description": "geek-camp monthly hackathon vol.7",
+  "description": "Find recipes from just a photo of the ingredients with AI.",
   "author": "mst-mkt, imoken777, rarandeyo, sorainiad",
   "scripts": {
     "dev": "turbo dev",

@@ -1,6 +1,31 @@
-# monthly-vol7
+<h1 align="center">ChefCam.</h1>
 
-## development
+## Project description
+
+Just take a picture of your refrigerator and you can instantly search for your dinner recipe.
+
+### Features
+
+- Upload a photo and food ingredients are automatically detected by AI
+- Unwanted ingredients can be manually selected from the detected materials
+- Search for recipes from cookpad based on the selected ingredients
+
+### Tech stack
+
+#### Frontend
+
+- React
+- Vite
+- Tanstack Router
+- Tailwind CSS
+
+#### Backend
+
+- Hono
+- langchain
+- cheerio
+
+## Development
 
 ### install dependencies
 

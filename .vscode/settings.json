@@ -39,5 +39,5 @@
   "typescript.suggest.autoImports": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
 
-  "cSpell.ignoreWords": ["hono", "tanstack", "biomejs", "tabler", "typecheck"]
+  "cSpell.ignoreWords": ["hono", "tanstack", "biomejs", "tabler", "typecheck", "chefcam"]
 }
