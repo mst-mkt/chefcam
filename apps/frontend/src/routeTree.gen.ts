@@ -14,8 +14,8 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AppImport } from './routes/_app'
-import { Route as AppRecipeImport } from './routes/_app/recipe'
 import { Route as AppUploadImport } from './routes/_app/upload'
+import { Route as AppRecipeImport } from './routes/_app/recipe'
 
 // Create Virtual Routes
 
