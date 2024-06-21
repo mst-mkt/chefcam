@@ -1,9 +1,11 @@
 import { z } from 'zod'
+export const recipeSchema = z.object({
+  recipeImage: z.string(),
+  recipeTitle: z.string(),
+  ingredients: z.array(z.string()),
+})
 
-const recipesReqSchema = z
-  .object({
-    ingredients: z.array(z.string()),
-  })
-  .strict()
+export type Recipe = z.infer<typeof recipeSchema>
+export type Recipes = Recipe[]
 
-export { recipesReqSchema }
+export const recipesSchema = z.array(recipeSchema)
