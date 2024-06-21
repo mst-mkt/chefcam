@@ -59,23 +59,25 @@ export const ImagePicker: FC<ImagePickerProps> = ({
           ファイルをドロップするか、<span className="font-bold text-[#486]">ここをクリック</span>
         </p>
       </label>
-      <div className="flex gap-x-2 overflow-x-scroll rounded-md">
-        {fileUrls.map((url, i) => (
-          <div
-            className="group relative aspect-square w-20 shrink-0 overflow-hidden rounded-md bg-green-50 shadow"
-            key={foodImages[i].file.name}
-          >
-            <img src={url} alt="preview" className="block h-full w-full object-cover" />
-            <button
-              type="button"
-              className="absolute top-0 right-0 cursor-pointer rounded-bl-md bg-[#f00] p-1 text-white opacity-0 transition-opacity hover:bg-[#d00] group-hover:opacity-100"
-              onClick={() => handleFileRemove(i)}
+      {foodImages.length !== 0 && (
+        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-transparent flex gap-x-2 overflow-x-scroll rounded-md">
+          {fileUrls.map((url, i) => (
+            <div
+              className="group relative aspect-square w-20 shrink-0 overflow-hidden rounded-md bg-green-50 shadow"
+              key={foodImages[i].file.name}
             >
-              <IconX size={16} color="#fff" />
-            </button>
-          </div>
-        ))}
-      </div>
+              <img src={url} alt="preview" className="block h-full w-full object-cover" />
+              <button
+                type="button"
+                className="absolute top-0 right-0 cursor-pointer rounded-bl-md bg-[#f00] p-1 text-white opacity-0 transition-opacity hover:bg-[#d00] group-hover:opacity-100"
+                onClick={() => handleFileRemove(i)}
+              >
+                <IconX size={16} color="#fff" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
