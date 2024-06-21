@@ -23,7 +23,7 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
         .split('、')
         .map((ingredient) => ingredient.trim())
         .filter((ingredient) => !ingredient.includes('\n...'))
-      const newRecipe = { url, image, title, ingredients }
+      const newRecipe = { url: fullUrl, image, title, ingredients }
 
       const validatedRecipe = recipeSchema.safeParse(newRecipe)
       if (!validatedRecipe.success) {
