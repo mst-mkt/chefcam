@@ -9,28 +9,29 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
     if (!res.ok) throw new Error(`Failed to fetch the recipes: ${res.statusText}`)
     const data = await res.text()
     const $ = load(data)
-    const recipes: Recipes = []
-    $('.recipe-list .recipe-preview').each((index, element) => {
-      try {
-        //要素を指定して抽出
-        const recipeImage = $(element).find('.recipe-image img').attr('src') || ''
-        const recipeTitle = $(element).find('.recipe-title').text().trim()
-        const ingredients = $(element)
-          .find('.ingredients')
-          .text()
-          .trim()
-          .split('、')
-          .map((ingredient) => ingredient.trim())
-          .filter((ingredient) => !ingredient.includes('\n...'))
-        const newRecipe = { recipeImage, recipeTitle, ingredients }
+    const recipes = $('.recipe-list .recipe-preview')
+      .map((index, element) => {
+        try {
+          //要素を指定して抽出
+          const recipeImage = $(element).find('.recipe-image img').attr('src') || ''
+          const recipeTitle = $(element).find('.recipe-title').text().trim()
+          const ingredients = $(element)
+            .find('.ingredients')
+            .text()
+            .trim()
+            .split('、')
+            .map((ingredient) => ingredient.trim())
+            .filter((ingredient) => !ingredient.includes('\n...'))
+          const newRecipe = { recipeImage, recipeTitle, ingredients }
 
-        // 配列挿入前にバリデーション
-        const validatedRecipe = recipesSchema.parse([newRecipe])[0]
-        recipes.push(validatedRecipe)
-      } catch (parseError) {
-        console.error(`Error parsing recipe at index ${index}:`, parseError)
-      }
-    })
+          // 配列挿入前にバリデーション
+          const validatedRecipe = recipesSchema.parse([newRecipe])[0]
+          return validatedRecipe
+        } catch (parseError) {
+          console.error(`Error parsing recipe at index ${index}:`, parseError)
+        }
+      })
+      .get()
     return recipes
   } catch (error) {
     console.error('Error fetching the recipes:', error)
