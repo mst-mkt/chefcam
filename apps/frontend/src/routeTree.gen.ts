@@ -13,6 +13,9 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AppImport } from './routes/_app'
+import { Route as AppUploadImport } from './routes/_app/upload'
+import { Route as AppRecipeImport } from './routes/_app/recipe'
 
 // Create Virtual Routes
 
@@ -20,10 +23,25 @@ const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
+const AppRoute = AppImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const AppUploadRoute = AppUploadImport.update({
+  path: '/upload',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppRecipeRoute = AppRecipeImport.update({
+  path: '/recipe',
+  getParentRoute: () => AppRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -36,12 +54,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppImport
+      parentRoute: typeof rootRoute
+    }
+    '/_app/recipe': {
+      id: '/_app/recipe'
+      path: '/recipe'
+      fullPath: '/recipe'
+      preLoaderRoute: typeof AppRecipeImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/upload': {
+      id: '/_app/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof AppUploadImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexLazyRoute })
+export const routeTree = rootRoute.addChildren({
+  IndexLazyRoute,
+  AppRoute: AppRoute.addChildren({ AppRecipeRoute, AppUploadRoute }),
+})
 
 /* prettier-ignore-end */
 
@@ -51,11 +93,27 @@ export const routeTree = rootRoute.addChildren({ IndexLazyRoute })
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/_app"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/_app": {
+      "filePath": "_app.tsx",
+      "children": [
+        "/_app/recipe",
+        "/_app/upload"
+      ]
+    },
+    "/_app/recipe": {
+      "filePath": "_app/recipe.tsx",
+      "parent": "/_app"
+    },
+    "/_app/upload": {
+      "filePath": "_app/upload.tsx",
+      "parent": "/_app"
     }
   }
 }

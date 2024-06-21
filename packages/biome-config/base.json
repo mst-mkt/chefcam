@@ -3,9 +3,12 @@
   "organizeImports": {
     "enabled": true
   },
+  "files": {
+    "ignore": ["./**/*.gen.ts"]
+  },
   "linter": {
     "enabled": true,
-    "ignore": ["./**/*.d.ts", "./**/*.gen.ts"],
+    "ignore": ["./**/*.d.ts"],
     "rules": {
       "recommended": true,
       "complexity": {
@@ -55,7 +58,11 @@
         "noEmptyBlockStatements": "error"
       },
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "error",
+          "options": {}
+        }
       }
     }
   },
