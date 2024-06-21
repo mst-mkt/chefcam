@@ -13,12 +13,12 @@ const Food = ({
   onClick,
 }: { food: string; selected: boolean; onClick: () => void }) => {
   const Icon = useMemo(() => (selected ? IconCircleCheck : IconCircleX), [selected])
-  const color = useMemo(() => (selected ? '#6c8' : 'gray'), [selected])
+  const color = useMemo(() => (selected ? '#6c8' : '#bbb'), [selected])
   const backgroundColor = useMemo(() => (selected ? '#6c82' : 'transparent'), [selected])
 
   return (
     <div
-      className="flex cursor-pointer items-center gap-x-2 rounded-full border py-1 pr-4 pl-2"
+      className="flex cursor-pointer items-center gap-x-2 rounded-full border py-1 pr-4 pl-2 transition-colors"
       style={{
         borderColor: color,
         backgroundColor,
