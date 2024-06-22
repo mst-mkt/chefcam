@@ -31,7 +31,7 @@ const Recipe = () => {
   const recipes = Route.useLoaderData()
 
   return (
-    <div className="mx-1">
+    <>
       <hgroup>
         <h2 className="font-bold text-3xl">レシピ一覧</h2>
         <p className="font-bold text-[#4c6] text-lg">Recipe</p>
@@ -41,6 +41,6 @@ const Recipe = () => {
           <RecipeCard {...recipe} key={recipe.url} />
         ))}
       </div>
-    </div>
+    </>
   )
 }

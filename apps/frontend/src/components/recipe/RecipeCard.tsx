@@ -9,7 +9,7 @@ type RecipeCardProps = {
 
 export const RecipeCard: FC<RecipeCardProps> = ({ url, title, image, ingredients }) => (
   <a href={url} key={url} className="group block rounded-md transition-colors hover:bg-[#ddd1]">
-    <div className="flex">
+    <div className="flex gap-x-4">
       <img
         src={image}
         alt={title}
