@@ -70,8 +70,9 @@ export const ImagePicker: FC<ImagePickerProps> = ({
               accept="image/*"
               multiple
             />
-            <p>
-              ファイルをドロップするか、
+            <p className="whitespace-pre-wrap break-keep text-center">
+              ファイルをドロップするか
+              <wbr />
               <span className="font-bold text-[#486]">ここをクリック</span>
             </p>
           </>
