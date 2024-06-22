@@ -21,6 +21,11 @@ const Upload = () => {
 
   return (
     <>
+      <hgroup>
+        <h2 className="font-bold text-3xl">画像アップロード</h2>
+        <p className="font-bold text-[#4c6] text-lg">Upload</p>
+      </hgroup>
+      <p>冷蔵庫や食材の写真をアップロードしてください。</p>
       <ImagePicker
         foodImages={foodImages}
         setFoodImages={setFoodImages}
