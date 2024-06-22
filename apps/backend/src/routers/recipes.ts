@@ -1,6 +1,6 @@
 import { zValidator } from '@hono/zod-validator'
 import { honoFactory } from '../factory'
-import { getRecipesByIngredients } from '../getRecipes'
+import { fetchRecipes } from '../getRecipes'
 import { ingredientsSchema } from '../schemas/ingredientsSchema'
 
 const recipesRouter = honoFactory
@@ -8,7 +8,7 @@ const recipesRouter = honoFactory
   .get('/', zValidator('query', ingredientsSchema), async (c) => {
     const { ingredients } = c.req.valid('query')
     try {
-      const recipes = await getRecipesByIngredients({ ingredients })
+      const recipes = await fetchRecipes({ ingredients })
       return c.json(recipes)
     } catch (error) {
       return c.json({ error }, 500)
