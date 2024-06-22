@@ -20,6 +20,7 @@ export const imageToFoods = async (file: File, envs: BindingsType) => {
     configuration: {
       baseURL: requestUrl,
     },
+    temperature: 0,
   })
 
   const imageUrl = await fileToBase64(file)
