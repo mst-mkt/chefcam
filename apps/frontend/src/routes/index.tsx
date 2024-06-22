@@ -1,8 +1,8 @@
 import { IconBrandGithubFilled } from '@tabler/icons-react'
-import { Link, createLazyFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { IllustBreakfast } from '../components/illust/Breakfast'
 
-export const Route = createLazyFileRoute('/')({
+export const Route = createFileRoute('/')({
   component: () => <Home />,
 })
 
