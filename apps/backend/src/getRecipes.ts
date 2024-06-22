@@ -4,9 +4,16 @@ import type { ingredients } from './schemas/ingredientsSchema'
 import { type Recipes, recipeSchema } from './schemas/recipesSchema'
 import { createSearchRecipesUrl } from './utils/createSearchUrl'
 
-const fetchRecipes = async (url: string): Promise<Recipes> => {
+const fetchRecipes = async (ingredients: ingredients, trialCount = 1): Promise<Recipes> => {
+  const url = createSearchRecipesUrl(ingredients)
   const res = await fetch(url)
-  if (!res.ok) throw new Error(`Failed to fetch the recipes: ${res.statusText}`)
+  if (!res.ok) {
+    if (trialCount < 3) {
+      const threeIngredients = ingredients.ingredients.slice(0, 2 * (3 - trialCount))
+      return fetchRecipes({ ingredients: threeIngredients }, trialCount + 1)
+    }
+    throw new Error(`Failed to fetch the recipes: ${res.statusText}`)
+  }
   const data = await res.text()
 
   const $ = load(data)
@@ -38,9 +45,4 @@ const fetchRecipes = async (url: string): Promise<Recipes> => {
   return recipes
 }
 
-const getRecipesByIngredients = async (ingredients: ingredients): Promise<Recipes> => {
-  const searchUrl = createSearchRecipesUrl(ingredients)
-  return await fetchRecipes(searchUrl)
-}
-
-export { getRecipesByIngredients }
+export { fetchRecipes }
