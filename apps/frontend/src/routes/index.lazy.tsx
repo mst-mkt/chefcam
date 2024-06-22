@@ -7,10 +7,7 @@ export const Route = createLazyFileRoute('/')({
 
 const Home = () => (
   <>
-    <div
-      className="flex h-screen flex-col items-center justify-center bg-contain bg-left bg-no-repeat text-center text-black"
-      style={{ backgroundImage: 'url(../../public/chef.pn)' }}
-    >
+    <div className="flex h-screen flex-col items-center justify-center text-center text-black">
       <div className="mb-5 animate-fadeIn text-center">
         <h1 className="animate-slideInDown font-bold text-5xl text-gray-900">ChefCam.</h1>
         <p className="mt-4 animate-fadeIn text-gray-700 text-lg delay-500">
