@@ -1,6 +1,7 @@
 import { IconLoader2 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
+import { LinkButton } from '../../components/common/LinkButton'
 import { RecipeCard } from '../../components/recipe/RecipeCard'
 import { apiClient } from '../../lib/apiClient'
 
@@ -14,11 +15,21 @@ export const Route = createFileRoute('/_app/recipe')({
   loader: async ({ deps: { foods } }) => {
     const res = await apiClient.recipes.$get({ query: { ingredients: foods } })
     const data = await res.json()
+    if (!res.ok) throw new Error()
+
     return data
   },
   component: () => <Recipe />,
   pendingComponent: () => <Pending />,
+  errorComponent: () => <ErrorComponents />,
 })
+
+const ErrorComponents = () => (
+  <>
+    <p>レシピが見つかりませんでした。</p>
+    <LinkButton to="/upload">戻る</LinkButton>
+  </>
+)
 
 const Pending = () => (
   <div className="flex flex-col items-center gap-y-4 py-8">
