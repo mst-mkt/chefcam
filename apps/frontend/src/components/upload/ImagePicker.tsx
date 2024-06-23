@@ -2,6 +2,7 @@ import { IconLoader2, IconPhotoPlus, IconX } from '@tabler/icons-react'
 import {
   type ChangeEvent,
   type Dispatch,
+  type DragEvent,
   type FC,
   type SetStateAction,
   useMemo,
@@ -27,11 +28,10 @@ export const ImagePicker: FC<ImagePickerProps> = ({
     [foodImages],
   )
 
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadFiles = async (files: File[]) => {
     setIsLoading(true)
     const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
 
-    const files = [...(e.target.files ?? [])]
     const currentFiles = foodImages.map((image) => image.file)
     const newFiles = files.filter((file) => !currentFiles.includes(file))
 
@@ -51,13 +51,34 @@ export const ImagePicker: FC<ImagePickerProps> = ({
     setIsLoading(false)
   }
 
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files ? [...e.target.files] : []
+    if (files.length === 0) return
+    await uploadFiles(files)
+  }
+
+  const handleDrop = async (e: DragEvent<HTMLLabelElement>) => {
+    e.preventDefault()
+    const files = e.dataTransfer?.files ? [...e.dataTransfer.files] : []
+    if (files.length === 0) return
+    await uploadFiles(files)
+  }
+
+  const handleDragOver = (e: DragEvent<HTMLLabelElement>) => {
+    e.preventDefault()
+  }
+
   const handleFileRemove = (index: number) => {
     setFoodImages((prev) => prev.filter((_, i) => i !== index))
   }
 
   return (
     <div className="flex flex-col gap-y-4">
-      <label className="flex aspect-[2] w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-2xl border-4 border-[#6c8] border-dotted p-16 transition-colors focus-within:bg-[#6c82] hover:bg-[#6c82]">
+      <label
+        className="flex aspect-[2] w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-2xl border-4 border-[#6c8] border-dotted p-16 transition-colors focus-within:bg-[#6c82] hover:bg-[#6c82]"
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+      >
         {isLoading ? (
           <IconLoader2 size={64} color="#486" className="animate-spin" />
         ) : (
