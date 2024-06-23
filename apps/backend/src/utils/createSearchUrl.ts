@@ -1,11 +1,12 @@
+import { COOKPAD_BASE_SEARCH_URL } from '../constants/cookpad'
 import type { ingredients } from '../schemas/ingredientsSchema'
 
 const createSearchRecipesUrl = (ingredients: ingredients): string => {
-  const baseSearchUrl = 'https://cookpad.com/search/'
   const searchParams = ingredients.ingredients
-    .map((ingredients) => encodeURIComponent(ingredients))
+    .map((ingredient) => encodeURIComponent(ingredient))
     .join('%20')
-  return `${baseSearchUrl}${searchParams}`
+
+  return `${COOKPAD_BASE_SEARCH_URL}${searchParams}`
 }
 
 export { createSearchRecipesUrl }
