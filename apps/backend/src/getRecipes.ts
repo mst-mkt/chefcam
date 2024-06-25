@@ -1,25 +1,33 @@
 import { load } from 'cheerio'
 import { COOKPAD_BASE_URL } from './constants/cookpad'
 import type { CookpadSearchParam } from './schemas/cookpadSearchParamSchema'
-import { type Recipes, recipeSchema } from './schemas/recipesSchema'
+import { recipeSchema } from './schemas/recipesSchema'
 import { createSearchRecipesUrl } from './utils/createSearchUrl'
 
-const getRecipes = async (
+const fetchCookpadHtml = async (
   cookpadSearchParam: CookpadSearchParam,
   trialCount = 1,
-): Promise<Recipes> => {
+): Promise<string> => {
   const url = createSearchRecipesUrl(cookpadSearchParam)
   const res = await fetch(url)
+
   if (!res.ok) {
     if (trialCount < 3) {
       const threeIngredients = cookpadSearchParam.ingredients.slice(0, 2 * (3 - trialCount))
-      return getRecipes({ ...cookpadSearchParam, ingredients: threeIngredients }, trialCount + 1)
+      const newCookpadSearchParam = { ...cookpadSearchParam, ingredients: threeIngredients }
+      const res = await fetchCookpadHtml(newCookpadSearchParam, trialCount + 1)
+      return res
     }
+
     throw new Error(`Failed to fetch the recipes: ${res.statusText}`)
   }
-  const data = await res.text()
 
-  const $ = load(data)
+  const html = await res.text()
+  return html
+}
+
+const scrapeCookpadHtml = async (html: string) => {
+  const $ = load(html)
   const recipes = $('.recipe-list .recipe-preview')
     .map((index, element) => {
       const image = $(element).find('.recipe-image img').attr('src')
@@ -48,4 +56,9 @@ const getRecipes = async (
   return recipes
 }
 
-export { getRecipes }
+export const getRecipes = async (cookpadSearchParam: CookpadSearchParam, trialCount = 1) => {
+  const html = await fetchCookpadHtml(cookpadSearchParam, trialCount)
+  const recipes = await scrapeCookpadHtml(html)
+
+  return recipes
+}
