@@ -1,16 +1,19 @@
 import { load } from 'cheerio'
 import { COOKPAD_BASE_URL } from './constants/cookpad'
-import type { ingredients } from './schemas/ingredientsSchema'
+import type { CookpadSearchParam } from './schemas/cookpadSearchParamSchema'
 import { type Recipes, recipeSchema } from './schemas/recipesSchema'
 import { createSearchRecipesUrl } from './utils/createSearchUrl'
 
-const fetchRecipes = async (ingredients: ingredients, trialCount = 1): Promise<Recipes> => {
-  const url = createSearchRecipesUrl(ingredients)
+const getRecipes = async (
+  cookpadSearchParam: CookpadSearchParam,
+  trialCount = 1,
+): Promise<Recipes> => {
+  const url = createSearchRecipesUrl(cookpadSearchParam)
   const res = await fetch(url)
   if (!res.ok) {
     if (trialCount < 3) {
-      const threeIngredients = ingredients.ingredients.slice(0, 2 * (3 - trialCount))
-      return fetchRecipes({ ingredients: threeIngredients }, trialCount + 1)
+      const threeIngredients = cookpadSearchParam.ingredients.slice(0, 2 * (3 - trialCount))
+      return getRecipes({ ...cookpadSearchParam, ingredients: threeIngredients }, trialCount + 1)
     }
     throw new Error(`Failed to fetch the recipes: ${res.statusText}`)
   }
@@ -45,4 +48,4 @@ const fetchRecipes = async (ingredients: ingredients, trialCount = 1): Promise<R
   return recipes
 }
 
-export { fetchRecipes }
+export { getRecipes }

@@ -43,7 +43,7 @@ export const imageToFoods = async (file: File, envs: BindingsType) => {
   })
 
   const res = await structuredLlm.invoke([message])
-  const foodsData = res.ingredients
+  const foodsData = res.data
 
   return foodsData
 }
