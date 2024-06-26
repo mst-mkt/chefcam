@@ -4,9 +4,7 @@ const numericString = z.string().regex(/^\d+$/, { message: 'This field must be a
 
 const cookpadSearchParamSchema = z.object({
   ingredients: z
-    .array(numericString)
-    .min(1)
-    .or(numericString.transform((v) => [v]))
+    .union([z.array(numericString).min(1), numericString.transform((v) => [v])])
     .describe('検索する食材'),
   page: z
     .string()
