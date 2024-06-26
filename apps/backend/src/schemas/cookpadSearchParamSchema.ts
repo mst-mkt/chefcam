@@ -4,18 +4,15 @@ const numericString = z.string().regex(/^\d+$/, { message: 'This field must be a
 
 const cookpadSearchParamSchema = z.object({
   ingredients: z
-    .union([z.array(numericString).min(1), numericString.transform((v) => [v])])
+    .union([z.array(z.string().min(1)).min(1), z.string().min(1)])
+    .transform((v) => (Array.isArray(v) ? v : [v]))
     .describe('検索する食材'),
-  page: z
-    .string()
-    .min(1)
+  page: numericString
     .optional()
     .default('1')
     .describe('ページ番号')
     .transform((v) => Number.parseInt(v)),
-  recipe_hits: z
-    .string()
-    .min(1)
+  recipe_hits: numericString
     .optional()
     .describe('レシピの表示数')
     .transform((v) => (v === undefined ? undefined : Number.parseInt(v))),
