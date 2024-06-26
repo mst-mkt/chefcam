@@ -7,8 +7,4 @@ const recipeSchema = z.object({
   ingredients: z.array(z.string()).describe('レシピの材料'),
 })
 
-const recipesSchema = z.array(recipeSchema)
-
-type Recipes = z.infer<typeof recipesSchema>
-
-export { recipeSchema, recipesSchema, type Recipes }
+export { recipeSchema }
