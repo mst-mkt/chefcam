@@ -70,9 +70,6 @@ const Recipe = () => {
         <h2 className="font-bold text-3xl">レシピ一覧</h2>
         <p className="font-bold text-[#4c6] text-lg">Recipe</p>
       </hgroup>
-      {foods}
-      {currentPage}
-      {recipeHits}
       <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
           <RecipeCard {...recipe} key={recipe.url} />
