@@ -28,6 +28,12 @@ const fetchCookpadHtml = async (
 
 const scrapeCookpadHtml = async (html: string) => {
   const $ = load(html)
+  const recipeHits = Number.parseInt(
+    $('.recipe_section .search_title > .count')
+      .text()
+      .replace(/[^0-9]/g, ''),
+  )
+
   const recipes = $('.recipe-list .recipe-preview')
     .map((index, element) => {
       const image = $(element).find('.recipe-image img').attr('src')
@@ -53,12 +59,12 @@ const scrapeCookpadHtml = async (html: string) => {
     .get()
     .filter((recipe) => recipe !== null)
 
-  return recipes
+  return { data: recipes, recipeHits }
 }
 
 export const getRecipes = async (cookpadSearchParam: CookpadSearchParam, trialCount = 1) => {
   const html = await fetchCookpadHtml(cookpadSearchParam, trialCount)
-  const recipes = await scrapeCookpadHtml(html)
+  const { data, recipeHits } = await scrapeCookpadHtml(html)
 
-  return recipes
+  return { data, page: cookpadSearchParam.page, recipeHits }
 }
