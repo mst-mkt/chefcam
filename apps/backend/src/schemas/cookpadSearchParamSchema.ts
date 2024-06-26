@@ -1,15 +1,12 @@
 import { z } from 'zod'
 
+const numericString = z.string().regex(/^\d+$/, { message: 'This field must be a number' })
+
 const cookpadSearchParamSchema = z.object({
   ingredients: z
-    .array(z.string())
+    .array(numericString)
     .min(1)
-    .or(
-      z
-        .string()
-        .min(1)
-        .transform((v) => [v]),
-    )
+    .or(numericString.transform((v) => [v]))
     .describe('検索する食材'),
   page: z
     .string()
