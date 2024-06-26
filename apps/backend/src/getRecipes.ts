@@ -1,22 +1,39 @@
 import { load } from 'cheerio'
 import { COOKPAD_BASE_URL } from './constants/cookpad'
-import type { ingredients } from './schemas/ingredientsSchema'
-import { type Recipes, recipeSchema } from './schemas/recipesSchema'
+import type { CookpadSearchParam } from './schemas/cookpadSearchParamSchema'
+import { recipeSchema } from './schemas/recipesSchema'
 import { createSearchRecipesUrl } from './utils/createSearchUrl'
 
-const fetchRecipes = async (ingredients: ingredients, trialCount = 1): Promise<Recipes> => {
-  const url = createSearchRecipesUrl(ingredients)
+const fetchCookpadHtml = async (
+  cookpadSearchParam: CookpadSearchParam,
+  trialCount = 1,
+): Promise<string> => {
+  const url = createSearchRecipesUrl(cookpadSearchParam)
   const res = await fetch(url)
+
   if (!res.ok) {
     if (trialCount < 3) {
-      const threeIngredients = ingredients.ingredients.slice(0, 2 * (3 - trialCount))
-      return fetchRecipes({ ingredients: threeIngredients }, trialCount + 1)
+      const threeIngredients = cookpadSearchParam.ingredients.slice(0, 2 * (3 - trialCount))
+      const newCookpadSearchParam = { ...cookpadSearchParam, ingredients: threeIngredients }
+      const res = await fetchCookpadHtml(newCookpadSearchParam, trialCount + 1)
+      return res
     }
+
     throw new Error(`Failed to fetch the recipes: ${res.statusText}`)
   }
-  const data = await res.text()
 
-  const $ = load(data)
+  const html = await res.text()
+  return html
+}
+
+const scrapeCookpadHtml = async (html: string) => {
+  const $ = load(html)
+  const recipeHits = Number.parseInt(
+    $('.recipes_section .search_title > .count')
+      .text()
+      .replace(/[^0-9]/g, ''),
+  )
+
   const recipes = $('.recipe-list .recipe-preview')
     .map((index, element) => {
       const image = $(element).find('.recipe-image img').attr('src')
@@ -42,7 +59,12 @@ const fetchRecipes = async (ingredients: ingredients, trialCount = 1): Promise<R
     .get()
     .filter((recipe) => recipe !== null)
 
-  return recipes
+  return { data: recipes, recipeHits }
 }
 
-export { fetchRecipes }
+export const getRecipes = async (cookpadSearchParam: CookpadSearchParam, trialCount = 1) => {
+  const html = await fetchCookpadHtml(cookpadSearchParam, trialCount)
+  const { data, recipeHits } = await scrapeCookpadHtml(html)
+
+  return { data, page: cookpadSearchParam.page, recipeHits }
+}

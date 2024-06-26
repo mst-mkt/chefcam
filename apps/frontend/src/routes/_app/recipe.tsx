@@ -1,5 +1,6 @@
 import { IconLoader2 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
 import { z } from 'zod'
 import { LinkButton } from '../../components/common/LinkButton'
 import { RecipeCard } from '../../components/recipe/RecipeCard'
@@ -39,7 +40,29 @@ const Pending = () => (
 )
 
 const Recipe = () => {
-  const recipes = Route.useLoaderData()
+  const { foods } = Route.useSearch()
+  const { data, page, recipeHits } = Route.useLoaderData()
+  const [recipes, setRecipes] = useState(data)
+  const [currentPage, setCurrentPage] = useState(page)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const loadMoreRecipes = async () => {
+    if (isLoading) return
+    setIsLoading(true)
+    const nextPage = currentPage + 1
+    const res = await apiClient.recipes.$get({
+      query: { ingredients: foods, page: nextPage.toString(), recipe_hits: recipeHits.toString() },
+    })
+
+    if (!res.ok) {
+      setIsLoading(false)
+      return
+    }
+    const nextData = await res.json()
+    setRecipes([...recipes, ...nextData.data])
+    setCurrentPage(nextData.page)
+    setIsLoading(false)
+  }
 
   return (
     <>
@@ -52,6 +75,20 @@ const Recipe = () => {
           <RecipeCard {...recipe} key={recipe.url} />
         ))}
       </div>
+      {recipeHits > recipes.length && (
+        <button
+          type="button"
+          className="flex items-center justify-center rounded-md bg-[#4c6] px-4 py-2 font-bold text-white transition-opacity disabled:opacity-50"
+          onClick={loadMoreRecipes}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <IconLoader2 size={20} color="white" className="animate-spin" />
+          ) : (
+            'もっと見る'
+          )}
+        </button>
+      )}
     </>
   )
 }
