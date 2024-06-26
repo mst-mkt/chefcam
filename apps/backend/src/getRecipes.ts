@@ -29,7 +29,7 @@ const fetchCookpadHtml = async (
 const scrapeCookpadHtml = async (html: string) => {
   const $ = load(html)
   const recipeHits = Number.parseInt(
-    $('.recipe_section .search_title > .count')
+    $('.recipes_section .search_title > .count')
       .text()
       .replace(/[^0-9]/g, ''),
   )
