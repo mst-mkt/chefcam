@@ -1,5 +1,6 @@
 import { IconLoader2 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
 import { z } from 'zod'
 import { LinkButton } from '../../components/common/LinkButton'
 import { RecipeCard } from '../../components/recipe/RecipeCard'
@@ -39,7 +40,22 @@ const Pending = () => (
 )
 
 const Recipe = () => {
-  const recipes = Route.useLoaderData()
+  const { foods } = Route.useSearch()
+  const { data, page, recipeHits } = Route.useLoaderData()
+  const [recipes, setRecipes] = useState(data)
+  const [currentPage, setCurrentPage] = useState(page)
+
+  const loadMoreRecipes = async () => {
+    const nextPage = currentPage + 1
+    const res = await apiClient.recipes.$get({
+      query: { ingredients: foods, page: nextPage.toString(), recipe_hits: recipeHits.toString() },
+    })
+
+    if (!res.ok) return
+    const nextData = await res.json()
+    setRecipes([...recipes, ...nextData.data])
+    setCurrentPage(nextData.page)
+  }
 
   return (
     <>
@@ -47,11 +63,22 @@ const Recipe = () => {
         <h2 className="font-bold text-3xl">レシピ一覧</h2>
         <p className="font-bold text-[#4c6] text-lg">Recipe</p>
       </hgroup>
+      {foods}
+      {currentPage}
+      {recipeHits}
       <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
           <RecipeCard {...recipe} key={recipe.url} />
         ))}
       </div>
+      <button
+        type="button"
+        className="rounded-md bg-[#4c6] px-4 py-2 font-bold text-white"
+        onClick={loadMoreRecipes}
+        disabled={currentPage === recipeHits}
+      >
+        もっと見る
+      </button>
     </>
   )
 }
