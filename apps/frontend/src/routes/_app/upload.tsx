@@ -1,3 +1,4 @@
+import { IconAlertCircle } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
 import { LinkButton } from '../../components/common/LinkButton'
@@ -31,7 +32,14 @@ const Upload = () => {
         setFoodImages={setFoodImages}
         setSelectedFoods={setSelectedFoods}
       />
+
       <FoodSelect foods={foods} selectedFoods={selectedFoods} setSelectedFoods={setSelectedFoods} />
+      {selectedFoods.length > 5 && (
+        <div className=" flex gap-1">
+          <IconAlertCircle size={25} color="#f00" />
+          <p>5個以上の食材を選択するとレシピに含まれない食材がある場合があります</p>
+        </div>
+      )}
       {foods.length !== 0 && (
         <LinkButton to="/recipe" search={{ foods: selectedFoods }}>
           レシピを検索

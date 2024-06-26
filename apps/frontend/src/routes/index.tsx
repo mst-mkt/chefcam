@@ -8,7 +8,7 @@ export const Route = createFileRoute('/')({
 
 const Home = () => (
   <>
-    <div className="flex h-screen flex-col items-center justify-center text-center text-black">
+    <div className="flex h-svh flex-col items-center justify-center text-center text-black">
       <div className="animate-fadeIn text-center">
         <h1 className="animate-slideInDown font-bold text-6xl text-gray-900">ChefCam.</h1>
         <p className="mt-4 animate-fadeIn text-gray-700 text-lg ">毎日レシピに悩む、あなたへ</p>
