@@ -1,7 +1,16 @@
 import { z } from 'zod'
 
 const cookpadSearchParamSchema = z.object({
-  ingredients: z.array(z.string()).describe('検索する食材'),
+  ingredients: z
+    .array(z.string())
+    .min(1)
+    .or(
+      z
+        .string()
+        .min(1)
+        .transform((v) => [v]),
+    )
+    .describe('検索する食材'),
   page: z
     .string()
     .min(1)
