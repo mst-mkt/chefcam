@@ -28,43 +28,37 @@ const fetchCookpadHtml = async (
 
 const scrapeCookpadHtml = async (html: string) => {
   const $ = load(html)
-  const recipeHits = Number.parseInt(
-    $('.recipes_section .search_title > .count')
-      .text()
-      .replace(/[^0-9]/g, ''),
-  )
 
-  const recipes = $('.recipe-list .recipe-preview')
-    .map((index, element) => {
-      const image = $(element).find('.recipe-image img').attr('src')
-      const title = $(element).find('.recipe-title').text().trim()
-      const url = $(element).find('.recipe-title').attr('href')
-      const fullUrl = url !== undefined ? new URL(url, COOKPAD_BASE_URL).href : undefined
-      const ingredients = $(element)
-        .find('.ingredients')
-        .text()
-        .trim()
-        .split('、')
-        .map((ingredient) => ingredient.trim())
-        .filter((ingredient) => !ingredient.includes('\n...'))
-      const newRecipe = { url: fullUrl, image, title, ingredients }
-
+  const recipeList = $('#search-recipes-list')
+  const recipes = recipeList.children()
+  const recipeData = recipes
+    .map((_, recipe) => {
+      const title = $(recipe).find('h2').text()
+      const url = $(recipe).find('h2>a').attr('href')
+      const image = $(recipe).find('.flex-none > picture > img').attr('src')
+      const ingredients = $(recipe)
+        .find('[data-ingredients-highlighter-target="ingredients"]')
+        .contents()
+        .map((_, ingredient) => $(ingredient).text())
+        .filter((_, ingredient) => ingredient !== '•')
+        .get()
+      const newRecipe = { title, url: `${COOKPAD_BASE_URL}${url}`, image, ingredients }
       const validatedRecipe = recipeSchema.safeParse(newRecipe)
       if (!validatedRecipe.success) {
-        console.error(`Invalid recipe at index ${index}:`, validatedRecipe.error)
+        console.error('Invalid recipe:', validatedRecipe.error.issues)
+        console.table(validatedRecipe.error.issues)
         return null
       }
       return validatedRecipe.data
     })
     .get()
-    .filter((recipe) => recipe !== null)
 
-  return { data: recipes, recipeHits }
+  return { data: recipeData }
 }
 
 export const getRecipes = async (cookpadSearchParam: CookpadSearchParam, trialCount = 1) => {
   const html = await fetchCookpadHtml(cookpadSearchParam, trialCount)
-  const { data, recipeHits } = await scrapeCookpadHtml(html)
+  const { data } = await scrapeCookpadHtml(html)
 
-  return { data, page: cookpadSearchParam.page, recipeHits }
+  return { data, page: cookpadSearchParam.page }
 }

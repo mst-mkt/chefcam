@@ -41,7 +41,7 @@ const Pending = () => (
 
 const Recipe = () => {
   const { foods } = Route.useSearch()
-  const { data, page, recipeHits } = Route.useLoaderData()
+  const { data, page } = Route.useLoaderData()
   const [recipes, setRecipes] = useState(data)
   const [currentPage, setCurrentPage] = useState(page)
   const [isLoading, setIsLoading] = useState(false)
@@ -51,7 +51,7 @@ const Recipe = () => {
     setIsLoading(true)
     const nextPage = currentPage + 1
     const res = await apiClient.recipes.$get({
-      query: { ingredients: foods, page: nextPage.toString(), recipe_hits: recipeHits.toString() },
+      query: { ingredients: foods, page: nextPage.toString() },
     })
 
     if (!res.ok) {
@@ -75,7 +75,7 @@ const Recipe = () => {
           <RecipeCard {...recipe} key={recipe.url} />
         ))}
       </div>
-      {recipeHits > recipes.length && (
+      {recipes.length > 0 && (
         <button
           type="button"
           className="flex items-center justify-center rounded-md bg-[#4c6] px-4 py-2 font-bold text-white transition-opacity disabled:opacity-50"
