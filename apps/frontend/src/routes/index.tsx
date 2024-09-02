@@ -1,6 +1,7 @@
 import { IconBrandGithubFilled } from '@tabler/icons-react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { IllustBreakfast } from '../components/illust/Breakfast'
+import { PROJECT_NAME } from '../constants/projects'
 
 export const Route = createFileRoute('/')({
   component: () => <Home />,
@@ -10,7 +11,7 @@ const Home = () => (
   <>
     <div className="flex h-svh flex-col items-center justify-center text-center text-black">
       <div className="animate-fadeIn text-center">
-        <h1 className="animate-slideInDown font-bold text-6xl text-gray-900">ChefCam.</h1>
+        <h1 className="animate-slideInDown font-bold text-6xl text-gray-900">{PROJECT_NAME}</h1>
         <p className="mt-4 animate-fadeIn text-gray-700 text-lg ">毎日レシピに悩む、あなたへ</p>
       </div>
       <IllustBreakfast
