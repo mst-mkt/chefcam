@@ -27,6 +27,7 @@
     "backend": "workspace:*",
     "biome-config": "workspace:*",
     "postcss": "^8.4.38",
+    "postcss-import": "^16.1.0",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
