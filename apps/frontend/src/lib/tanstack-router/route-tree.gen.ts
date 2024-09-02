@@ -10,11 +10,11 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as AppImport } from './routes/_app'
-import { Route as IndexImport } from './routes/index'
-import { Route as AppUploadImport } from './routes/_app/upload'
-import { Route as AppRecipeImport } from './routes/_app/recipe'
+import { Route as rootRoute } from './../../routes/__root'
+import { Route as AppImport } from './../../routes/_app'
+import { Route as IndexImport } from './../../routes/index'
+import { Route as AppUploadImport } from './../../routes/_app/upload'
+import { Route as AppRecipeImport } from './../../routes/_app/recipe'
 
 // Create/Update Routes
 
