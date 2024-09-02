@@ -12,10 +12,6 @@ const cookpadSearchParamSchema = z.object({
     .default('1')
     .describe('ページ番号')
     .transform((v) => Number.parseInt(v)),
-  recipe_hits: numericString
-    .optional()
-    .describe('レシピの表示数')
-    .transform((v) => (v === undefined ? undefined : Number.parseInt(v))),
 })
 
 type CookpadSearchParam = z.infer<typeof cookpadSearchParamSchema>
