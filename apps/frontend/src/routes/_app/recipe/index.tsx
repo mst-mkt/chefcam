@@ -2,15 +2,15 @@ import { IconLoader2 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { z } from 'zod'
-import { LinkButton } from '../../components/common/LinkButton'
-import { RecipeCard } from '../../components/recipe/RecipeCard'
-import { apiClient } from '../../lib/apiClient'
+import { LinkButton } from '../../../components/common/LinkButton'
+import { apiClient } from '../../../lib/apiClient'
+import { RecipeCard } from './.recipe-card'
 
 const recipeSearchSchema = z.object({
   foods: z.array(z.string()).catch([]),
 })
 
-export const Route = createFileRoute('/_app/recipe')({
+export const Route = createFileRoute('/_app/recipe/')({
   validateSearch: (search) => recipeSearchSchema.parse(search),
   loaderDeps: ({ search: { foods } }) => ({ foods }),
   loader: async ({ deps: { foods } }) => {
@@ -34,7 +34,7 @@ const ErrorComponents = () => (
 
 const Pending = () => (
   <div className="flex flex-col items-center gap-y-4 py-8">
-    <IconLoader2 size={64} color="#486" className="animate-spin" />
+    <IconLoader2 size={64} className="animate-spin text-accent" />
     <p>レシピを検索中</p>
   </div>
 )
@@ -68,7 +68,7 @@ const Recipe = () => {
     <>
       <hgroup>
         <h2 className="font-bold text-3xl">レシピ一覧</h2>
-        <p className="font-bold text-[#4c6] text-lg">Recipe</p>
+        <p className="font-bold text-accent text-lg">Recipe</p>
       </hgroup>
       <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
@@ -78,7 +78,7 @@ const Recipe = () => {
       {recipes.length > 0 && (
         <button
           type="button"
-          className="flex items-center justify-center rounded-md bg-[#4c6] px-4 py-2 font-bold text-white transition-opacity disabled:opacity-50"
+          className="flex items-center justify-center rounded-md bg-accent px-4 py-2 font-bold text-white transition-opacity disabled:opacity-50"
           onClick={loadMoreRecipes}
           disabled={isLoading}
         >

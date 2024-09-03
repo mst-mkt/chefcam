@@ -1,5 +1,6 @@
 import { IconCircleCheck, IconCircleX } from '@tabler/icons-react'
 import { type Dispatch, type FC, type SetStateAction, useMemo } from 'react'
+import { twJoin } from 'tailwind-merge'
 
 type FoodSelectProps = {
   foods: string[]
@@ -13,20 +14,18 @@ const Food = ({
   onClick,
 }: { food: string; selected: boolean; onClick: () => void }) => {
   const Icon = useMemo(() => (selected ? IconCircleCheck : IconCircleX), [selected])
-  const color = useMemo(() => (selected ? '#6c8' : '#bbb'), [selected])
-  const backgroundColor = useMemo(() => (selected ? '#6c82' : 'transparent'), [selected])
 
   return (
     <div
-      className="flex cursor-pointer items-center gap-x-2 rounded-full border py-1 pr-4 pl-2 transition-colors"
-      style={{
-        borderColor: color,
-        backgroundColor,
-      }}
+      className={twJoin(
+        'flex cursor-pointer items-center gap-x-2 rounded-full border py-1 pr-4 pl-2 transition-colors',
+        selected && 'border-accent bg-accent/10',
+        !selected && 'border-foreground-500',
+      )}
       onClick={onClick}
       onKeyDown={onClick}
     >
-      <Icon size={20} color={color} />
+      <Icon size={20} className={selected ? 'text-accent' : 'text-foreground-500'} />
       <span>{food}</span>
     </div>
   )
@@ -52,14 +51,6 @@ export const FoodSelect: FC<FoodSelectProps> = ({ foods, selectedFoods, setSelec
           onClick={() => toggleFoodSelect(food)}
         />
       ))}
-      {/* {foods.length !== 0 && (
-        <button
-          className="box-content flex h-[1lh] w-[1lh] items-center justify-center rounded-full border border-[#6c8] bg-[#6c8] px-1 py-1"
-          type="button"
-        >
-          <IconPlus size={20} color="#fff" className="aspect-square" />
-        </button>
-      )} */}
     </div>
   )
 }

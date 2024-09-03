@@ -1,0 +1,28 @@
+@layer base {
+  :root {
+    --content-max-width: 600px;
+
+    /* oklch(100% 0 0) */
+    --background: 100% 0 0;
+    /* oklch(20% 0.04 256) */
+    --foreground: 20% 0.04 256;
+    /* oklch(64% 0.32 150) */
+    --accent: 64% 0.32 150;
+  }
+
+  .dark {
+    /* oklch(28% 0.01 256) */
+    --background: 28% 0.01 256;
+    /* oklch(92% 0.01 256) */
+    --foreground: 92% 0.01 256;
+    /* oklch(64% 0.32 150) */
+    --accent: 64% 0.32 150;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    @apply scrollbar-thin scrollbar-thumb-background-200 scrollbar-thumb-rounded-full scrollbar-track-transparent;
+  }
+}

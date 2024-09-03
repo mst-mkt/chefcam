@@ -37,13 +37,6 @@
             "syntax": "shorthand"
           }
         },
-        "useFilenamingConvention": {
-          "level": "error",
-          "options": {
-            "requireAscii": true,
-            "filenameCases": ["camelCase", "PascalCase"]
-          }
-        },
         "useForOf": "error",
         "useFragmentSyntax": "error",
         "useNodeAssertStrict": "error",

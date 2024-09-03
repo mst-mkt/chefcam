@@ -1,31 +1,16 @@
 import { HumanMessage } from '@langchain/core/messages'
-import { ChatOpenAI } from '@langchain/openai'
-import type { BindingsType } from './factory'
-import { ingredientsSchema } from './schemas/ingredientsSchema'
-import { fileToBase64 } from './utils/fileToBase64'
+import type { ChatOpenAI } from '@langchain/openai'
+import { z } from 'zod'
+import { fileToBase64 } from '../../utils/fileToBase64'
 
-export const imageToFoods = async (file: File, envs: BindingsType) => {
-  const { OPENAI_API_KEY, OPENAI_BASE_URL } = envs
-  if (OPENAI_API_KEY === undefined) {
-    throw new Error('OPENAI_API_KEY is not defined')
-  }
-  if (OPENAI_BASE_URL === undefined) {
-    throw new Error('OPENAI_REQUEST_BASE_URL is not defined')
-  }
-  const requestUrl = new URL(OPENAI_BASE_URL).toString()
+const ingredientsSchema = z.object({
+  data: z.array(z.string()).describe('食材のリスト'),
+})
 
-  const model = new ChatOpenAI({
-    model: 'gpt-4o',
-    apiKey: OPENAI_API_KEY,
-    configuration: {
-      baseURL: requestUrl,
-    },
-    temperature: 0,
-  })
-
+export const imageToFoods = async (ai: ChatOpenAI, file: File) => {
   const imageUrl = await fileToBase64(file)
 
-  const structuredLlm = model.withStructuredOutput(ingredientsSchema, {
+  const structuredLlm = ai.withStructuredOutput(ingredientsSchema, {
     name: 'food_detection',
   })
 
@@ -44,8 +29,6 @@ export const imageToFoods = async (file: File, envs: BindingsType) => {
     ],
   })
 
-  const res = await structuredLlm.invoke([message])
-  const foodsData = res.data
-
-  return foodsData
+  const { data } = await structuredLlm.invoke([message])
+  return data
 }

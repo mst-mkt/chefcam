@@ -1,13 +1,13 @@
 import { IconAlertCircle } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
-import { LinkButton } from '../../components/common/LinkButton'
-import { FoodSelect } from '../../components/upload/FoodSelect'
-import { ImagePicker } from '../../components/upload/ImagePicker'
-import type { FoodImage } from '../../types/FoodTypes'
-import { dropDuplicates } from '../../utils/dropDuplicates'
+import { LinkButton } from '../../../components/common/LinkButton'
+import type { FoodImage } from '../../../types/FoodTypes'
+import { dropDuplicates } from '../../../utils/dropDuplicates'
+import { FoodSelect } from './.food-select'
+import { ImagePicker } from './.image-picker'
 
-export const Route = createFileRoute('/_app/upload')({
+export const Route = createFileRoute('/_app/upload/')({
   component: () => <Upload />,
 })
 
@@ -24,7 +24,7 @@ const Upload = () => {
     <>
       <hgroup>
         <h2 className="font-bold text-3xl">画像アップロード</h2>
-        <p className="font-bold text-[#4c6] text-lg">Upload</p>
+        <p className="font-bold text-accent text-lg">Upload</p>
       </hgroup>
       <p>冷蔵庫や食材の写真をアップロードしてください。</p>
       <ImagePicker
@@ -34,9 +34,9 @@ const Upload = () => {
       />
 
       <FoodSelect foods={foods} selectedFoods={selectedFoods} setSelectedFoods={setSelectedFoods} />
-      {selectedFoods.length > 5 && (
-        <div className=" flex gap-1">
-          <IconAlertCircle size={25} color="#f00" />
+      {selectedFoods.length > 5 && foods.length > 0 && (
+        <div className="flex gap-x-2">
+          <IconAlertCircle size={25} className="text-red-400" />
           <p>5個以上の食材を選択するとレシピに含まれない食材がある場合があります</p>
         </div>
       )}

@@ -1,21 +1,27 @@
 import { load } from 'cheerio'
-import { COOKPAD_BASE_URL } from './constants/cookpad'
-import type { CookpadSearchParam } from './schemas/cookpadSearchParamSchema'
-import { recipeSchema } from './schemas/recipesSchema'
-import { createSearchRecipesUrl } from './utils/createSearchUrl'
+import { z } from 'zod'
+import { COOKPAD_BASE_URL } from '../../constants/cookpad'
+import { createRecipesUrl } from './createUrl'
+
+const recipeSchema = z.object({
+  url: z.string().url().describe('レシピのURL'),
+  image: z.string().url().describe('レシピの画像のURL'),
+  title: z.string().describe('レシピのタイトル'),
+  ingredients: z.array(z.string()).describe('レシピの材料'),
+})
 
 const fetchCookpadHtml = async (
-  cookpadSearchParam: CookpadSearchParam,
+  ingredients: string[],
+  page: number,
   trialCount = 1,
 ): Promise<string> => {
-  const url = createSearchRecipesUrl(cookpadSearchParam)
+  const url = createRecipesUrl(ingredients, page)
   const res = await fetch(url)
 
   if (!res.ok) {
     if (trialCount < 3) {
-      const threeIngredients = cookpadSearchParam.ingredients.slice(0, 2 * (3 - trialCount))
-      const newCookpadSearchParam = { ...cookpadSearchParam, ingredients: threeIngredients }
-      const res = await fetchCookpadHtml(newCookpadSearchParam, trialCount + 1)
+      const threeIngredients = ingredients.slice(0, 2 * (3 - trialCount))
+      const res = await fetchCookpadHtml(threeIngredients, page, trialCount + 1)
       return res
     }
 
@@ -30,7 +36,7 @@ const scrapeCookpadHtml = async (html: string) => {
   const $ = load(html)
 
   const recipeList = $('#search-recipes-list')
-  const recipes = recipeList.children()
+  const recipes = recipeList.children().filter((_, elm) => 'id' in elm.attribs)
   const recipeData = recipes
     .map((_, recipe) => {
       const title = $(recipe).find('h2').text()
@@ -56,9 +62,9 @@ const scrapeCookpadHtml = async (html: string) => {
   return { data: recipeData }
 }
 
-export const getRecipes = async (cookpadSearchParam: CookpadSearchParam, trialCount = 1) => {
-  const html = await fetchCookpadHtml(cookpadSearchParam, trialCount)
+export const getRecipes = async (ingredients: string[], page: number, trialCount = 1) => {
+  const html = await fetchCookpadHtml(ingredients, page, trialCount)
   const { data } = await scrapeCookpadHtml(html)
 
-  return { data, page: cookpadSearchParam.page }
+  return { data, page }
 }
