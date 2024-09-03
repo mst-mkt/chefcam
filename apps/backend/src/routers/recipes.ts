@@ -22,7 +22,7 @@ const recipesRouter = honoFactory
     const { ingredients, page } = c.req.valid('query')
 
     try {
-      const recipes = await getRecipes({ ingredients, page })
+      const recipes = await getRecipes(ingredients, page)
       return c.json(recipes)
     } catch (error) {
       return c.json({ error }, 500)

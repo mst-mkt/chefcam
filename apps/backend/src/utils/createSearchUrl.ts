@@ -1,7 +1,6 @@
 import { COOKPAD_BASE_SEARCH_URL } from '../constants/cookpad'
-import type { CookpadSearchParam } from '../schemas/cookpadSearchParamSchema'
 
-const createSearchRecipesUrl = ({ ingredients, page }: CookpadSearchParam): string => {
+const createSearchRecipesUrl = (ingredients: string[], page: number): string => {
   const url = new URL(COOKPAD_BASE_SEARCH_URL)
 
   const ingredientsParam = ingredients
