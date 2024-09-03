@@ -34,7 +34,7 @@ const Upload = () => {
       />
 
       <FoodSelect foods={foods} selectedFoods={selectedFoods} setSelectedFoods={setSelectedFoods} />
-      {selectedFoods.length > 5 && (
+      {selectedFoods.length > 5 && foods.length > 0 && (
         <div className="flex gap-x-2">
           <IconAlertCircle size={25} className="text-red-400" />
           <p>5個以上の食材を選択するとレシピに含まれない食材がある場合があります</p>
