@@ -22,7 +22,7 @@ const uploadRouter = honoFactory
     }
 
     try {
-      const foods = await imageToFoods(file, c.env)
+      const foods = await imageToFoods(c.var.ai, file)
       return c.json({ foods }, 200)
     } catch (error) {
       return c.json({ error }, 500)
