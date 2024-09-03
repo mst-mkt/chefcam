@@ -1,7 +1,7 @@
-import { ChatOpenAI } from '@langchain/openai'
+import { createOpenAI } from '@ai-sdk/openai'
 import { createMiddleware } from 'hono/factory'
 
-export const aiMiddleware = createMiddleware(async (c, next) => {
+export const aiModelMiddleware = createMiddleware(async (c, next) => {
   const { OPENAI_API_KEY, OPENAI_BASE_URL } = c.env
   if (OPENAI_API_KEY === undefined) {
     throw new Error('OPENAI_API_KEY is not defined')
@@ -11,16 +11,14 @@ export const aiMiddleware = createMiddleware(async (c, next) => {
   }
   const requestUrl = new URL(OPENAI_BASE_URL).toString()
 
-  const ai = new ChatOpenAI({
-    model: 'gpt-4o',
+  const openai = createOpenAI({
     apiKey: OPENAI_API_KEY,
-    configuration: {
-      baseURL: requestUrl,
-    },
-    temperature: 0,
+    baseURL: requestUrl,
   })
 
-  c.set('ai', ai)
+  const model = openai('gpt-4o-mini')
+
+  c.set('model', model)
 
   await next()
 })
