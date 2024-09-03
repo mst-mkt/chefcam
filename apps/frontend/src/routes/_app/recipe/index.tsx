@@ -34,7 +34,7 @@ const ErrorComponents = () => (
 
 const Pending = () => (
   <div className="flex flex-col items-center gap-y-4 py-8">
-    <IconLoader2 size={64} color="#486" className="animate-spin" />
+    <IconLoader2 size={64} className="animate-spin text-accent" />
     <p>レシピを検索中</p>
   </div>
 )
