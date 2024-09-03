@@ -1,14 +1,21 @@
 import { load } from 'cheerio'
-import { COOKPAD_BASE_URL } from './constants/cookpad'
-import { recipeSchema } from './schemas/recipesSchema'
-import { createSearchRecipesUrl } from './utils/createSearchUrl'
+import { z } from 'zod'
+import { COOKPAD_BASE_URL } from '../../constants/cookpad'
+import { createRecipesUrl } from './createUrl'
+
+const recipeSchema = z.object({
+  url: z.string().url().describe('レシピのURL'),
+  image: z.string().url().describe('レシピの画像のURL'),
+  title: z.string().describe('レシピのタイトル'),
+  ingredients: z.array(z.string()).describe('レシピの材料'),
+})
 
 const fetchCookpadHtml = async (
   ingredients: string[],
   page: number,
   trialCount = 1,
 ): Promise<string> => {
-  const url = createSearchRecipesUrl(ingredients, page)
+  const url = createRecipesUrl(ingredients, page)
   const res = await fetch(url)
 
   if (!res.ok) {

@@ -1,7 +1,7 @@
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import { honoFactory } from '../factory'
-import { getRecipes } from '../getRecipes'
+import { getRecipes } from '../features/recipes/scraper'
 
 const numericString = z.string().regex(/^\d+$/, { message: 'This field must be a number' })
 const cookpadSearchParamSchema = z.object({

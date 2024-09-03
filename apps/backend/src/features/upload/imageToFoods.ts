@@ -1,7 +1,11 @@
 import { HumanMessage } from '@langchain/core/messages'
 import type { ChatOpenAI } from '@langchain/openai'
-import { ingredientsSchema } from './schemas/ingredientsSchema'
-import { fileToBase64 } from './utils/fileToBase64'
+import { z } from 'zod'
+import { fileToBase64 } from '../../utils/fileToBase64'
+
+const ingredientsSchema = z.object({
+  data: z.array(z.string()).describe('食材のリスト'),
+})
 
 export const imageToFoods = async (ai: ChatOpenAI, file: File) => {
   const imageUrl = await fileToBase64(file)
@@ -25,8 +29,6 @@ export const imageToFoods = async (ai: ChatOpenAI, file: File) => {
     ],
   })
 
-  const res = await structuredLlm.invoke([message])
-  const foodsData = res.data
-
-  return foodsData
+  const { data } = await structuredLlm.invoke([message])
+  return data
 }

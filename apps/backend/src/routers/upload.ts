@@ -1,7 +1,7 @@
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import { honoFactory } from '../factory'
-import { imageToFoods } from '../imageToFoods'
+import { imageToFoods } from '../features/upload/imageToFoods'
 
 const allowedImageTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/heic', 'image/heif']
 const uploadReqSchema = z
