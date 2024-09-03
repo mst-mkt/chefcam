@@ -1,7 +1,16 @@
 import { zValidator } from '@hono/zod-validator'
+import { z } from 'zod'
 import { honoFactory } from '../factory'
 import { imageToFoods } from '../imageToFoods'
-import { uploadReqSchema } from '../schemas/uploadSchema'
+
+const allowedImageTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/heic', 'image/heif']
+const uploadReqSchema = z
+  .object({
+    file: z
+      .instanceof(File)
+      .refine((f) => allowedImageTypes.includes(f.type), { message: 'Invalid file type' }),
+  })
+  .strict()
 
 const uploadRouter = honoFactory
   .createApp()
