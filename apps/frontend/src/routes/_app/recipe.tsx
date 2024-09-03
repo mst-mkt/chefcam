@@ -68,7 +68,7 @@ const Recipe = () => {
     <>
       <hgroup>
         <h2 className="font-bold text-3xl">レシピ一覧</h2>
-        <p className="font-bold text-[#4c6] text-lg">Recipe</p>
+        <p className="font-bold text-accent text-lg">Recipe</p>
       </hgroup>
       <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
@@ -78,7 +78,7 @@ const Recipe = () => {
       {recipes.length > 0 && (
         <button
           type="button"
-          className="flex items-center justify-center rounded-md bg-[#4c6] px-4 py-2 font-bold text-white transition-opacity disabled:opacity-50"
+          className="flex items-center justify-center rounded-md bg-accent px-4 py-2 font-bold text-white transition-opacity disabled:opacity-50"
           onClick={loadMoreRecipes}
           disabled={isLoading}
         >
