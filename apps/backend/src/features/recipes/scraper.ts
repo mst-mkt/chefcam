@@ -36,7 +36,7 @@ const scrapeCookpadHtml = async (html: string) => {
   const $ = load(html)
 
   const recipeList = $('#search-recipes-list')
-  const recipes = recipeList.children()
+  const recipes = recipeList.children().filter((_, elm) => 'id' in elm.attribs)
   const recipeData = recipes
     .map((_, recipe) => {
       const title = $(recipe).find('h2').text()
