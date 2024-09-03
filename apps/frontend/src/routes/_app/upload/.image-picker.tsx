@@ -1,8 +1,8 @@
 import { IconX } from '@tabler/icons-react'
 import { type Dispatch, type FC, type SetStateAction, useMemo, useState } from 'react'
-import { apiClient } from '../../lib/apiClient'
-import type { FoodImage } from '../../types/FoodTypes'
-import { FileInput } from '../common/FileInput'
+import { FileInput } from '../../../components/common/FileInput'
+import { apiClient } from '../../../lib/apiClient'
+import type { FoodImage } from '../../../types/FoodTypes'
 
 type ImagePickerProps = {
   foodImages: FoodImage[]

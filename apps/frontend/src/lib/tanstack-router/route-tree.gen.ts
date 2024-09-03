@@ -7,8 +7,8 @@
 import { Route as rootRoute } from './../../routes/__root'
 import { Route as AppImport } from './../../routes/_app'
 import { Route as IndexImport } from './../../routes/index'
-import { Route as AppUploadImport } from './../../routes/_app/upload'
-import { Route as AppRecipeImport } from './../../routes/_app/recipe'
+import { Route as AppUploadIndexImport } from './../../routes/_app/upload/index'
+import { Route as AppRecipeIndexImport } from './../../routes/_app/recipe/index'
 
 // Create/Update Routes
 
@@ -22,13 +22,13 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AppUploadRoute = AppUploadImport.update({
-  path: '/upload',
+const AppUploadIndexRoute = AppUploadIndexImport.update({
+  path: '/upload/',
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppRecipeRoute = AppRecipeImport.update({
-  path: '/recipe',
+const AppRecipeIndexRoute = AppRecipeIndexImport.update({
+  path: '/recipe/',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -50,18 +50,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
     }
-    '/_app/recipe': {
-      id: '/_app/recipe'
+    '/_app/recipe/': {
+      id: '/_app/recipe/'
       path: '/recipe'
       fullPath: '/recipe'
-      preLoaderRoute: typeof AppRecipeImport
+      preLoaderRoute: typeof AppRecipeIndexImport
       parentRoute: typeof AppImport
     }
-    '/_app/upload': {
-      id: '/_app/upload'
+    '/_app/upload/': {
+      id: '/_app/upload/'
       path: '/upload'
       fullPath: '/upload'
-      preLoaderRoute: typeof AppUploadImport
+      preLoaderRoute: typeof AppUploadIndexImport
       parentRoute: typeof AppImport
     }
   }
@@ -71,7 +71,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  AppRoute: AppRoute.addChildren({ AppRecipeRoute, AppUploadRoute }),
+  AppRoute: AppRoute.addChildren({ AppRecipeIndexRoute, AppUploadIndexRoute }),
 })
 
 /* ROUTE_MANIFEST_START
@@ -90,16 +90,16 @@ export const routeTree = rootRoute.addChildren({
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
-        "/_app/recipe",
-        "/_app/upload"
+        "/_app/recipe/",
+        "/_app/upload/"
       ]
     },
-    "/_app/recipe": {
-      "filePath": "_app/recipe.tsx",
+    "/_app/recipe/": {
+      "filePath": "_app/recipe/index.tsx",
       "parent": "/_app"
     },
-    "/_app/upload": {
-      "filePath": "_app/upload.tsx",
+    "/_app/upload/": {
+      "filePath": "_app/upload/index.tsx",
       "parent": "/_app"
     }
   }

@@ -2,15 +2,15 @@ import { IconLoader2 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { z } from 'zod'
-import { LinkButton } from '../../components/common/LinkButton'
-import { RecipeCard } from '../../components/recipe/RecipeCard'
-import { apiClient } from '../../lib/apiClient'
+import { LinkButton } from '../../../components/common/LinkButton'
+import { apiClient } from '../../../lib/apiClient'
+import { RecipeCard } from './.recipe-card'
 
 const recipeSearchSchema = z.object({
   foods: z.array(z.string()).catch([]),
 })
 
-export const Route = createFileRoute('/_app/recipe')({
+export const Route = createFileRoute('/_app/recipe/')({
   validateSearch: (search) => recipeSearchSchema.parse(search),
   loaderDeps: ({ search: { foods } }) => ({ foods }),
   loader: async ({ deps: { foods } }) => {

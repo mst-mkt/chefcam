@@ -1,13 +1,13 @@
 import { IconAlertCircle } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
-import { LinkButton } from '../../components/common/LinkButton'
-import { FoodSelect } from '../../components/upload/FoodSelect'
-import { ImagePicker } from '../../components/upload/ImagePicker'
-import type { FoodImage } from '../../types/FoodTypes'
-import { dropDuplicates } from '../../utils/dropDuplicates'
+import { LinkButton } from '../../../components/common/LinkButton'
+import type { FoodImage } from '../../../types/FoodTypes'
+import { dropDuplicates } from '../../../utils/dropDuplicates'
+import { FoodSelect } from './.food-select'
+import { ImagePicker } from './.image-picker'
 
-export const Route = createFileRoute('/_app/upload')({
+export const Route = createFileRoute('/_app/upload/')({
   component: () => <Upload />,
 })
 
