@@ -1,7 +1,7 @@
-import type { ChatOpenAI } from '@langchain/openai'
+import type { LanguageModel } from 'ai'
 import { cors } from 'hono/cors'
 import { createFactory } from 'hono/factory'
-import { aiMiddleware } from './middlewares/ai'
+import { aiModelMiddleware } from './middlewares/aiModel'
 
 export type BindingsType = {
   FRONTEND_BASE_URL: string | undefined
@@ -10,7 +10,7 @@ export type BindingsType = {
 }
 
 type VariablesType = {
-  ai: ChatOpenAI
+  model: LanguageModel
 }
 
 type HonoConfigType = {
@@ -34,7 +34,7 @@ const honoFactory = createFactory<HonoConfigType>({
           },
         }),
       )
-      .use('*', aiMiddleware)
+      .use('*', aiModelMiddleware)
   },
 })
 
