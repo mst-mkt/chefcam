@@ -1,4 +1,4 @@
-import { IconCamera, IconRotate, IconX } from '@tabler/icons-react'
+import { IconCamera, IconCameraPlus, IconRotate, IconX } from '@tabler/icons-react'
 import { type Dispatch, type FC, type SetStateAction, useCallback, useRef } from 'react'
 import { Camera, type CameraType } from 'react-camera-pro'
 import { twJoin } from 'tailwind-merge'
@@ -63,7 +63,7 @@ export const CameraButton: FC<CameraButtonProps> = ({
           'focus-visible:border-accent focus-visible:bg-background-50 focus-visible:outline-none',
         )}
       >
-        <IconCamera size={24} />
+        <IconCameraPlus size={24} />
       </button>
       <Modal title="カメラ">
         <div className="relative overflow-hidden rounded-md">
