@@ -19,7 +19,13 @@ const recipeInfoSchema = z
             .object({
               ingredient: z.string().min(1),
               quantity: z.string().min(1).optional(),
-              recipeId: z.string().min(1).optional(),
+              recipeLink: z
+                .object({
+                  id: z.string().min(1),
+                  label: z.string().min(1),
+                })
+                .strict()
+                .optional(),
             })
             .strict(),
         ]),
@@ -31,7 +37,13 @@ const recipeInfoSchema = z
           .object({
             step: z.string().min(1).optional(),
             images: z.array(z.string().url()).optional(),
-            recipeId: z.string().min(1).optional(),
+            recipeLink: z
+              .object({
+                id: z.string().min(1),
+                label: z.string().min(1),
+              })
+              .strict()
+              .optional(),
           })
           .strict(),
       )
@@ -60,12 +72,18 @@ export const scrapeRecipePage = async (html: string) => {
       }
 
       const quantity = $(ingredient).find('bdi').text().trim()
-      const recipeLink = $(ingredient).children('div > a').attr('href')
+      const recipeLink = $(ingredient).children('div').children('a')
 
       return {
         ingredient: $(ingredient).find('span').text().trim(),
         quantity: quantity !== '' ? quantity : undefined,
-        recipeId: recipeLink !== undefined ? getRecipeIdFromUrl(recipeLink) : undefined,
+        recipeLink:
+          recipeLink.length > 0
+            ? {
+                id: getRecipeIdFromUrl(recipeLink.attr('href') ?? ''),
+                label: recipeLink.text().trim(),
+              }
+            : undefined,
       }
     })
     .get()
@@ -75,7 +93,7 @@ export const scrapeRecipePage = async (html: string) => {
     .children()
     .map((_, step) => {
       const text = $(step).find('.w-full > [dir="auto"]').children('p').text().trim()
-      const recipeLink = $(step).find('.w-full > .w-full').find('a').attr('href')
+      const recipeLink = $(step).find('.w-full > .w-full').find('a')
       const images = $(step)
         .find('.w-full > [dir="auto"]')
         .next()
@@ -86,7 +104,13 @@ export const scrapeRecipePage = async (html: string) => {
       return {
         step: text,
         images,
-        recipeId: recipeLink !== undefined ? getRecipeIdFromUrl(recipeLink) : undefined,
+        recipeLink:
+          recipeLink.length > 0
+            ? {
+                id: getRecipeIdFromUrl(recipeLink.attr('href') ?? ''),
+                label: recipeLink.text().trim(),
+              }
+            : undefined,
       }
     })
     .get()
@@ -99,8 +123,10 @@ export const scrapeRecipePage = async (html: string) => {
     description,
     ingredients,
     steps,
-    point,
+    point: point !== '' ? point : undefined,
   }
+
+  console.log(recipeInfo)
 
   const validated = recipeInfoSchema.safeParse(recipeInfo)
 

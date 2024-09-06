@@ -9,6 +9,7 @@ import { Route as AppImport } from './../../routes/_app'
 import { Route as IndexImport } from './../../routes/index'
 import { Route as AppUploadIndexImport } from './../../routes/_app/upload/index'
 import { Route as AppRecipeIndexImport } from './../../routes/_app/recipe/index'
+import { Route as AppRecipeRecipeIdIndexImport } from './../../routes/_app/recipe/$recipeId/index'
 
 // Create/Update Routes
 
@@ -29,6 +30,11 @@ const AppUploadIndexRoute = AppUploadIndexImport.update({
 
 const AppRecipeIndexRoute = AppRecipeIndexImport.update({
   path: '/recipe/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppRecipeRecipeIdIndexRoute = AppRecipeRecipeIdIndexImport.update({
+  path: '/recipe/$recipeId/',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -64,6 +70,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppUploadIndexImport
       parentRoute: typeof AppImport
     }
+    '/_app/recipe/$recipeId/': {
+      id: '/_app/recipe/$recipeId/'
+      path: '/recipe/$recipeId'
+      fullPath: '/recipe/$recipeId'
+      preLoaderRoute: typeof AppRecipeRecipeIdIndexImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
@@ -71,7 +84,11 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  AppRoute: AppRoute.addChildren({ AppRecipeIndexRoute, AppUploadIndexRoute }),
+  AppRoute: AppRoute.addChildren({
+    AppRecipeIndexRoute,
+    AppUploadIndexRoute,
+    AppRecipeRecipeIdIndexRoute,
+  }),
 })
 
 /* ROUTE_MANIFEST_START
@@ -91,7 +108,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_app.tsx",
       "children": [
         "/_app/recipe/",
-        "/_app/upload/"
+        "/_app/upload/",
+        "/_app/recipe/$recipeId/"
       ]
     },
     "/_app/recipe/": {
@@ -100,6 +118,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_app/upload/": {
       "filePath": "_app/upload/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/recipe/$recipeId/": {
+      "filePath": "_app/recipe/$recipeId/index.tsx",
       "parent": "/_app"
     }
   }
