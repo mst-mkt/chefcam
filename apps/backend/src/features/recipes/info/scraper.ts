@@ -126,8 +126,6 @@ export const scrapeRecipePage = async (html: string) => {
     point: point !== '' ? point : undefined,
   }
 
-  console.log(recipeInfo)
-
   const validated = recipeInfoSchema.safeParse(recipeInfo)
 
   if (!validated.success) {
