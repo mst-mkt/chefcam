@@ -82,8 +82,8 @@ export const CameraButton: FC<CameraButtonProps> = ({
           </div>
         </div>
         <div className="flex items-center justify-center gap-x-8">
-          <IconButton icon={IconCamera} onClick={handleTakePhoto} size={24} className="order-2" />
-          <IconButton icon={IconX} onClick={() => close()} size={24} className="order-3" />
+          <IconButton icon={IconCamera} onClick={handleTakePhoto} size={24} />
+          <IconButton icon={IconX} onClick={() => close()} size={24} />
         </div>
       </Modal>
     </>
