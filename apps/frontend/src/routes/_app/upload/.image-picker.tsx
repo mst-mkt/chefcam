@@ -3,6 +3,7 @@ import { type Dispatch, type FC, type SetStateAction, useMemo, useState } from '
 import { FileInput } from '../../../components/common/FileInput'
 import { apiClient } from '../../../lib/apiClient'
 import type { FoodImage } from '../../../types/FoodTypes'
+import { CameraButton } from './.camera'
 
 type ImagePickerProps = {
   foodImages: FoodImage[]
@@ -55,25 +56,28 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   return (
     <div className="flex flex-col gap-y-4">
       <FileInput onChange={uploadFiles} isLoading={isLoading} />
-      {foodImages.length !== 0 && (
-        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-transparent flex gap-x-2 overflow-x-scroll rounded-md">
-          {fileUrls.map((url, i) => (
-            <div
-              className="group relative aspect-1 w-20 shrink-0 overflow-hidden rounded-md bg-accent shadow"
-              key={foodImages[i]?.file.name}
+      <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-transparent flex gap-x-2 overflow-x-scroll rounded-md">
+        {fileUrls.map((url, i) => (
+          <div
+            className="group relative aspect-1 w-20 shrink-0 overflow-hidden rounded-md bg-accent shadow"
+            key={foodImages[i]?.file.name}
+          >
+            <img src={url} alt="preview" className="block h-full w-full object-cover" />
+            <button
+              type="button"
+              className="absolute top-0 right-0 cursor-pointer rounded-bl-md bg-red-400 p-1 text-white opacity-0 transition-opacity hover:bg-red-600 group-hover:opacity-100"
+              onClick={() => handleFileRemove(i)}
             >
-              <img src={url} alt="preview" className="block h-full w-full object-cover" />
-              <button
-                type="button"
-                className="absolute top-0 right-0 cursor-pointer rounded-bl-md bg-red-400 p-1 text-white opacity-0 transition-opacity hover:bg-red-600 group-hover:opacity-100"
-                onClick={() => handleFileRemove(i)}
-              >
-                <IconX size={16} color="#fff" />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+              <IconX size={16} color="#fff" />
+            </button>
+          </div>
+        ))}
+        <CameraButton
+          setIsLoading={setIsLoading}
+          setFoodImages={setFoodImages}
+          setSelectedFoods={setSelectedFoods}
+        />
+      </div>
     </div>
   )
 }

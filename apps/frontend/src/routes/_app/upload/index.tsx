@@ -32,7 +32,6 @@ const Upload = () => {
         setFoodImages={setFoodImages}
         setSelectedFoods={setSelectedFoods}
       />
-
       <FoodSelect foods={foods} selectedFoods={selectedFoods} setSelectedFoods={setSelectedFoods} />
       {selectedFoods.length > 5 && foods.length > 0 && (
         <div className="flex gap-x-2">
