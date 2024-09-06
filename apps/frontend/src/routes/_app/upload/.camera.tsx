@@ -68,16 +68,18 @@ export const CameraButton: FC<CameraButtonProps> = ({
         <IconCameraPlus size={24} />
       </button>
       <Modal title="カメラ">
-        <div className="relative overflow-hidden rounded-md">
-          <Webcam
-            ref={webcamRef}
-            audio={false}
-            screenshotFormat="image/jpeg"
-            videoConstraints={{
-              facingMode: 'environment',
-              aspectRatio: 4 / 3,
-            }}
-          />
+        <div className="flex items-center justify-center">
+          <div className="relative overflow-hidden rounded-md">
+            <Webcam
+              ref={webcamRef}
+              audio={false}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                facingMode: 'environment',
+                aspectRatio: 4 / 3,
+              }}
+            />
+          </div>
         </div>
         <div className="flex items-center justify-center gap-x-8">
           <IconButton icon={IconCamera} onClick={handleTakePhoto} size={24} className="order-2" />
