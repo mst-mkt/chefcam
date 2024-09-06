@@ -1,12 +1,11 @@
-import { IconCamera, IconCameraPlus, IconRotate, IconX } from '@tabler/icons-react'
+import { IconCamera, IconCameraPlus, IconX } from '@tabler/icons-react'
 import { type Dispatch, type FC, type SetStateAction, useCallback, useRef } from 'react'
-import { Camera, type CameraType } from 'react-camera-pro'
+import Webcam from 'react-webcam'
 import { twJoin } from 'tailwind-merge'
 import { IconButton } from '../../../components/common/IconButton'
 import { useModal } from '../../../hooks/useModal'
 import { apiClient } from '../../../lib/apiClient'
 import type { FoodImage } from '../../../types/FoodTypes'
-import { imageDataToFile } from '../../../utils/imageDataToFile'
 
 type CameraButtonProps = {
   setIsLoading: Dispatch<SetStateAction<boolean>>
@@ -20,10 +19,10 @@ export const CameraButton: FC<CameraButtonProps> = ({
   setSelectedFoods,
 }) => {
   const { Modal, open, close } = useModal()
-  const cameraRef = useRef<CameraType>(null)
+  const webcamRef = useRef<Webcam>(null)
 
   const handlerClick = useCallback(async () => {
-    await navigator.mediaDevices.getUserMedia({ video: true })
+    await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
     open()
   }, [open])
 
@@ -45,10 +44,13 @@ export const CameraButton: FC<CameraButtonProps> = ({
   )
 
   const handleTakePhoto = useCallback(async () => {
-    const imageData = cameraRef.current?.takePhoto('imgData')
-    if (typeof imageData === 'string' || imageData === undefined) return
+    const imageSrc = webcamRef.current?.getScreenshot()
+    if (!imageSrc) return
 
-    const imageFile = imageDataToFile(imageData)
+    const imageFile = await fetch(imageSrc)
+      .then((res) => res.blob())
+      .then((blob) => new File([blob], 'screenshot.jpg', { type: 'image/jpeg' }))
+
     uploadFiles(imageFile)
   }, [uploadFiles])
 
@@ -66,18 +68,22 @@ export const CameraButton: FC<CameraButtonProps> = ({
         <IconCameraPlus size={24} />
       </button>
       <Modal title="カメラ">
-        <div className="relative overflow-hidden rounded-md">
-          <Camera ref={cameraRef} errorMessages={{}} aspectRatio={4 / 3} />
+        <div className="flex items-center justify-center">
+          <div className="relative overflow-hidden rounded-md">
+            <Webcam
+              ref={webcamRef}
+              audio={false}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                facingMode: 'environment',
+                aspectRatio: 4 / 3,
+              }}
+            />
+          </div>
         </div>
         <div className="flex items-center justify-center gap-x-8">
-          <IconButton icon={IconCamera} onClick={handleTakePhoto} size={24} className="order-2" />
-          <IconButton
-            icon={IconRotate}
-            onClick={() => cameraRef.current?.switchCamera()}
-            size={24}
-            className="order-1"
-          />
-          <IconButton icon={IconX} onClick={() => close()} size={24} className="order-3" />
+          <IconButton icon={IconCamera} onClick={handleTakePhoto} size={24} />
+          <IconButton icon={IconX} onClick={() => close()} size={24} />
         </div>
       </Modal>
     </>
