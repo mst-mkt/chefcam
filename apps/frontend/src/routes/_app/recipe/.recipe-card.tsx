@@ -1,16 +1,18 @@
+import { Link } from '@tanstack/react-router'
 import type { FC } from 'react'
 
 type RecipeCardProps = {
-  url: string
+  id: string
   title: string
   image: string
   ingredients: string[]
 }
 
-export const RecipeCard: FC<RecipeCardProps> = ({ url, title, image, ingredients }) => (
-  <a
-    href={url}
-    key={url}
+export const RecipeCard: FC<RecipeCardProps> = ({ id, title, image, ingredients }) => (
+  <Link
+    to="/recipe/$recipeId"
+    params={{ recipeId: id }}
+    key={id}
     className="group block rounded-md transition-colors hover:bg-background-100"
   >
     <div className="flex h-fit gap-x-2 sm:gap-x-4">
@@ -28,5 +30,5 @@ export const RecipeCard: FC<RecipeCardProps> = ({ url, title, image, ingredients
         </p>
       </div>
     </div>
-  </a>
+  </Link>
 )

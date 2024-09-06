@@ -2,6 +2,7 @@ import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import { honoFactory } from '../factory'
 import { getRecipes } from '../features/recipes/scraper'
+import { recipeRouter } from './recipes/[recipeId]'
 
 const numericString = z.string().regex(/^\d+$/, { message: 'This field must be a number' })
 const cookpadSearchParamSchema = z.object({
@@ -28,5 +29,6 @@ const recipesRouter = honoFactory
       return c.json({ error }, 500)
     }
   })
+  .route('/', recipeRouter)
 
 export { recipesRouter }

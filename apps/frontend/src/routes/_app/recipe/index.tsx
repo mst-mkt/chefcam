@@ -72,7 +72,7 @@ const Recipe = () => {
       </hgroup>
       <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
-          <RecipeCard {...recipe} key={recipe.url} />
+          <RecipeCard {...recipe} key={recipe.id} />
         ))}
       </div>
       {recipes.length > 0 && (

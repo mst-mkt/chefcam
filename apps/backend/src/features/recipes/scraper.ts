@@ -1,10 +1,10 @@
 import { load } from 'cheerio'
 import { z } from 'zod'
-import { COOKPAD_BASE_URL } from '../../constants/cookpad'
 import { createRecipesUrl } from './createUrl'
+import { getRecipeIdFromUrl } from './info/recipeId'
 
 const recipeSchema = z.object({
-  url: z.string().url().describe('レシピのURL'),
+  id: z.string().describe('レシピのURL'),
   image: z.string().url().describe('レシピの画像のURL'),
   title: z.string().describe('レシピのタイトル'),
   ingredients: z.array(z.string()).describe('レシピの材料'),
@@ -40,7 +40,7 @@ const scrapeCookpadHtml = async (html: string) => {
   const recipeData = recipes
     .map((_, recipe) => {
       const title = $(recipe).find('h2').text()
-      const url = $(recipe).find('h2>a').attr('href')
+      const url = $(recipe).find('h2>a').attr('href') ?? ''
       const image = $(recipe).find('.flex-none > picture > img').attr('src')
       const ingredients = $(recipe)
         .find('[data-ingredients-highlighter-target="ingredients"]')
@@ -48,7 +48,7 @@ const scrapeCookpadHtml = async (html: string) => {
         .map((_, ingredient) => $(ingredient).text())
         .filter((_, ingredient) => ingredient !== '•')
         .get()
-      const newRecipe = { title, url: `${COOKPAD_BASE_URL}${url}`, image, ingredients }
+      const newRecipe = { title, id: getRecipeIdFromUrl(url), image, ingredients }
       const validatedRecipe = recipeSchema.safeParse(newRecipe)
       if (!validatedRecipe.success) {
         console.error('Invalid recipe:', validatedRecipe.error.issues)
