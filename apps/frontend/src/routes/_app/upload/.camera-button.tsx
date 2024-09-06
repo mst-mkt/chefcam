@@ -25,9 +25,13 @@ type CameraButtonProps = {
 const CameraAccessChecking: FC = () => <p className="text-accent">カメラへのアクセスを確認中...</p>
 
 const CameraAccessDenied: FC<{ close: () => void }> = ({ close }) => (
-  <div>
+  <div className="flex flex-col items-center">
     <p className="text-accent">カメラへのアクセスが許可されていません。</p>
-    <button type="button" onClick={close} className="mt-4 rounded bg-accent px-4 py-2 text-white">
+    <button
+      type="button"
+      onClick={close}
+      className="mx-auto mt-4 rounded bg-accent px-4 py-2 text-white"
+    >
       閉じる
     </button>
   </div>
