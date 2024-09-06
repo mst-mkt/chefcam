@@ -67,7 +67,7 @@ export const CameraButton: FC<CameraButtonProps> = ({
       </button>
       <Modal title="カメラ">
         <div className="relative overflow-hidden rounded-md">
-          <Camera ref={cameraRef} errorMessages={{}} aspectRatio={4 / 3} />
+          <Camera ref={cameraRef} errorMessages={{}} aspectRatio={4 / 3} facingMode="environment" />
         </div>
         <div className="flex items-center justify-center gap-x-8">
           <IconButton icon={IconCamera} onClick={handleTakePhoto} size={24} className="order-2" />
