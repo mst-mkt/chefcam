@@ -16,7 +16,7 @@ export const aiModelMiddleware = createMiddleware(async (c, next) => {
     baseURL: requestUrl,
   })
 
-  const model = openai('gpt-4o')
+  const model = openai('gpt-4o-mini')
 
   c.set('model', model)
 
