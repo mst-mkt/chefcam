@@ -1,4 +1,3 @@
-import {} from '@tabler/icons-react'
 import type React from 'react'
 import type { FC } from 'react'
 type ModalProps = {
