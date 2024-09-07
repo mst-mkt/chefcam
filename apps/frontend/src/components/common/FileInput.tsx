@@ -32,15 +32,15 @@ export const FileInput: FC<FileInputProps> = ({ onChange, isLoading = false }) =
 
   return (
     <label
-      className="flex aspect-2 w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-2xl border-4 border-accent border-dotted p-16 transition-colors focus-within:bg-accent/20 hover:bg-accent/10"
+      className="flex aspect-2 w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-2xl border-4 border-accent border-dotted px-16 py-8 transition-colors focus-within:bg-accent/20 hover:bg-accent/10 md:p-16"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >
       {isLoading ? (
-        <IconLoader2 size={64} className="animate-spin text-accent" />
+        <IconLoader2 className="h-12 w-12 animate-spin text-accent md:h-16 md:w-16" />
       ) : (
         <>
-          <IconPhotoPlus size={64} className="text-accent" />
+          <IconPhotoPlus className="h-12 w-12 text-accent md:h-16 md:w-16" />
           <input
             type="file"
             className="h-0 border-0 opacity-0"
