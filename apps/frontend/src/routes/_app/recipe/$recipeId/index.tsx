@@ -22,11 +22,11 @@ const RecipeInfo = () => {
 
   return (
     <div className="flex flex-col gap-y-16">
-      <div className="flex gap-x-4">
+      <div className="flex flex-col gap-4 md:flex-row">
         <img
           src={recipe.thumbnail}
           alt={recipe.title}
-          className="block aspect-1 w-32 shrink-0 grow-0 rounded-md object-cover"
+          className="block aspect-[16/9] w-full shrink-0 grow-0 rounded-md object-cover md:aspect-1 md:w-32"
         />
         <div className="flex shrink grow flex-col gap-y-2">
           <h1 className="truncate font-bold text-xl">{recipe.title}</h1>
