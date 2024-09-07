@@ -12,6 +12,7 @@ export const RecipeCard: FC<RecipeCardProps> = ({ id, title, image, ingredients 
   <Link
     to="/recipe/$recipeId"
     params={{ recipeId: id }}
+    search={{ searchResult: location.href }}
     key={id}
     className="group block rounded-md transition-colors hover:bg-background-100"
   >

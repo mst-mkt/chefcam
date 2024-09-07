@@ -1,7 +1,12 @@
-import { IconLink } from '@tabler/icons-react'
+import { IconChevronLeft, IconLink } from '@tabler/icons-react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { twJoin } from 'tailwind-merge'
+import { z } from 'zod'
 import { apiClient } from '../../../../lib/apiClient'
+
+const searchParamsSchema = z.object({
+  searchResult: z.string().url().optional(),
+})
 
 const loader = async (recipeId: string) => {
   const res = await apiClient.recipes[':recipeId'].$get({ param: { recipeId } })
@@ -11,26 +16,36 @@ const loader = async (recipeId: string) => {
 }
 
 export const Route = createFileRoute('/_app/recipe/$recipeId/')({
+  validateSearch: (search) => searchParamsSchema.parse(search),
   loader: ({ params }) => loader(params.recipeId),
   component: () => <RecipeInfo />,
 })
 
 const RecipeInfo = () => {
   const { recipe } = Route.useLoaderData()
+  const { searchResult } = Route.useSearch()
 
   if (recipe === null) return <div>Recipe not found</div>
 
   return (
     <div className="flex flex-col gap-y-16">
-      <div className="flex flex-col gap-4 md:flex-row">
-        <img
-          src={recipe.thumbnail}
-          alt={recipe.title}
-          className="block aspect-[16/9] w-full shrink-0 grow-0 rounded-md object-cover md:aspect-1 md:w-32"
-        />
-        <div className="flex shrink grow flex-col gap-y-2">
-          <h1 className="truncate font-bold text-xl">{recipe.title}</h1>
-          <p className="line-clamp-4">{recipe.description}</p>
+      <div className="flex flex-col gap-y-8">
+        {searchResult !== undefined && (
+          <Link to={searchResult} className="flex items-center gap-x-2 font-bold text-accent">
+            <IconChevronLeft size={28} />
+            <span>検索結果に戻る</span>
+          </Link>
+        )}
+        <div className="flex flex-col gap-4 md:flex-row">
+          <img
+            src={recipe.thumbnail}
+            alt={recipe.title}
+            className="block aspect-[16/9] w-full shrink-0 grow-0 rounded-md object-cover md:aspect-1 md:w-32"
+          />
+          <div className="flex shrink grow flex-col gap-y-2">
+            <h1 className="truncate font-bold text-xl">{recipe.title}</h1>
+            <p className="line-clamp-4">{recipe.description}</p>
+          </div>
         </div>
       </div>
       <ul className="flex flex-col gap-y-2 rounded-md bg-background-50 p-4 text-sm">
