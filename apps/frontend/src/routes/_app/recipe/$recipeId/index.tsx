@@ -1,5 +1,6 @@
 import { IconChevronLeft, IconLink } from '@tabler/icons-react'
 import { Link, createFileRoute } from '@tanstack/react-router'
+import { useLayoutEffect } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { z } from 'zod'
 import { apiClient } from '../../../../lib/apiClient'
@@ -24,6 +25,11 @@ export const Route = createFileRoute('/_app/recipe/$recipeId/')({
 const RecipeInfo = () => {
   const { recipe } = Route.useLoaderData()
   const { searchResult } = Route.useSearch()
+
+  useLayoutEffect(() => {
+    const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+    scrollToTop()
+  }, [])
 
   if (recipe === null) return <div>Recipe not found</div>
 
