@@ -3,7 +3,7 @@ import { type Dispatch, type FC, type SetStateAction, useMemo, useState } from '
 import { FileInput } from '../../../components/common/FileInput'
 import { apiClient } from '../../../lib/apiClient'
 import type { FoodImage } from '../../../types/FoodTypes'
-import { CameraButton } from './.camera'
+import { CameraButton } from './.camera-button'
 
 type ImagePickerProps = {
   foodImages: FoodImage[]
