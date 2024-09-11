@@ -33,6 +33,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: chefcam
+          workingDirectory: ./apps/frontend
           directory: ./dist
           branch: main
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
@@ -57,4 +58,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: ./apps/backend
           command: deploy ./src/index.ts
