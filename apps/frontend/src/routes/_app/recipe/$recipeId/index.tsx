@@ -22,6 +22,7 @@ export const Route = createFileRoute('/_app/recipe/$recipeId/')({
   loader: ({ params }) => loader(params.recipeId),
   component: () => <RecipeInfo />,
   pendingComponent: () => <PendingRecipe />,
+  pendingMs: 0,
 })
 
 const RecipeInfo = () => {

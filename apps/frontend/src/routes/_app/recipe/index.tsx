@@ -24,6 +24,7 @@ export const Route = createFileRoute('/_app/recipe/')({
   component: () => <Recipe />,
   pendingComponent: () => <PendingRecipe />,
   errorComponent: () => <ErrorComponent />,
+  pendingMs: 0,
 })
 
 const Recipe = () => {
