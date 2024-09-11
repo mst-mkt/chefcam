@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-export const RecipeSkelton: FC = () => (
+export const SkeltonCard: FC = () => (
   <div className="group block rounded-md transition-colors hover:bg-background-100">
     <div className="flex h-fit gap-x-2 sm:gap-x-4">
       <div className="aspect-1 h-20 animate-pulse rounded-md bg-foreground/30 shadow-md sm:h-32" />

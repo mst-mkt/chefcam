@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { LinkButton } from '../../../components/common/LinkButton'
 import { apiClient } from '../../../lib/apiClient'
 import { RecipeCard } from './.recipe-card'
-import { RecipeSkelton } from './.recipe-skelton'
+import { SkeltonCard } from './.skelton-card'
 
 const recipeSearchSchema = z.object({
   foods: z.array(z.string()).catch([]),
@@ -96,7 +96,7 @@ const PendingRecipe = () => (
     <div className="flex flex-col gap-y-8">
       {[...Array(5)].map((_, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: This is a skeleton component, so index key is not a problem
-        <RecipeSkelton key={i} />
+        <SkeltonCard key={i} />
       ))}
     </div>
   </>
