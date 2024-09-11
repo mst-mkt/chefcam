@@ -102,7 +102,7 @@ export const scrapeRecipePage = async (html: string) => {
         .get()
 
       return {
-        step: text,
+        step: text.length > 0 ? text : undefined,
         images,
         recipeLink:
           recipeLink.length > 0
