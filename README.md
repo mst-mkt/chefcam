@@ -22,8 +22,14 @@ Just take a picture of your refrigerator and you can instantly search for your d
 #### Backend
 
 - Hono
-- langchain
+- Vercel AI SDK
 - cheerio
+
+### Deployment
+
+- Cloudflare Pages
+- Cloudflare Workers
+- Cloudflare AI Gateway
 
 ## Development
 
