@@ -25,7 +25,7 @@ Just take a picture of your refrigerator and you can instantly search for your d
 - Vercel AI SDK
 - cheerio
 
-### Deployment
+#### Deployment
 
 - Cloudflare Pages
 - Cloudflare Workers
