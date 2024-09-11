@@ -6,13 +6,14 @@ type RecipeCardProps = {
   title: string
   image: string
   ingredients: string[]
+  search?: string[]
 }
 
-export const RecipeCard: FC<RecipeCardProps> = ({ id, title, image, ingredients }) => (
+export const RecipeCard: FC<RecipeCardProps> = ({ id, title, image, ingredients, search }) => (
   <Link
     to="/recipe/$recipeId"
     params={{ recipeId: id }}
-    search={{ searchResult: location.href }}
+    search={{ search }}
     key={id}
     className="group block rounded-md transition-colors hover:bg-background-100"
   >

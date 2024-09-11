@@ -3,14 +3,18 @@ import { Link } from '@tanstack/react-router'
 import type { FC } from 'react'
 
 type SkeltonRecipeProps = {
-  searchResult?: string
+  search?: string[]
 }
 
-export const SkeltonRecipe: FC<SkeltonRecipeProps> = ({ searchResult }) => (
+export const SkeltonRecipe: FC<SkeltonRecipeProps> = ({ search }) => (
   <>
     <div className="flex flex-col gap-y-8">
-      {searchResult !== undefined && (
-        <Link to={searchResult} className="flex items-center gap-x-2 font-bold text-accent">
+      {search !== undefined && (
+        <Link
+          to="/recipe"
+          search={{ foods: search }}
+          className="flex items-center gap-x-2 font-bold text-accent"
+        >
           <IconChevronLeft size={28} />
           <span>検索結果に戻る</span>
         </Link>
