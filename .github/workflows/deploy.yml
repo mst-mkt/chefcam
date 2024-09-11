@@ -1,0 +1,60 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["Checks"]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  fontend:
+    runs-on: ubuntu-latest
+    name: Deploy Frontend to Cloudflare Pages
+    permissions:
+      contents: read
+      deployments: write
+    defaults:
+      run:
+        working-directory: ./apps/frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+      - name: Deploy
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: chefcam
+          directory: ./dist
+          branch: main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+  backend:
+    runs-on: ubuntu-latest
+    name: Deploy Backend to Cloudflare Workers
+    permissions:
+      contents: read
+      deployments: write
+    defaults:
+      run:
+        working-directory: ./apps/backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy ./src/index.ts
