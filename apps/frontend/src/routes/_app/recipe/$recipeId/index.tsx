@@ -4,6 +4,7 @@ import { useLayoutEffect } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { z } from 'zod'
 import { apiClient } from '../../../../lib/apiClient'
+import { SkeltonRecipe } from './.skelton-recipe'
 
 const searchParamsSchema = z.object({
   searchResult: z.string().url().optional(),
@@ -20,6 +21,7 @@ export const Route = createFileRoute('/_app/recipe/$recipeId/')({
   validateSearch: (search) => searchParamsSchema.parse(search),
   loader: ({ params }) => loader(params.recipeId),
   component: () => <RecipeInfo />,
+  pendingComponent: () => <PendingRecipe />,
 })
 
 const RecipeInfo = () => {
@@ -115,6 +117,21 @@ const RecipeInfo = () => {
           <p>{recipe.point}</p>
         </div>
       )}
+    </div>
+  )
+}
+
+const PendingRecipe = () => {
+  const { searchResult } = Route.useSearch()
+
+  useLayoutEffect(() => {
+    const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+    scrollToTop()
+  }, [])
+
+  return (
+    <div className="flex flex-col gap-y-16">
+      <SkeltonRecipe searchResult={searchResult} />
     </div>
   )
 }
