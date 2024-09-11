@@ -6,9 +6,11 @@ Just take a picture of your refrigerator and you can instantly search for your d
 
 ### Features
 
+- Take a picture of the ingredients in the refrigerator
 - Upload a photo and food ingredients are automatically detected by AI
 - Unwanted ingredients can be manually selected from the detected materials
 - Search for recipes from cookpad based on the selected ingredients
+- View the recipe and ingredients in detail
 
 ### Tech stack
 
