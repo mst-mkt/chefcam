@@ -7,7 +7,7 @@ import { apiClient } from '../../../../lib/apiClient'
 import { SkeltonRecipe } from './.skelton-recipe'
 
 const searchParamsSchema = z.object({
-  searchResult: z.string().url().optional(),
+  search: z.array(z.string()).optional(),
 })
 
 const loader = async (recipeId: string) => {
@@ -22,11 +22,12 @@ export const Route = createFileRoute('/_app/recipe/$recipeId/')({
   loader: ({ params }) => loader(params.recipeId),
   component: () => <RecipeInfo />,
   pendingComponent: () => <PendingRecipe />,
+  pendingMs: 0,
 })
 
 const RecipeInfo = () => {
   const { recipe } = Route.useLoaderData()
-  const { searchResult } = Route.useSearch()
+  const { search } = Route.useSearch()
 
   useLayoutEffect(() => {
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -38,8 +39,12 @@ const RecipeInfo = () => {
   return (
     <div className="flex flex-col gap-y-16">
       <div className="flex flex-col gap-y-8">
-        {searchResult !== undefined && (
-          <Link to={searchResult} className="flex items-center gap-x-2 font-bold text-accent">
+        {search !== undefined && (
+          <Link
+            to="/recipe"
+            search={{ foods: search }}
+            className="flex items-center gap-x-2 font-bold text-accent"
+          >
             <IconChevronLeft size={28} />
             <span>検索結果に戻る</span>
           </Link>
@@ -122,7 +127,7 @@ const RecipeInfo = () => {
 }
 
 const PendingRecipe = () => {
-  const { searchResult } = Route.useSearch()
+  const { search } = Route.useSearch()
 
   useLayoutEffect(() => {
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -131,7 +136,7 @@ const PendingRecipe = () => {
 
   return (
     <div className="flex flex-col gap-y-16">
-      <SkeltonRecipe searchResult={searchResult} />
+      <SkeltonRecipe search={search} />
     </div>
   )
 }

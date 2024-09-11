@@ -24,6 +24,7 @@ export const Route = createFileRoute('/_app/recipe/')({
   component: () => <Recipe />,
   pendingComponent: () => <PendingRecipe />,
   errorComponent: () => <ErrorComponent />,
+  pendingMs: 0,
 })
 
 const Recipe = () => {
@@ -59,7 +60,7 @@ const Recipe = () => {
       </hgroup>
       <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
-          <RecipeCard {...recipe} key={recipe.id} />
+          <RecipeCard {...recipe} key={recipe.id} search={foods} />
         ))}
       </div>
       {recipes.length > 0 && (
