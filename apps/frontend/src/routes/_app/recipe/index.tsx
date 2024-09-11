@@ -23,15 +23,8 @@ export const Route = createFileRoute('/_app/recipe/')({
   },
   component: () => <Recipe />,
   pendingComponent: () => <PendingRecipe />,
-  errorComponent: () => <ErrorComponents />,
+  errorComponent: () => <ErrorComponent />,
 })
-
-const ErrorComponents = () => (
-  <>
-    <p>レシピが見つかりませんでした。</p>
-    <LinkButton to="/upload">戻る</LinkButton>
-  </>
-)
 
 const Recipe = () => {
   const { foods } = Route.useSearch()
@@ -99,5 +92,11 @@ const PendingRecipe = () => (
         <SkeltonCard key={i} />
       ))}
     </div>
+  </>
+)
+const ErrorComponent = () => (
+  <>
+    <p>レシピが見つかりませんでした。</p>
+    <LinkButton to="/upload">戻る</LinkButton>
   </>
 )
