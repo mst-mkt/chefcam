@@ -26,6 +26,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build
+        env:
+          VITE_BACKEND_BASE_URL: https://api.chefcam.keito.dev
         run: pnpm build
       - name: Deploy
         uses: cloudflare/pages-action@v1
