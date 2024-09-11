@@ -94,6 +94,7 @@ const PendingRecipe = () => (
     </div>
   </>
 )
+
 const ErrorComponent = () => (
   <>
     <p>レシピが見つかりませんでした。</p>
