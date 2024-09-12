@@ -39,15 +39,14 @@ const scrapeCookpadHtml = async (html: string) => {
   const recipes = recipeList.children().filter((_, elm) => 'id' in elm.attribs)
   const recipeData = recipes
     .map((_, recipe) => {
-      const title = $(recipe).find('h2').text()
+      const title = $(recipe).find('h2').text().replace(/\n/g, '').trim()
       const url = $(recipe).find('h2>a').attr('href') ?? ''
       const image = $(recipe).find('.flex-none > picture > img').attr('src')
       const ingredients = $(recipe)
         .find('[data-ingredients-highlighter-target="ingredients"]')
-        .contents()
-        .map((_, ingredient) => $(ingredient).text())
-        .filter((_, ingredient) => ingredient !== '•')
-        .get()
+        .text()
+        .split(',\n')
+        .map((ingredient) => ingredient.trim())
       const newRecipe = { title, id: getRecipeIdFromUrl(url), image, ingredients }
       const validatedRecipe = recipeSchema.safeParse(newRecipe)
       if (!validatedRecipe.success) {
