@@ -2,6 +2,7 @@ import { IconBrandGithubFilled } from '@tabler/icons-react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { IllustBreakfast } from '../components/illust/Breakfast'
 import { PROJECT_NAME, PROJECT_REPOSITORY_URL } from '../constants/projects'
+import { useKeydown } from '../hooks/useKeydown'
 import { useTheme } from '../hooks/useTheme'
 
 export const Route = createFileRoute('/')({
@@ -9,7 +10,12 @@ export const Route = createFileRoute('/')({
 })
 
 const Home = () => {
+  const navigation = Route.useNavigate()
+
   useTheme()
+  useKeydown({ key: 'enter' }, () => {
+    navigation({ to: '/upload' })
+  })
 
   return (
     <>
