@@ -66,6 +66,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({
             <button
               type="button"
               className="absolute top-0 right-0 cursor-pointer rounded-bl-md bg-red-400 p-1 text-white opacity-0 transition-opacity hover:bg-red-600 group-hover:opacity-100"
+              aria-label="Remove image"
               onClick={() => handleFileRemove(i)}
             >
               <IconX size={16} color="#fff" />

@@ -40,7 +40,8 @@ const Home = () => {
       </div>
       <a
         href={PROJECT_REPOSITORY_URL}
-        className="absolute right-4 bottom-4 w-fit rounded-md p-2 transition-colors hover:bg-background-100"
+        className="absolute right-8 bottom-8 w-fit rounded-md p-2 transition-colors hover:bg-background-100"
+        aria-label="GitHub repository link"
       >
         <IconBrandGithubFilled size={20} className="text-foreground" />
       </a>

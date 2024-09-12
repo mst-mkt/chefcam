@@ -117,6 +117,7 @@ export const CameraButton: FC<CameraButtonProps> = ({
       <button
         type="button"
         onClick={() => setIsCameraOpen(true)}
+        aria-label="Open camera"
         className={twJoin(
           'flex aspect-1 w-20 items-center justify-center rounded-lg border-2 border-background-200 bg-primary text-accent transition-colors',
           'hover:border-background-400 hover:bg-background-50',

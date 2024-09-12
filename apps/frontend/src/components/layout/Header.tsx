@@ -15,6 +15,7 @@ export const Header = () => {
         <button
           type="button"
           onClick={toggleTheme}
+          aria-label="Toggle theme"
           className="w-fit rounded-md p-2 transition-colors hover:bg-background-200 focus:outline-none"
         >
           <IconBrightness size={20} />
