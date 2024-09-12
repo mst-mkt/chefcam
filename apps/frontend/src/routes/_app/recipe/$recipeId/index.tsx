@@ -29,11 +29,6 @@ const RecipeInfo = () => {
   const { recipe } = Route.useLoaderData()
   const { search } = Route.useSearch()
 
-  useLayoutEffect(() => {
-    const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-    scrollToTop()
-  }, [])
-
   if (recipe === null) return <div>Recipe not found</div>
 
   return (
@@ -130,8 +125,7 @@ const PendingRecipe = () => {
   const { search } = Route.useSearch()
 
   useLayoutEffect(() => {
-    const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-    scrollToTop()
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }, [])
 
   return (
