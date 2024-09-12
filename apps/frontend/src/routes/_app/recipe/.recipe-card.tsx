@@ -21,7 +21,7 @@ export const RecipeCard: FC<RecipeCardProps> = ({ id, title, image, ingredients,
       <img
         src={image}
         alt={title}
-        className="block aspect-1 h-20 rounded-md object-cover shadow-md sm:h-[8rem]"
+        className="block aspect-1 h-24 rounded-md object-cover shadow-md sm:h-32"
       />
       <div className="flex shrink grow flex-col justify-center gap-y-2 overflow-hidden px-4">
         <h3 className="truncate font-bold transition-colors group-hover:text-accent sm:text-lg">
