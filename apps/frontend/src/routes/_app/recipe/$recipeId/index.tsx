@@ -38,7 +38,7 @@ const RecipeInfo = () => {
           <Link
             to="/recipe"
             search={{ foods: search }}
-            className="flex items-center gap-x-2 font-bold text-accent"
+            className="flex w-fit items-center gap-x-2 font-bold text-accent transition-colors hover:text-accent-700 dark:hover:text-accent-200"
           >
             <IconChevronLeft size={28} />
             <span>検索結果に戻る</span>
