@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import type { FC } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 type RecipeCardProps = {
   id: string
@@ -15,21 +16,31 @@ export const RecipeCard: FC<RecipeCardProps> = ({ id, title, image, ingredients,
     params={{ recipeId: id }}
     search={{ search }}
     key={id}
-    className="group block rounded-md transition-colors hover:bg-background-100"
+    className="block rounded-md transition-colors hover:bg-background-100"
   >
-    <div className="flex h-fit gap-x-2 sm:gap-x-4">
+    <div className="flex h-fit items-center gap-x-2 sm:gap-x-4">
       <img
         src={image}
         alt={title}
-        className="block aspect-1 h-24 rounded-md object-cover shadow-md sm:h-32"
+        className="block aspect-1 h-24 rounded-md object-cover shadow-md md:h-36"
       />
-      <div className="flex shrink grow flex-col justify-center gap-y-2 overflow-hidden px-4">
-        <h3 className="truncate font-bold transition-colors group-hover:text-accent sm:text-lg">
-          {title}
-        </h3>
-        <p className="line-clamp-2 text-sm transition-colors sm:text-base">
-          {ingredients.join(', ')}
-        </p>
+      <div className="flex shrink grow flex-col justify-center gap-y-2 overflow-hidden p-4 sm:gap-y-4">
+        <h3 className="truncate font-bold transition-colors sm:text-lg">{title}</h3>
+        <div className="line-clamp-2">
+          {ingredients
+            .toSorted((a) => (search?.some((s) => a.includes(s)) ? -1 : 1))
+            .map((ingredient) => (
+              <p
+                key={ingredient}
+                className={twMerge(
+                  'mr-2 mb-1 inline-block rounded-full bg-background-100/10 px-2 py-1 text-xs last:mr-0',
+                  search?.some((s) => ingredient.includes(s)) && 'bg-accent-50/50 font-bold',
+                )}
+              >
+                {ingredient}
+              </p>
+            ))}
+        </div>
       </div>
     </div>
   </Link>
