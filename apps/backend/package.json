@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.55",
+    "@auth/core": "^0.34.2",
+    "@hono/auth-js": "^1.0.10",
     "@hono/zod-validator": "^0.2.2",
     "ai": "^3.3.26",
     "cheerio": "1.0.0-rc.12",
