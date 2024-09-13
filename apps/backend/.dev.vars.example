@@ -3,3 +3,6 @@ OPENAI_API_KEY =
 OPENAI_BASE_URL = https://gateway.ai.cloudflare.com/v1/aff21982f7963fd8f2d9d373bd3b0f6f/chefcam/openai
 
 AUTH_SECRET = # generate with `openssl rand -base64 33`
+
+GOOGLE_CLIENT_ID =
+GOOGLE_CLIENT_SECRET =
