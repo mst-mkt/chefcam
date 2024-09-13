@@ -4,6 +4,7 @@ import { useLayoutEffect } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { z } from 'zod'
 import { apiClient } from '../../../../lib/apiClient'
+import { preloadImages } from '../../../../utils/imagePreload'
 import { SkeltonRecipe } from './.skelton-recipe'
 
 const searchParamsSchema = z.object({
@@ -12,9 +13,16 @@ const searchParamsSchema = z.object({
 
 const loader = async (recipeId: string) => {
   const res = await apiClient.recipes[':recipeId'].$get({ param: { recipeId } })
+  const data = await res.json()
   if (!res.ok) throw new Error(res.statusText)
 
-  return await res.json()
+  const images = [
+    data.recipe?.thumbnail,
+    ...(data.recipe?.steps.flatMap((step) => step.images) ?? []),
+  ].filter((image) => image !== undefined)
+  await preloadImages(images)
+
+  return data
 }
 
 export const Route = createFileRoute('/_app/recipe/$recipeId/')({

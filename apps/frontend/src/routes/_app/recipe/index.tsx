@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { z } from 'zod'
 import { LinkButton } from '../../../components/common/LinkButton'
 import { apiClient } from '../../../lib/apiClient'
+import { preloadImages } from '../../../utils/imagePreload'
 import { RecipeCard } from './.recipe-card'
 import { SkeltonCard } from './.skelton-card'
 
@@ -18,6 +19,9 @@ export const Route = createFileRoute('/_app/recipe/')({
     const res = await apiClient.recipes.$get({ query: { ingredients: foods } })
     const data = await res.json()
     if (!res.ok) throw new Error()
+
+    const images = data.data.map((recipe) => recipe.image)
+    await preloadImages(images)
 
     return data
   },
