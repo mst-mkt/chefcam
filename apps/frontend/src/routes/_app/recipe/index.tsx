@@ -1,11 +1,12 @@
 import { IconLoader2 } from '@tabler/icons-react'
 import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { z } from 'zod'
 import { LinkButton } from '../../../components/common/LinkButton'
 import { apiClient } from '../../../lib/apiClient'
 import { preloadImages } from '../../../utils/imagePreload'
 import { RecipeCard } from './.recipe-card'
+import { SearchFoods } from './.search-food'
 import { SkeltonCard } from './.skelton-card'
 
 const recipeSearchSchema = z.object({
@@ -32,6 +33,7 @@ export const Route = createFileRoute('/_app/recipe/')({
 })
 
 const Recipe = () => {
+  const navigate = Route.useNavigate()
   const { foods } = Route.useSearch()
   const { data, page } = Route.useLoaderData()
   const [recipes, setRecipes] = useState(data)
@@ -56,12 +58,22 @@ const Recipe = () => {
     setIsLoading(false)
   }
 
+  const handleRemoveFoodParam = useCallback(
+    (food: string) => {
+      if (foods.length <= 1) return
+      const newFoods = foods.filter((f) => f !== food)
+      navigate({ to: '/recipe', search: { foods: newFoods } })
+    },
+    [foods, navigate],
+  )
+
   return (
     <>
       <hgroup>
         <h2 className="font-bold text-3xl">レシピ一覧</h2>
         <p className="font-bold text-accent text-lg">Recipe</p>
       </hgroup>
+      <SearchFoods foods={foods} handleRemoveFoodParam={handleRemoveFoodParam} />
       <div className="flex flex-col gap-y-8">
         {recipes.map((recipe) => (
           <RecipeCard {...recipe} key={recipe.id} search={foods} />
@@ -85,20 +97,35 @@ const Recipe = () => {
   )
 }
 
-const PendingRecipe = () => (
-  <>
-    <hgroup>
-      <h2 className="font-bold text-3xl">レシピ一覧</h2>
-      <p className="font-bold text-accent text-lg">Recipe</p>
-    </hgroup>
-    <div className="flex flex-col gap-y-8">
-      {[...Array(5)].map((_, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: This is a skeleton component, so index key is not a problem
-        <SkeltonCard key={i} />
-      ))}
-    </div>
-  </>
-)
+const PendingRecipe = () => {
+  const { foods } = Route.useSearch()
+  const navigate = Route.useNavigate()
+
+  const handleRemoveFoodParam = useCallback(
+    (food: string) => {
+      if (foods.length <= 1) return
+      const newFoods = foods.filter((f) => f !== food)
+      navigate({ to: '/recipe', search: { foods: newFoods } })
+    },
+    [foods, navigate],
+  )
+
+  return (
+    <>
+      <hgroup>
+        <h2 className="font-bold text-3xl">レシピ一覧</h2>
+        <p className="font-bold text-accent text-lg">Recipe</p>
+      </hgroup>
+      <SearchFoods foods={foods} handleRemoveFoodParam={handleRemoveFoodParam} />
+      <div className="flex flex-col gap-y-8">
+        {[...Array(5)].map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: This is a skeleton component, so index key is not a problem
+          <SkeltonCard key={i} />
+        ))}
+      </div>
+    </>
+  )
+}
 
 const ErrorComponent = () => (
   <>
