@@ -1,4 +1,4 @@
-import { authHandler, verifyAuth } from '@hono/auth-js'
+import { authHandler } from '@hono/auth-js'
 import type { LanguageModel } from 'ai'
 import { cors } from 'hono/cors'
 import { createFactory } from 'hono/factory'
@@ -41,7 +41,6 @@ const honoFactory = createFactory<HonoConfigType>({
 
     app.use('*', authMiddleware)
     app.use('/auth/*', authHandler())
-    app.use('*', verifyAuth())
   },
 })
 
