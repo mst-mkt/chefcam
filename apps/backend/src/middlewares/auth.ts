@@ -2,6 +2,7 @@ import Google from '@auth/core/providers/google'
 import { initAuthConfig } from '@hono/auth-js'
 
 export const authMiddleware = initAuthConfig((c) => ({
+  basePath: '/auth',
   secret: c.env.AUTH_SECRET,
   providers: [
     Google({
