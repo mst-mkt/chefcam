@@ -12,10 +12,11 @@ compatibility_date = "2023-12-01"
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
+[[d1_databases]]
+binding = "DB"
+database_name = "chefcam"
+database_id = "efd66620-172b-4305-a21a-e1d6e5a881da"
+migrations_dir = "drizzle/migrations"
 
 # [ai]
 # binding = "AI"
