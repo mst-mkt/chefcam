@@ -26,7 +26,7 @@ export const Header = () => {
           </button>
           <IconButton
             icon={session === null ? IconDoorEnter : IconDoorExit}
-            onClick={() => (session === null ? signIn('google') : signOut())}
+            onClick={() => (session === null ? signIn('google') : signOut({ redirect: false }))}
             className="bg-transparent"
           />
         </div>

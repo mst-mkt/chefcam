@@ -10,4 +10,7 @@ export const authMiddleware = initAuthConfig((c) => ({
       clientSecret: c.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    redirect: ({ url }) => url,
+  },
 }))
