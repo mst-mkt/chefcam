@@ -33,6 +33,7 @@ const honoFactory = createFactory<HonoConfigType>({
 
           return FRONTEND_BASE_URL
         },
+        credentials: true,
       }),
     )
 
