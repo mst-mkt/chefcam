@@ -12,10 +12,10 @@ compatibility_date = "2023-12-01"
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
+[[d1_databases]]
+binding = "DB"
+database_name = "chefcam-db"
+database_id = "b6c2f4b9-bfdc-4015-b13b-a3782407e912"
 
 # [ai]
 # binding = "AI"
