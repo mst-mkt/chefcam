@@ -14,6 +14,7 @@
     "@hono/zod-validator": "^0.2.2",
     "ai": "^3.3.26",
     "cheerio": "1.0.0-rc.12",
+    "drizzle-orm": "^0.33.0",
     "hono": "^4.5.11",
     "zod": "^3.23.8"
   },
@@ -21,6 +22,7 @@
     "@biomejs/biome": "^1.8.3",
     "@cloudflare/workers-types": "^4.20240821.1",
     "biome-config": "workspace:*",
+    "drizzle-kit": "^0.24.2",
     "typescript": "^5.5.4",
     "wrangler": "^3.74.0"
   },
