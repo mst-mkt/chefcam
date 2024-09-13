@@ -120,7 +120,7 @@ export const scrapeRecipePage = async (html: string) => {
   const recipeInfo = {
     title,
     thumbnail,
-    description,
+    description: description !== '' ? description : undefined,
     ingredients,
     steps,
     point: point !== '' ? point : undefined,
