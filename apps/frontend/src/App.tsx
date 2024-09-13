@@ -1,3 +1,4 @@
+import { SessionProvider, authConfigManager } from '@hono/auth-js/react'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from './lib/tanstack-router/route-tree.gen'
 
@@ -11,8 +12,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+authConfigManager.setConfig({
+  baseUrl: 'http://localhost:8787',
+  basePath: '/auth',
+  credentials: 'include',
+})
+
 const App = () => {
-  return <RouterProvider router={router} />
+  return (
+    <SessionProvider>
+      <RouterProvider router={router} />
+    </SessionProvider>
+  )
 }
 
 export default App
