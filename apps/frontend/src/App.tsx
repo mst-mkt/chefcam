@@ -1,5 +1,6 @@
 import { SessionProvider, authConfigManager } from '@hono/auth-js/react'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { BACKEND_BASE_URL } from './lib/envValue'
 import { routeTree } from './lib/tanstack-router/route-tree.gen'
 
 const router = createRouter({
@@ -13,7 +14,7 @@ declare module '@tanstack/react-router' {
 }
 
 authConfigManager.setConfig({
-  baseUrl: 'http://localhost:8787',
+  baseUrl: BACKEND_BASE_URL,
   basePath: '/auth',
   credentials: 'include',
 })
