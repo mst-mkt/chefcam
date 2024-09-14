@@ -1,9 +1,20 @@
+import fs from 'node:fs'
 import dotenv from 'dotenv'
 import type { Config } from 'drizzle-kit'
 
 dotenv.config({
   path: './.dev.vars',
 })
+
+const localDbUrl = (() => {
+  const dir = './.wrangler/state/v3/d1/miniflare-D1DatabaseObject/'
+  const files = fs.readdirSync(dir)
+  const dbFile = files.find((file) => file.endsWith('.sqlite'))
+
+  if (dbFile === undefined) throw new Error('Database file not found')
+
+  return `${dir}${dbFile}`
+})()
 
 const remoteConfig = {
   schema: './src/drizzle/schema.ts',
@@ -22,7 +33,7 @@ const localConfig = {
   out: './src/drizzle/migrations/',
   dialect: 'sqlite',
   dbCredentials: {
-    url: './.wrangler/state/v3/d1/miniflare-D1DatabaseObject/035cee5d9d4111e5318a84d863dfb624ed8cb5bd2da46860deb321a831411ff2.sqlite',
+    url: localDbUrl,
   },
 } satisfies Config
 
