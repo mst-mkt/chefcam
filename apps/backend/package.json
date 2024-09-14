@@ -7,7 +7,7 @@
     "fix": "biome check --write ./src/",
     "typecheck": "tsc --noEmit",
     "generate:drizzle": "drizzle-kit generate",
-    "migrate:remote": "wrangler d1  migrations apply chefcam",
+    "migrate:remote": "wrangler d1  migrations apply chefcam --remote",
     "migrate:local": "wrangler d1  migrations apply chefcam --local",
     "drizzle-studio:remote": "NODE_ENV=production drizzle-kit studio",
     "drizzle-studio:local": "drizzle-kit studio"
