@@ -16,7 +16,7 @@ compatibility_date = "2023-12-01"
 binding = "DB"
 database_name = "chefcam"
 database_id = "efd66620-172b-4305-a21a-e1d6e5a881da"
-migrations_dir = "drizzle/migrations"
+migrations_dir = "src/drizzle/migrations"
 
 # [ai]
 # binding = "AI"
