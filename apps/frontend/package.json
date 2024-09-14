@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hono/auth-js": "^1.0.10",
     "@tabler/icons-react": "^3.14.0",
     "@tanstack/react-router": "^1.52.5",
     "@tanstack/router-devtools": "^1.52.5",

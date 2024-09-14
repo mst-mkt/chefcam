@@ -5,20 +5,32 @@
     "deploy": "wrangler deploy --minify src/index.ts",
     "check": "biome check ./src/",
     "fix": "biome check --write ./src/",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "generate:drizzle": "drizzle-kit generate",
+    "migrate:remote": "wrangler d1  migrations apply chefcam --remote",
+    "migrate:local": "wrangler d1  migrations apply chefcam --local",
+    "drizzle-studio:remote": "NODE_ENV=production drizzle-kit studio",
+    "drizzle-studio:local": "drizzle-kit studio"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.55",
+    "@auth/core": "^0.34.2",
+    "@auth/drizzle-adapter": "^1.4.2",
+    "@hono/auth-js": "^1.0.10",
     "@hono/zod-validator": "^0.2.2",
     "ai": "^3.3.26",
     "cheerio": "1.0.0-rc.12",
+    "drizzle-orm": "^0.33.0",
     "hono": "^4.5.11",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@cloudflare/workers-types": "^4.20240821.1",
+    "@libsql/client": "^0.11.0",
     "biome-config": "workspace:*",
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.24.2",
     "typescript": "^5.5.4",
     "wrangler": "^3.74.0"
   },

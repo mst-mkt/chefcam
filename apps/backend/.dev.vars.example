@@ -1,3 +1,12 @@
 FRONTEND_BASE_URL = http://localhost:5173
 OPENAI_API_KEY =
 OPENAI_BASE_URL = https://gateway.ai.cloudflare.com/v1/aff21982f7963fd8f2d9d373bd3b0f6f/chefcam/openai
+
+AUTH_SECRET = # generate with `openssl rand -base64 33`
+
+GOOGLE_CLIENT_ID =
+GOOGLE_CLIENT_SECRET =
+
+CLOUDFLARE_ACCOUNT_ID =
+CLOUDFLARE_API_TOKEN =
+D1_DATABASE_ID =
