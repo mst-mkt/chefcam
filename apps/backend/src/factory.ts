@@ -15,14 +15,15 @@ export type BindingsType = {
   DB: D1Database
 }
 
-type VariablesType = {
-  model: LanguageModel
-  db: DrizzleD1Database
+declare module 'hono' {
+  interface ContextVariableMap {
+    model: LanguageModel
+    db: DrizzleD1Database
+  }
 }
 
 type HonoConfigType = {
   Bindings: BindingsType
-  Variables: VariablesType
 }
 
 const honoFactory = createFactory<HonoConfigType>({
