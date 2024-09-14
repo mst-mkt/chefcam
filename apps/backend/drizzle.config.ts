@@ -1,10 +1,20 @@
+import dotenv from 'dotenv'
 import type { Config } from 'drizzle-kit'
+
+dotenv.config({
+  path: './.dev.vars',
+})
 
 const remoteConfig = {
   schema: './src/drizzle/schema.ts',
   out: './src/drizzle/migrations/',
   dialect: 'sqlite',
   driver: 'd1-http',
+  dbCredentials: {
+    accountId: process.env.CLOUDFLARE_ACCOUNT_ID ?? '',
+    token: process.env.CLOUDFLARE_API_TOKEN ?? '',
+    databaseId: process.env.D1_DATABASE_ID ?? '',
+  },
 } satisfies Config
 
 const localConfig = {
