@@ -32,6 +32,9 @@ importers:
       '@auth/core':
         specifier: ^0.34.2
         version: 0.34.2
+      '@auth/drizzle-adapter':
+        specifier: ^1.4.2
+        version: 1.4.2
       '@hono/auth-js':
         specifier: ^1.0.10
         version: 1.0.10(@auth/core@0.34.2)(hono@4.5.11)(react@18.3.1)
@@ -257,6 +260,9 @@ packages:
         optional: true
       nodemailer:
         optional: true
+
+  '@auth/drizzle-adapter@1.4.2':
+    resolution: {integrity: sha512-rqukaT9CeWB8VOt6g2bQ6uYMHVOQIYCBkzddZXWshi8aqwLABatpRWAc+pehpcMDn0RSW/uvKMs7tkON+Bho9Q==}
 
   '@babel/code-frame@7.24.7':
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
@@ -4132,6 +4138,14 @@ snapshots:
       oauth4webapi: 2.13.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
+
+  '@auth/drizzle-adapter@1.4.2':
+    dependencies:
+      '@auth/core': 0.34.2
+    transitivePeerDependencies:
+      - '@simplewebauthn/browser'
+      - '@simplewebauthn/server'
+      - nodemailer
 
   '@babel/code-frame@7.24.7':
     dependencies:

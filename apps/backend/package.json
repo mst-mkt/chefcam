@@ -13,6 +13,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^0.0.55",
     "@auth/core": "^0.34.2",
+    "@auth/drizzle-adapter": "^1.4.2",
     "@hono/auth-js": "^1.0.10",
     "@hono/zod-validator": "^0.2.2",
     "ai": "^3.3.26",
