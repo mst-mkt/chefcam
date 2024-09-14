@@ -25,12 +25,15 @@ Just take a picture of your refrigerator and you can instantly search for your d
 
 - Hono
 - Vercel AI SDK
+- Drizzle ORM
+- Auth.js
 - cheerio
 
 #### Deployment
 
 - Cloudflare Pages
 - Cloudflare Workers
+- Cloudflare D1
 - Cloudflare AI Gateway
 
 ## Development

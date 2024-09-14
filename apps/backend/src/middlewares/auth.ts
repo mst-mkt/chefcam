@@ -1,4 +1,5 @@
 import Google from '@auth/core/providers/google'
+import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import { initAuthConfig } from '@hono/auth-js'
 
 export const authMiddleware = initAuthConfig((c) => ({
@@ -13,4 +14,5 @@ export const authMiddleware = initAuthConfig((c) => ({
   callbacks: {
     redirect: ({ url }) => url,
   },
+  adapter: DrizzleAdapter(c.var.db),
 }))
