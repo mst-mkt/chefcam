@@ -5,7 +5,10 @@
     "deploy": "wrangler deploy --minify src/index.ts",
     "check": "biome check ./src/",
     "fix": "biome check --write ./src/",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "generate:drizzle": "drizzle-kit generate",
+    "migrate:remote": "wrangler d1  migrations apply chefcam",
+    "migrate:local": "wrangler d1  migrations apply chefcam --local"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.55",
