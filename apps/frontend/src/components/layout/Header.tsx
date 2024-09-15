@@ -28,18 +28,17 @@ export const Header = () => {
           {PROJECT_NAME}
         </Link>
         <div className="flex gap-x-2">
-          <button
-            type="button"
+          <Button
+            icon={IconBrightness}
             onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="w-fit rounded-md p-2 transition-colors hover:bg-background-100 focus:outline-none"
-          >
-            <IconBrightness size={20} />
-          </button>
+            className="bg-transparent"
+            toolTip="テーマを変更"
+          />
           <Button
             icon={session === null ? IconLogin : IconLogout}
             onClick={() => (session === null ? loginConfirm() : logoutConfirm())}
             className="bg-transparent"
+            toolTip={session === null ? 'ログイン' : 'ログアウト'}
           />
         </div>
       </div>
