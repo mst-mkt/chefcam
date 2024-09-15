@@ -19,11 +19,9 @@ export const RecipeCard: FC<RecipeCardProps> = ({ id, title, image, ingredients,
     className="block rounded-md transition-colors hover:bg-background-100"
   >
     <div className="flex h-fit items-center gap-x-2 sm:gap-x-4">
-      <img
-        src={image}
-        alt={title}
-        className="block aspect-1 h-24 rounded-md object-cover shadow-md md:h-36"
-      />
+      <div className="h-32 w-28 shrink-0 overflow-hidden rounded-md shadow-md md:h-36 md:w-36">
+        <img src={image} alt={title} className="block h-full w-full object-cover" />
+      </div>
       <div className="flex shrink grow flex-col justify-center gap-y-2 overflow-hidden p-4 sm:gap-y-4">
         <h3 className="truncate font-bold transition-colors sm:text-lg">{title}</h3>
         <div className="line-clamp-2">
