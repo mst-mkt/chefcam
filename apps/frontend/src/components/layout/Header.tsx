@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router'
 import { PROJECT_NAME } from '../../constants/projects'
 import { useConfirm } from '../../hooks/useConfirm'
 import { useTheme } from '../../hooks/useTheme'
-import { IconButton } from '../common/IconButton'
+import { Button } from '../common/Button'
 
 export const Header = () => {
   const { toggleTheme } = useTheme()
@@ -36,7 +36,7 @@ export const Header = () => {
           >
             <IconBrightness size={20} />
           </button>
-          <IconButton
+          <Button
             icon={session === null ? IconLogin : IconLogout}
             onClick={() => (session === null ? loginConfirm() : logoutConfirm())}
             className="bg-transparent"

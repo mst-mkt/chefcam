@@ -2,15 +2,19 @@ import type { Icon } from '@tabler/icons-react'
 import type { FC, JSX } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-type IconButtonProps = {
-  icon: Icon
-  label?: string
+type Content =
+  | { icon: Icon; label: string }
+  | { icon: Icon; label?: string }
+  | { icon?: Icon; label: string }
+
+type ButtonProps = {
   iconPosition?: 'left' | 'right'
   size?: number
   iconClassName?: string
-} & Omit<JSX.IntrinsicElements['button'], 'children'>
+} & Content &
+  Omit<JSX.IntrinsicElements['button'], 'children'>
 
-export const IconButton: FC<IconButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
   label,
   size,
   icon: Icon,
@@ -29,7 +33,7 @@ export const IconButton: FC<IconButtonProps> = ({
       props.className,
     )}
   >
-    <Icon size={size ?? 20} className={iconClassName} />
-    {label}
+    {Icon && <Icon size={size} className={iconClassName} />}
+    {label && <span>{label}</span>}
   </button>
 )

@@ -11,7 +11,7 @@ import {
 } from 'react'
 import Webcam from 'react-webcam'
 import { twJoin } from 'tailwind-merge'
-import { IconButton } from '../../../components/common/IconButton'
+import { Button } from '../../../components/common/Button'
 import { apiClient } from '../../../lib/apiClient'
 import type { FoodImage } from '../../../types/FoodTypes'
 import { Modal } from './.camera-modal'
@@ -55,8 +55,8 @@ const CameraComponent: FC<{
       />
     </div>
     <div className="mt-4 flex items-center justify-center gap-x-8">
-      <IconButton icon={IconCamera} onClick={handleTakePhoto} size={24} />
-      <IconButton icon={IconX} onClick={close} size={24} />
+      <Button icon={IconCamera} onClick={handleTakePhoto} size={24} />
+      <Button icon={IconX} onClick={close} size={24} />
     </div>
   </>
 )

@@ -1,7 +1,7 @@
 import { IconX } from '@tabler/icons-react'
 import { type ReactNode, forwardRef } from 'react'
 import { twJoin } from 'tailwind-merge'
-import { IconButton } from './IconButton'
+import { Button } from './Button'
 
 type ModalProps = {
   close: () => void
@@ -24,7 +24,7 @@ export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
           <header className="flex items-center justify-between">
             <h2 className="shrink grow font-bold">{title}</h2>
             {/* biome-ignore lint/a11y/noPositiveTabindex: don't focus close button at fist time */}
-            <IconButton icon={IconX} onClick={close} className="bg-transparent" tabIndex={1} />
+            <Button icon={IconX} onClick={close} className="bg-transparent" tabIndex={1} />
           </header>
           {children}
         </>

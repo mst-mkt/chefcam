@@ -1,6 +1,6 @@
 import { type Icon, IconCheck, IconX } from '@tabler/icons-react'
 import { type ReactNode, forwardRef } from 'react'
-import { IconButton } from './IconButton'
+import { Button } from './Button'
 
 type ConfirmProps = {
   title: string
@@ -33,17 +33,17 @@ export const Confirm = forwardRef<HTMLDialogElement, ConfirmProps>(
     >
       <header className="flex items-center justify-between">
         <h2 className="shrink grow font-bold">{title}</h2>
-        <IconButton icon={IconX} onClick={onCancel} className="bg-transparent" />
+        <Button icon={IconX} onClick={onCancel} className="bg-transparent" />
       </header>
       <div>{children}</div>
       <div className="flex justify-end gap-x-2">
-        <IconButton
+        <Button
           icon={cancelButtonIcon}
           onClick={onCancel}
           label={cancelButtonText}
           className="focus-visible:ring-red-400"
         />
-        <IconButton
+        <Button
           icon={confirmButtonIcon}
           onClick={onConfirm}
           label={confirmButtonText}
