@@ -1,13 +1,25 @@
 import { signIn, signOut, useSession } from '@hono/auth-js/react'
-import { IconBrightness, IconDoorEnter, IconDoorExit } from '@tabler/icons-react'
+import { IconBrightness, IconLogin, IconLogout, IconPoint } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 import { PROJECT_NAME } from '../../constants/projects'
+import { useConfirm } from '../../hooks/useConfirm'
 import { useTheme } from '../../hooks/useTheme'
 import { IconButton } from '../common/IconButton'
 
 export const Header = () => {
   const { toggleTheme } = useTheme()
   const { data: session } = useSession()
+
+  const { confirm: loginConfirm, ConfirmDialog: LoginDialog } = useConfirm({
+    onConfirm: async () => {
+      await signIn('google')
+    },
+  })
+  const { confirm: logoutConfirm, ConfirmDialog: LogoutDialog } = useConfirm({
+    onConfirm: async () => {
+      await signOut({ redirect: false })
+    },
+  })
 
   return (
     <header className="sticky top-0 z-50 border-background-100 border-b bg-backgroung/16 backdrop-blur-md">
@@ -25,12 +37,31 @@ export const Header = () => {
             <IconBrightness size={20} />
           </button>
           <IconButton
-            icon={session === null ? IconDoorEnter : IconDoorExit}
-            onClick={() => (session === null ? signIn('google') : signOut({ redirect: false }))}
+            icon={session === null ? IconLogin : IconLogout}
+            onClick={() => (session === null ? loginConfirm() : logoutConfirm())}
             className="bg-transparent"
           />
         </div>
       </div>
+      <LoginDialog title="ログイン" confirmButtonText="Login" confirmButtonIcon={IconLogin}>
+        <div className="flex flex-col gap-y-4">
+          <p>Googleアカウントでログインすることができます。</p>
+          <p>ログインすると以下の機能が利用できるようになります。</p>
+          <ul className="flex flex-col gap-y-2">
+            <li className="flex items-center gap-x-2">
+              <IconPoint size={20} className="text-accent" />
+              レシピのお気に入り機能
+            </li>
+            <li className="flex items-center gap-x-2">
+              <IconPoint size={20} className="text-accent" />
+              アップロードした画像の保存
+            </li>
+          </ul>
+        </div>
+      </LoginDialog>
+      <LogoutDialog title="ログアウト" confirmButtonText="Logout" confirmButtonIcon={IconLogout}>
+        ログアウトしますか？
+      </LogoutDialog>
     </header>
   )
 }
