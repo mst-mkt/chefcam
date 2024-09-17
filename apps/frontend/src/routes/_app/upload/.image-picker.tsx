@@ -1,4 +1,4 @@
-import { IconX } from '@tabler/icons-react'
+import { IconAlertCircle, IconX } from '@tabler/icons-react'
 import { type Dispatch, type FC, type SetStateAction, useMemo, useState } from 'react'
 import { FileInput } from '../../../components/common/FileInput'
 import { apiClient } from '../../../lib/apiClient'
@@ -17,6 +17,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   setSelectedFoods,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<boolean>(false)
   const fileUrls = useMemo(
     () => foodImages.map((image) => URL.createObjectURL(image.file)),
     [foodImages],
@@ -24,29 +25,46 @@ export const ImagePicker: FC<ImagePickerProps> = ({
 
   const uploadFiles = async (files: File[]) => {
     setIsLoading(true)
-    const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
+    setError(false)
 
+    const newFoodImages = await processNewFiles(files, foodImages)
+    const hasError = newFoodImages.some((image) => image.foods.length === 0)
+    updateImagesAndFoods(newFoodImages, setFoodImages, setSelectedFoods)
+    if (hasError) {
+      setError(true)
+    }
+
+    setIsLoading(false)
+  }
+
+  const processNewFiles = async (files: File[], foodImages: FoodImage[]): Promise<FoodImage[]> => {
+    const postImage = (file: File) => apiClient.upload.$post({ form: { file } })
     const currentFiles = foodImages.map((image) => image.file)
     const newFiles = files.filter((file) => !currentFiles.includes(file))
 
-    const newFoodImages = await Promise.all(
+    const results = await Promise.all(
       newFiles.map(async (file) => {
         const res = await postImage(file)
+
         const data = await res.json()
-        return {
-          file,
-          foods: 'foods' in data ? data.foods : [],
-        }
+
+        return { file, foods: 'foods' in data ? data.foods : [] }
       }),
     )
 
+    return results
+  }
+
+  const updateImagesAndFoods = (
+    newFoodImages: FoodImage[],
+    setFoodImages: Dispatch<SetStateAction<FoodImage[]>>,
+    setSelectedFoods: Dispatch<SetStateAction<string[]>>,
+  ) => {
     setFoodImages((prev) => [...prev, ...newFoodImages])
     setSelectedFoods((prev) => [
       ...prev,
       ...newFoodImages.flatMap((image) => image.foods).filter((food) => !prev.includes(food)),
     ])
-
-    setIsLoading(false)
   }
 
   const handleFileRemove = (index: number) => {
@@ -56,6 +74,12 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   return (
     <div className="flex flex-col gap-y-4">
       <FileInput onChange={uploadFiles} isLoading={isLoading} />
+      {error && (
+        <div className="flex gap-x-2">
+          <IconAlertCircle size={25} className="text-red-400" />
+          <p>画像から食材が見つかりませんでした</p>
+        </div>
+      )}
       <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-transparent flex gap-x-2 overflow-x-scroll rounded-md">
         {fileUrls.map((url, i) => (
           <div
