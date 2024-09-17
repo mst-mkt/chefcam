@@ -17,23 +17,21 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   setSelectedFoods,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<boolean>(false)
+
   const fileUrls = useMemo(
     () => foodImages.map((image) => URL.createObjectURL(image.file)),
     [foodImages],
   )
 
+  const noFoodsError = useMemo(() => {
+    const lastImage = foodImages[foodImages.length - 1]
+    return foodImages.length > 0 && lastImage && lastImage.foods.length === 0
+  }, [foodImages])
+
   const uploadFiles = async (files: File[]) => {
     setIsLoading(true)
-    setError(false)
-
     const newFoodImages = await processNewFiles(files, foodImages)
-    const hasError = newFoodImages.some((image) => image.foods.length === 0)
     updateImagesAndFoods(newFoodImages, setFoodImages, setSelectedFoods)
-    if (hasError) {
-      setError(true)
-    }
-
     setIsLoading(false)
   }
 
@@ -74,7 +72,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   return (
     <div className="flex flex-col gap-y-4">
       <FileInput onChange={uploadFiles} isLoading={isLoading} />
-      {error && (
+      {noFoodsError && (
         <div className="flex gap-x-2">
           <IconAlertCircle size={25} className="text-red-400" />
           <p>画像から食材が見つかりませんでした</p>
