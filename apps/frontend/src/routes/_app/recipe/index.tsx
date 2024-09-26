@@ -118,7 +118,7 @@ const PendingRecipe = () => {
       </hgroup>
       <SearchFoods foods={foods} handleRemoveFoodParam={handleRemoveFoodParam} />
       <div className="flex flex-col gap-y-8">
-        {[...Array(5)].map((_, i) => (
+        {[...new Array(5)].map((_, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: This is a skeleton component, so index key is not a problem
           <SkeltonCard key={i} />
         ))}

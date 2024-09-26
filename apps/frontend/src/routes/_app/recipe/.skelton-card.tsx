@@ -9,7 +9,7 @@ export const SkeltonCard: FC = () => (
           <div className="h-[1lh] w-full animate-pulse rounded bg-foreground/30" />
         </div>
         <div className="line-clamp-2">
-          {[...Array(Math.floor(Math.random() * 3 + 4))].map((_, i) => (
+          {[...new Array(Math.floor(Math.random() * 3 + 4))].map((_, i) => (
             <div
               // biome-ignore lint/suspicious/noArrayIndexKey: This is a skeleton component, so index key is not a problem
               key={i}

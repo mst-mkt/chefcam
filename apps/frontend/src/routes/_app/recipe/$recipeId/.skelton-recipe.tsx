@@ -26,7 +26,7 @@ export const SkeltonRecipe: FC<SkeltonRecipeProps> = ({ search }) => (
             <div className="h-[1lh] w-full animate-pulse rounded bg-foreground/30" />
           </div>
           <div className="line-clamp-4">
-            {[...Array(2)].map((_, i) => (
+            {[...new Array(2)].map((_, i) => (
               <div
                 // biome-ignore lint/suspicious/noArrayIndexKey: This is a skeleton component, so index key is not a problem
                 key={i}
@@ -38,7 +38,7 @@ export const SkeltonRecipe: FC<SkeltonRecipeProps> = ({ search }) => (
       </div>
     </div>
     <ul className="flex flex-col gap-y-2 rounded-md bg-background-50 p-4 text-sm">
-      {[...Array(5)].map((_, i) => (
+      {[...new Array(5)].map((_, i) => (
         <li
           // biome-ignore lint/suspicious/noArrayIndexKey: This is a skeleton component, so index key is not a problem
           key={i}
@@ -50,7 +50,7 @@ export const SkeltonRecipe: FC<SkeltonRecipeProps> = ({ search }) => (
       ))}
     </ul>
     <ol className="flex flex-col gap-y-8">
-      {[...Array(8)].map((_, i) => (
+      {[...new Array(8)].map((_, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: This is a skeleton component, so index key is not a problem
         <li key={i} className="flex gap-x-4">
           <div className="sticky top-[90px] flex aspect-1 h-[1lh] items-center justify-center rounded-full bg-accent font-bold text-white">
