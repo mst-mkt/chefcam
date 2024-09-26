@@ -19,12 +19,10 @@ authConfigManager.setConfig({
   credentials: 'include',
 })
 
-const App = () => {
+export const App = () => {
   return (
     <SessionProvider>
       <RouterProvider router={router} />
     </SessionProvider>
   )
 }
-
-export default App

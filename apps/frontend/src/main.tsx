@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom/client'
-import App from './App.tsx'
+import { App } from './App.tsx'
 import './styles/index.css'
 
 // biome-ignore lint/style/noNonNullAssertion: #root is exist in index.html
