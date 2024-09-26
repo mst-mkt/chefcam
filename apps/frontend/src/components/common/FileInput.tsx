@@ -32,6 +32,7 @@ export const FileInput: FC<FileInputProps> = ({ onChange, isLoading = false }) =
 
   return (
     <label
+      htmlFor="file-input"
       className="flex aspect-2 w-full cursor-pointer flex-col items-center justify-center gap-y-2 rounded-2xl border-4 border-accent border-dotted px-16 py-8 transition-colors focus-within:bg-accent/20 hover:bg-accent/10 md:p-16"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
@@ -43,10 +44,11 @@ export const FileInput: FC<FileInputProps> = ({ onChange, isLoading = false }) =
           <IconPhotoPlus className="h-12 w-12 text-accent md:h-16 md:w-16" />
           <input
             type="file"
+            id="file-input"
             className="h-0 border-0 opacity-0"
             onChange={handleFileChange}
             accept="image/*"
-            multiple
+            multiple={true}
           />
           <p className="whitespace-pre-wrap break-keep text-center">
             ファイルをドロップするか
