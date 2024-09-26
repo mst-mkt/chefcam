@@ -11,9 +11,9 @@ importers:
       '@biomejs/biome':
         specifier: ^1.9.2
         version: 1.9.2
-      biome-config:
-        specifier: workspace:*
-        version: link:packages/biome-config
+      '@mst-mkt/js-config':
+        specifier: npm:@jsr/mst-mkt__js-config@^0.0.1
+        version: '@jsr/mst-mkt__js-config@0.0.1'
       husky:
         specifier: ^9.1.6
         version: 9.1.6
@@ -66,9 +66,9 @@ importers:
       '@libsql/client':
         specifier: ^0.11.0
         version: 0.11.0
-      biome-config:
-        specifier: workspace:*
-        version: link:../../packages/biome-config
+      '@mst-mkt/js-config':
+        specifier: npm:@jsr/mst-mkt__js-config@^0.0.1
+        version: '@jsr/mst-mkt__js-config@0.0.1'
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -118,6 +118,9 @@ importers:
       '@biomejs/biome':
         specifier: ^1.9.2
         version: 1.9.2
+      '@mst-mkt/js-config':
+        specifier: npm:@jsr/mst-mkt__js-config@^0.0.1
+        version: '@jsr/mst-mkt__js-config@0.0.1'
       '@tailwindcss/aspect-ratio':
         specifier: ^0.4.2
         version: 0.4.2(tailwindcss@3.4.13)
@@ -139,9 +142,6 @@ importers:
       backend:
         specifier: workspace:*
         version: link:../backend
-      biome-config:
-        specifier: workspace:*
-        version: link:../../packages/biome-config
       postcss:
         specifier: ^8.4.47
         version: 8.4.47
@@ -1781,6 +1781,9 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
+  '@jsr/mst-mkt__js-config@0.0.1':
+    resolution: {integrity: sha512-zEEclkXB/Gclc3YVmEQq8XsBKpXEpBnrvRYt0DA2P7aVoUERYjp3lT76dl8r9GsR2eJaUWs8uUsVgoY748qAqw==, tarball: https://npm.jsr.io/~/11/@jsr/mst-mkt__js-config/0.0.1.tgz}
+
   '@libsql/client@0.11.0':
     resolution: {integrity: sha512-IkMxBFI43JXBRf4K57m6zeoa8M6u0FFEI11vHh4/ObTCZFk20wJNO9hRa1Zq1BeVDqABxMRf02HPAr02pC06bQ==}
 
@@ -3233,7 +3236,6 @@ packages:
 
   libsql@0.4.5:
     resolution: {integrity: sha512-sorTJV6PNt94Wap27Sai5gtVLIea4Otb2LUiAUyr3p6BPOScGMKGt5F1b5X/XgkNtcsDKeX5qfeBDj+PdShclQ==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@2.1.0:
@@ -5718,6 +5720,8 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@jsr/mst-mkt__js-config@0.0.1': {}
+
   '@libsql/client@0.11.0':
     dependencies:
       '@libsql/core': 0.11.0
@@ -6073,7 +6077,7 @@ snapshots:
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 18.19.53
+      '@types/node': 22.7.3
       form-data: 4.0.0
     optional: true
 

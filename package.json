@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.2",
-    "biome-config": "workspace:*",
+    "@mst-mkt/js-config": "npm:@jsr/mst-mkt__js-config@^0.0.1",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "turbo": "^2.1.2"

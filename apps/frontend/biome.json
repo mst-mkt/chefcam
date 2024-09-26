@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["./node_modules/biome-config/base.json"],
+  "extends": ["./node_modules/@mst-mkt/js-config/packages/biome/config.json"],
   "files": {
-    "ignore": ["./src/styles/index.css"]
+    "ignore": ["./src/styles/index.css", "./src/lib/tanstack-router/route-tree.gen.ts"]
   }
 }
