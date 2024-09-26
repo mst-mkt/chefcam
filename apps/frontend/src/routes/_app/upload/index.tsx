@@ -39,7 +39,7 @@ const Upload = () => {
           <p>5個以上の食材を選択するとレシピに含まれない食材がある場合があります</p>
         </div>
       )}
-      {foods.length !== 0 && (
+      {foods.length > 0 && (
         <LinkButton to="/recipe" search={{ foods: selectedFoods }}>
           レシピを検索
         </LinkButton>

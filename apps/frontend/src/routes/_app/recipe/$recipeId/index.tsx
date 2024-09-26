@@ -89,7 +89,7 @@ const RecipeInfo = () => {
             </div>
             <div className="flex flex-col gap-y-2">
               <p>{step.step}</p>
-              {step.images?.length !== 0 && (
+              {step.images?.length > 0 && (
                 <div
                   className={twJoin(
                     'flex gap-x-2 overflow-x-scroll rounded-md',
