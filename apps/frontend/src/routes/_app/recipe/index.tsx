@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_app/recipe/')({
   loader: async ({ deps: { foods } }) => {
     const res = await apiClient.recipes.$get({ query: { ingredients: foods } })
     const data = await res.json()
-    if (!res.ok) throw new Error()
+    if (!res.ok) throw new Error(`Error: failed to fetch recipe-search data (${res.url})`)
 
     const images = data.data.map((recipe) => recipe.image)
     await preloadImages(images)
