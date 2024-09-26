@@ -20,3 +20,6 @@ migrations_dir = "src/drizzle/migrations"
 
 # [ai]
 # binding = "AI"
+
+[observability]
+enabled = true
