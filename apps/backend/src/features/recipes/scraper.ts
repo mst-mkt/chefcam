@@ -51,7 +51,6 @@ const scrapeCookpadHtml = async (html: string) => {
       const validatedRecipe = recipeSchema.safeParse(newRecipe)
       if (!validatedRecipe.success) {
         console.error('Invalid recipe:', validatedRecipe.error.issues)
-        console.table(validatedRecipe.error.issues)
         return null
       }
       return validatedRecipe.data

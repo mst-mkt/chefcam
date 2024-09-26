@@ -130,7 +130,6 @@ export const scrapeRecipePage = async (html: string) => {
 
   if (!validated.success) {
     console.error('Invalid recipe:', validated.error.issues)
-    console.table(validated.error.issues)
     return null
   }
 
