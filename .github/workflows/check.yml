@@ -15,10 +15,18 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 20.14.0
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9.3.0
       - run: pnpm install
+      - name: Check package versions
+        run: |
+          echo "--- Global TypeScript version ---"
+          pnpm list typescript
+          echo "--- Frontend TypeScript version ---"
+          cd apps/frontend && pnpm list typescript
+          echo "--- Backend TypeScript version ---"
+          cd ../../apps/backend && pnpm list typescript
       - run: pnpm run check
       - run: pnpm run typecheck
