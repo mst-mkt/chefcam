@@ -15,24 +15,24 @@
   "dependencies": {
     "@ai-sdk/openai": "^0.0.55",
     "@auth/core": "^0.34.2",
-    "@auth/drizzle-adapter": "^1.5.2",
-    "@hono/auth-js": "^1.0.10",
+    "@auth/drizzle-adapter": "^1.9.1",
+    "@hono/auth-js": "^1.0.16",
     "@hono/zod-validator": "^0.2.2",
-    "ai": "^3.4.4",
+    "ai": "^3.4.33",
     "cheerio": "1.0.0-rc.12",
     "drizzle-orm": "^0.33.0",
-    "hono": "^4.6.3",
-    "zod": "^3.23.8"
+    "hono": "^4.7.10",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.2",
-    "@cloudflare/workers-types": "^4.20240925.0",
+    "@biomejs/biome": "^1.9.4",
+    "@cloudflare/workers-types": "^4.20250517.0",
     "@libsql/client": "^0.11.0",
     "@mst-mkt/js-config": "npm:@jsr/mst-mkt__js-config@^0.0.1",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.5.0",
     "drizzle-kit": "^0.24.2",
-    "typescript": "^5.6.2",
-    "wrangler": "^3.78.10"
+    "typescript": "^5.8.3",
+    "wrangler": "^3.114.8"
   },
   "type": "module"
 }

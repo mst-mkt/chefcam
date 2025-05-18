@@ -1,6 +1,6 @@
 {
   "name": "biome-config",
   "devDependencies": {
-    "@biomejs/biome": "^1.8.1"
+    "@biomejs/biome": "^1.9.4"
   }
 }
