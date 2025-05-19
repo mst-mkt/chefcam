@@ -109,7 +109,8 @@ const RecipeInfo = () => {
               )}
               {step.recipeLink !== undefined && (
                 <Link
-                  to={`/recipe/${step.recipeLink.id}`}
+                  to="/recipe/$recipeId"
+                  params={{ recipeId: step.recipeLink.id }}
                   className="flex items-center gap-x-2 text-accent"
                 >
                   <IconLink size={20} />
