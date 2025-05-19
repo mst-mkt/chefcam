@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@mst-mkt/js-config": "npm:@jsr/mst-mkt__js-config@^0.0.1",
+    "@mst-mkt/js-config": "jsr:^0.1.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tanstack/router-vite-plugin": "^1.120.5",
     "@types/react": "^18.3.21",

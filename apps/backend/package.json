@@ -28,7 +28,7 @@
     "@biomejs/biome": "^1.9.4",
     "@cloudflare/workers-types": "^4.20250517.0",
     "@libsql/client": "^0.11.0",
-    "@mst-mkt/js-config": "npm:@jsr/mst-mkt__js-config@^0.0.1",
+    "@mst-mkt/js-config": "jsr:^0.1.2",
     "dotenv": "^16.5.0",
     "drizzle-kit": "^0.24.2",
     "typescript": "^5.8.3",
