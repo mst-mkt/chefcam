@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "chefcam",
+  "compatibility_date": "2025-04-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "chefcam",
+      "database_id": "efd66620-172b-4305-a21a-e1d6e5a881da",
+      "migrations_dir": "src/drizzle/migrations"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
